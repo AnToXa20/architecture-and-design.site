@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - Архитектурное Бюро</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'white': '#FFFFFF',
+                        'black': '#000000',
+                        'light-gray': '#E6E6E6',
+                        'gray': '#A6A6A6',
+                        'dark-gray': '#2F2F2F',
+                        'gold-1': '#FFC107',
+                        'gold-2': '#E8A317',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-roboto text-dark-gray bg-white">
+    <!-- Шапка сайта -->
+    <header class="bg-white fixed w-full top-0 shadow-md z-50">
+        <div class="container mx-auto py-4 px-4 flex justify-between items-center">
+            <!-- Логотип -->
+            <a href="index.html" class="flex items-center">
+                <img src="Logo_black.svg" alt="Логотип" class="logo-image">
+            </a>
+
+            <!-- Навигация для десктопа -->
+            <nav class="hidden lg:flex">
+                <a href="portfolio.html" class="header-link">Портфолио</a>
+                <a href="stages.html" class="header-link">Этапы работы</a>
+                <a href="articles.html" class="header-link">Статьи</a>
+                <a href="services.html" class="header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="header-link">ИИ дизайн</a>
+                <a href="about.html" class="header-link">О нас</a>
+                <a href="contacts.html" class="header-link">Контакты</a>
+            </nav>
+
+            <!-- Кнопка мобильного меню -->
+            <button id="mobile-menu-button" class="lg:hidden flex flex-col justify-center items-center">
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black"></span>
+            </button>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="lg:hidden hidden absolute top-full left-0 w-full bg-white shadow-md">
+            <nav class="flex flex-col p-4">
+                <a href="portfolio.html" class="py-2 header-link">Портфолио</a>
+                <a href="stages.html" class="py-2 header-link">Этапы работы</a>
+                <a href="articles.html" class="py-2 header-link">Статьи</a>
+                <a href="services.html" class="py-2 header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="py-2 header-link">ИИ дизайн</a>
+                <a href="about.html" class="py-2 header-link">О нас</a>
+                <a href="contacts.html" class="py-2 header-link">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main class="pt-32 pb-20">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-montserrat font-bold mb-4 text-center">
+                Контакты
+            </h1>
+            <div class="w-20 h-1 bg-gold-1 mx-auto mb-12"></div>
+            
+            <!-- Контактная информация и карта -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto mb-16">
+                <!-- Контактная информация -->
+                <div class="bg-light-gray p-8 rounded-lg">
+                    <h2 class="text-3xl font-montserrat font-semibold mb-6">Свяжитесь с нами</h2>
+                    
+                    <!-- Адрес -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-montserrat mb-3">Наш адрес</h3>
+                        <p class="text-lg">г. Москва, Новинский бульвар 25 к.10 оф.18</p>
+                    </div>
+                    
+                    <!-- Телефон и Email -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-montserrat mb-3">Контактные данные</h3>
+                        <p class="text-lg mb-2">Телефон: +7 XXX XXX XX XX</p>
+                        <p class="text-lg mb-2">Email: info@architecture-bureau.com</p>
+                    </div>
+                    
+                    <!-- Соцсети -->
+                    <div>
+                        <h3 class="text-xl font-montserrat mb-3">Социальные сети</h3>
+                        <div class="flex space-x-4">
+                            <!-- Telegram иконка -->
+                            <a href="#" class="text-dark-gray hover:text-gold-1 transition-colors">
+                                <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.33 6.917a.75.75 0 0 0 .062 1.379l3.786 1.443 9.626-6.346a.562.562 0 0 1 .67.054.563.563 0 0 1-.18.662L9.042 13.96l-.54 4.05a.75.75 0 0 0 1.302.516l1.716-1.876 3.337 2.503a.75.75 0 0 0 1.164-.527l3.014-15.038a.75.75 0 0 0-.837-.855z"/>
+                                </svg>
+                            </a>
+                            
+                            <!-- ВКонтакте иконка -->
+                            <a href="#" class="text-dark-gray hover:text-gold-1 transition-colors">
+                                <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21.579 6.855c.14-.465 0-.806-.666-.806h-2.193c-.561 0-.82.29-.96.61 0 0-1.122 2.739-2.713 4.52-.515.516-.748.679-1.03.679-.14 0-.343-.163-.343-.628V6.855c0-.558-.161-.806-.626-.806H9.642c-.348 0-.558.258-.558.504 0 .528.79.65.869 2.138v3.228c0 .707-.127.836-.407.836-.748 0-2.567-2.749-3.644-5.9-.213-.618-.425-.866-.986-.866H2.724c-.627 0-.752.29-.752.61 0 .57.747 3.4 3.476 7.142 1.82 2.55 4.38 3.931 6.716 3.931 1.4 0 1.572-.315 1.572-.857v-1.978c0-.628.132-.752.574-.752.326 0 .887.164 2.198 1.428 1.496 1.497 1.742 2.167 2.581 2.167h2.193c.627 0 .94-.315.759-.937-.197-.616-.907-1.508-1.847-2.567-.512-.604-1.277-1.254-1.51-1.579-.325-.419-.232-.604 0-.976 0 0 2.697-3.793 2.975-5.081z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Google карта -->
+                <div class="h-full min-h-[400px] rounded-lg overflow-hidden">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.6090419468906!2d37.58087507680372!3d55.75606157346351!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a4a6a75b9c3%3A0x561db69ad8c3db18!2z0J3QvtCy0LjQvdGB0LrQuNC5INCx0YPQu9GM0LLQsNGALCAyNSDQutC-0YDQv9GD0YEgMTAsINCc0L7RgdC60LLQsCwgMTIxMDY5!5e0!3m2!1sru!2sru!4v1701256985580!5m2!1sru!2sru" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+            
+            <!-- Форма обратной связи -->
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl font-montserrat font-semibold mb-8 text-center">Напишите нам</h2>
+                
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-lg font-medium mb-2">Ваше имя</label>
+                            <input type="text" id="name" name="name" class="w-full p-3 border border-gray rounded-md focus:outline-none focus:ring-2 focus:ring-gold-1">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-lg font-medium mb-2">Email</label>
+                            <input type="email" id="email" name="email" class="w-full p-3 border border-gray rounded-md focus:outline-none focus:ring-2 focus:ring-gold-1">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="subject" class="block text-lg font-medium mb-2">Тема</label>
+                        <input type="text" id="subject" name="subject" class="w-full p-3 border border-gray rounded-md focus:outline-none focus:ring-2 focus:ring-gold-1">
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-lg font-medium mb-2">Сообщение</label>
+                        <textarea id="message" name="message" rows="5" class="w-full p-3 border border-gray rounded-md focus:outline-none focus:ring-2 focus:ring-gold-1"></textarea>
+                    </div>
+                    
+                    <div class="flex justify-center">
+                        <button type="submit" class="bg-dark-gray hover:bg-gold-1 hover:text-black text-white py-3 px-8 rounded-md font-medium transition-colors">Отправить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer class="bg-dark-gray text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Контакты</h3>
+                    <ul class="space-y-2">
+                        <li>Телефон: +7 XXX XXX XX XX</li>
+                        <li>Email: info@architecture-bureau.com</li>
+                        <li>Адрес: г. Москва, Новинский бульвар 25 к.10 оф.18</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Наши услуги</h3>
+                    <ul class="space-y-2">
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Архитектурное проектирование</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Дизайн интерьера</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Ландшафтный дизайн</a></li>
+                        <li><a href="ai-design.html" class="text-white hover:text-gold-1 transition-colors">ИИ дизайн</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Информация</h3>
+                    <ul class="space-y-2">
+                        <li><a href="stages.html" class="text-white hover:text-gold-1 transition-colors">Этапы работы</a></li>
+                        <li><a href="portfolio.html" class="text-white hover:text-gold-1 transition-colors">Портфолио</a></li>
+                        <li><a href="about.html" class="text-white hover:text-gold-1 transition-colors">О нас</a></li>
+                        <li><a href="articles.html" class="text-white hover:text-gold-1 transition-colors">Статьи</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-center mt-8 pt-8 border-t border-gray">
+                <img src="Logo.svg" alt="Логотип" class="w-32 h-32 mb-4">
+                <p class="text-center text-sm">© <span id="current-year"></span> Архитектурное Бюро. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

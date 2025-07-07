@@ -1,0 +1,3083 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Архитектурное Бюро</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'white': '#FFFFFF',
+                        'black': '#000000',
+                        'light-gray': '#E6E6E6',
+                        'gray': '#A6A6A6',
+                        'dark-gray': '#2F2F2F',
+                        'gold-1': '#FFC107',
+                        'gold-2': '#E8A317',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-roboto text-dark-gray bg-light-gray min-h-screen">
+    <!-- Шапка админки -->
+    <header class="bg-dark-gray text-white py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="/Logo.svg" alt="Логотип" class="w-12 h-12 mr-3">
+                <h1 class="text-xl md:text-2xl font-montserrat font-bold">Админ-панель</h1>
+            </div>
+            
+            <div class="flex items-center">
+                <span class="mr-4" id="admin-name">Администратор</span>
+                <button id="logout-btn" class="bg-gold-1 hover:bg-gold-2 text-black py-2 px-4 rounded transition-colors">Выйти</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-montserrat font-bold">Управление проектами</h2>
+                <button id="add-project-btn" class="bg-gold-1 hover:bg-gold-2 text-black py-2 px-4 rounded transition-colors flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                    Добавить проект
+                </button>
+            </div>
+            
+            <!-- Таблица проектов -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white">
+                    <thead>
+                        <tr class="bg-dark-gray text-white">
+                            <th class="py-3 px-4 text-left">ID</th>
+                            <th class="py-3 px-4 text-left">Название</th>
+                            <th class="py-3 px-4 text-left">Тип</th>
+                            <th class="py-3 px-4 text-left">Год</th>
+                            <th class="py-3 px-4 text-left">Статус</th>
+                            <th class="py-3 px-4 text-left">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projects-tbody">
+                        <!-- Проекты будут загружены динамически из базы данных -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Управление статьями URL -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-montserrat font-bold">Управление статьями URL</h2>
+                <button id="add-article-btn" class="bg-gold-1 hover:bg-gold-2 text-black py-2 px-4 rounded transition-colors flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                    Добавить статью
+                </button>
+            </div>
+            
+            <!-- Таблица статей -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white">
+                    <thead>
+                        <tr class="bg-dark-gray text-white">
+                            <th class="py-3 px-4 text-left">ID</th>
+                            <th class="py-3 px-4 text-left">Заголовок</th>
+                            <th class="py-3 px-4 text-left">Категория</th>
+                            <th class="py-3 px-4 text-left">Дата</th>
+                            <th class="py-3 px-4 text-left">Автор</th>
+                            <th class="py-3 px-4 text-left">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="articles-tbody">
+                        <!-- Статьи будут загружены динамически из базы данных -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Управление статьями -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-montserrat font-bold">Управление статьями</h2>
+                <button id="add-article-content-btn" class="bg-gold-1 hover:bg-gold-2 text-black py-2 px-4 rounded transition-colors flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                    Добавить статью
+                </button>
+            </div>
+            
+            <!-- Таблица статей -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white">
+                    <thead>
+                        <tr class="bg-dark-gray text-white">
+                            <th class="py-3 px-4 text-left">ID</th>
+                            <th class="py-3 px-4 text-left">Заголовок</th>
+                            <th class="py-3 px-4 text-left">Категория</th>
+                            <th class="py-3 px-4 text-left">Дата</th>
+                            <th class="py-3 px-4 text-left">Автор</th>
+                            <th class="py-3 px-4 text-left">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="articles-content-tbody">
+                        <!-- Статьи будут загружены динамически из базы данных -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Модальное окно для добавления/редактирования статьи -->
+        <div id="article-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-lg w-full max-w-4xl p-6 max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-montserrat font-bold">Добавить новую статью</h3>
+                    <button id="close-article-modal" class="text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <form>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="article-title" class="block text-sm font-medium mb-1">Заголовок статьи</label>
+                            <input type="text" id="article-title" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                        </div>
+                        <div>
+                            <label for="article-category" class="block text-sm font-medium mb-1">Категория</label>
+                            <select id="article-category" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                                <option value="">Выберите категорию</option>
+                                <option value="architecture">Архитектура</option>
+                                <option value="interior">Дизайн интерьера</option>
+                                <option value="country">Загородные дома</option>
+                                <option value="landscape">Ландшафтный дизайн</option>
+                                <option value="technology">Технологии</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="article-date" class="block text-sm font-medium mb-1">Дата публикации</label>
+                            <input type="date" id="article-date" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                        </div>
+                        <div>
+                            <label for="article-author" class="block text-sm font-medium mb-1">Автор</label>
+                            <select id="article-author" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                                <option value="">Выберите автора</option>
+                                <!-- Авторы будут загружены через JavaScript -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="article-short" class="block text-sm font-medium mb-1">Краткое описание</label>
+                        <textarea id="article-short" rows="2" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1"></textarea>
+                    </div>
+                    
+                    <!-- Блок для управления содержимым статьи -->
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-sm font-medium">Содержимое статьи</label>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <button type="button" id="add-article-text-block" class="bg-dark-gray text-white py-1 px-3 rounded text-sm hover:bg-gray transition-colors">
+                                    + Текст
+                                </button>
+                                <button type="button" id="add-article-image-block" class="bg-dark-gray text-white py-1 px-3 rounded text-sm hover:bg-gray transition-colors">
+                                    + Изображение
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="article-content-blocks" class="border border-gray rounded p-4 min-h-[200px] mb-2">
+                            <div class="text-gray text-center py-8">Добавьте блоки контента для вашей статьи</div>
+                        </div>
+                        
+                        <p class="text-sm text-gray italic">
+                            Перетаскивайте блоки, чтобы изменить их порядок в статье
+                        </p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Изображение статьи</label>
+                        <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center">
+                            <div class="mb-2" id="main-image-placeholder">
+                                <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <p class="text-sm text-gray mb-1">Перетащите файл сюда или</p>
+                                <button type="button" id="main-image-upload-btn" class="text-blue-600 hover:text-blue-800 font-medium">
+                                    выберите файл
+                                </button>
+                            </div>
+                            <div id="main-image-preview" class="hidden">
+                                <img src="" alt="Предпросмотр главного изображения" class="max-h-40 mx-auto mb-2">
+                                <button type="button" id="remove-main-image" class="text-red-600 hover:text-red-800 text-sm">
+                                    Удалить изображение
+                                </button>
+                            </div>
+                            <input type="file" id="main-image-upload" class="hidden" accept="image/*">
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancel-article-btn" class="border border-dark-gray text-dark-gray hover:bg-dark-gray hover:text-white py-2 px-4 rounded transition-colors">
+                            Отмена
+                        </button>
+                        <button type="submit" class="bg-gold-1 hover:bg-gold-2 text-black py-2 px-4 rounded transition-colors">
+                            Сохранить статью
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Модальное окно для добавления/редактирования проекта -->
+        <div id="project-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-lg w-full max-w-4xl p-6 max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-montserrat font-bold">Добавить новый проект</h3>
+                    <button id="close-modal" class="text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="project-form">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="project-title" class="block text-sm font-medium mb-1">Название проекта</label>
+                            <input type="text" id="project-title" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                        </div>
+                        <div>
+                            <label for="project-type" class="block text-sm font-medium mb-1">Тип проекта</label>
+                            <select id="project-type" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                                <option value="">Выберите тип проекта</option>
+                                <option value="residential">Жилые интерьеры</option>
+                                <option value="country">Загородные дома</option>
+                                <option value="office">Офисные интерьеры</option>
+                                <option value="commercial">Коммерческая недвижимость</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="project-area" class="block text-sm font-medium mb-1">Площадь</label>
+                            <input type="text" id="project-area" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                        </div>
+                        <div>
+                            <label for="project-location" class="block text-sm font-medium mb-1">Расположение</label>
+                            <input type="text" id="project-location" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                        </div>
+                        <div>
+                            <label for="project-year" class="block text-sm font-medium mb-1">Год</label>
+                            <input type="text" id="project-year" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                        </div>
+                        <div>
+                            <label for="project-status" class="block text-sm font-medium mb-1">Статус</label>
+                            <select id="project-status" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                                <option value="completed">Реализован</option>
+                                <option value="in-progress">В процессе</option>
+                                <option value="concept">Концепция</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Поле для исходных данных -->
+                    <div class="mb-6">
+                        <label for="project-description" class="block text-sm font-medium mb-2">Исходные данные</label>
+                        <textarea id="project-description" rows="4" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" placeholder="Опишите исходные данные проекта..."></textarea>
+                    </div>
+                    
+                    <!-- Новый блок для управления содержимым проекта -->
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-sm font-medium">Содержимое проекта</label>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <button type="button" id="add-text-block" class="bg-dark-gray text-white py-1 px-3 rounded text-sm hover:bg-gray transition-colors">
+                                    + Текст
+                                </button>
+                                <button type="button" id="add-image-block" class="bg-dark-gray text-white py-1 px-3 rounded text-sm hover:bg-gray transition-colors">
+                                    + Изображение
+                                </button>
+                                <button type="button" id="add-two-images-block" class="bg-dark-gray text-white py-1 px-3 rounded text-sm hover:bg-gray transition-colors">
+                                    + Два изображения
+                                </button>
+                                <button type="button" id="add-image-text-block" class="bg-dark-gray text-white py-1 px-3 rounded text-sm hover:bg-gray transition-colors">
+                                    + Изображение + Текст
+                                </button>
+                                <button type="button" id="add-text-image-block" class="bg-dark-gray text-white py-1 px-3 rounded text-sm hover:bg-gray transition-colors">
+                                    + Текст + Изображение
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="content-blocks" class="border border-gray rounded p-4 min-h-[200px] mb-2">
+                            <div class="text-gray text-center py-8">Добавьте блоки контента для вашего проекта</div>
+                        </div>
+                        
+                        <p class="text-sm text-gray italic">
+                            Перетаскивайте блоки, чтобы изменить их порядок в проекте
+                        </p>
+                    </div>
+                    
+
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Обложка проекта</label>
+                        <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center">
+                            <div class="mb-2">
+                                <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <p class="text-sm text-gray mb-1">Перетащите файл сюда или</p>
+                            <button type="button" id="cover-upload-btn" class="text-blue-600 hover:text-blue-800 font-medium">
+                                выберите файл
+                            </button>
+                            <input type="file" id="cover-upload" class="hidden" accept="image/*">
+                            <div id="cover-preview" class="mt-2 hidden">
+                                <img src="" alt="Предпросмотр обложки" class="max-h-40 mx-auto">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancel-btn" class="border border-dark-gray text-dark-gray hover:bg-dark-gray hover:text-white py-2 px-4 rounded transition-colors">
+                            Отмена
+                        </button>
+                        <button type="submit" class="bg-gold-1 hover:bg-gold-2 text-black py-2 px-4 rounded transition-colors">
+                            Сохранить проект
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Модальное окно для добавления/редактирования статьи (контент) -->
+        <div id="article-content-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-lg w-full max-w-4xl p-6 max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-montserrat font-bold">Добавить новую статью</h3>
+                    <button id="close-article-content-modal" class="text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <form>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="article-content-title" class="block text-sm font-medium mb-1">Заголовок статьи</label>
+                            <input type="text" id="article-content-title" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                        </div>
+                        <div>
+                            <label for="article-content-category" class="block text-sm font-medium mb-1">Категория</label>
+                            <select id="article-content-category" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                                <option value="">Выберите категорию</option>
+                                <option value="architecture">Архитектура</option>
+                                <option value="interior">Дизайн интерьера</option>
+                                <option value="country">Загородные дома</option>
+                                <option value="landscape">Ландшафтный дизайн</option>
+                                <option value="technology">Технологии</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="article-content-date" class="block text-sm font-medium mb-1">Дата публикации</label>
+                            <input type="date" id="article-content-date" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                        </div>
+                        <div>
+                            <label for="article-content-author" class="block text-sm font-medium mb-1">Автор</label>
+                            <select id="article-content-author" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                                <option value="">Выберите автора</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="article-content-short" class="block text-sm font-medium mb-1">Краткое описание</label>
+                        <textarea id="article-content-short" rows="2" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1"></textarea>
+                    </div>
+                    
+                    <!-- Блок для управления содержимым статьи -->
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-sm font-medium">Содержимое статьи</label>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <button type="button" id="add-article-content-text-block" class="bg-dark-gray text-white py-1 px-3 rounded text-sm hover:bg-gray transition-colors">
+                                    + Текст
+                                </button>
+                                <button type="button" id="add-article-content-image-block" class="bg-dark-gray text-white py-1 px-3 rounded text-sm hover:bg-gray transition-colors">
+                                    + Изображение
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="article-content-blocks-container" class="border border-gray rounded p-4 min-h-[200px] mb-2">
+                            <div class="text-gray text-center py-8">Добавьте блоки контента для вашей статьи</div>
+                        </div>
+                        
+                        <p class="text-sm text-gray italic">
+                            Перетаскивайте блоки, чтобы изменить их порядок в статье
+                        </p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Изображение статьи</label>
+                        <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center">
+                            <div class="mb-2" id="main-image-content-placeholder">
+                                <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <p class="text-sm text-gray mb-1">Перетащите файл сюда или</p>
+                                <button type="button" id="main-image-content-upload-btn" class="text-blue-600 hover:text-blue-800 font-medium">
+                                    выберите файл
+                                </button>
+                            </div>
+                            <div id="main-image-content-preview" class="hidden">
+                                <img src="" alt="Предпросмотр главного изображения" class="max-h-40 mx-auto mb-2">
+                                <button type="button" id="remove-main-image-content" class="text-red-600 hover:text-red-800 text-sm">
+                                    Удалить изображение
+                                </button>
+                            </div>
+                            <input type="file" id="main-image-content-upload" class="hidden" accept="image/*">
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancel-article-content-btn" class="border border-dark-gray text-dark-gray hover:bg-dark-gray hover:text-white py-2 px-4 rounded transition-colors">
+                            Отмена
+                        </button>
+                        <button type="submit" class="bg-gold-1 hover:bg-gold-2 text-black py-2 px-4 rounded transition-colors">
+                            Сохранить статью
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Шаблоны для блоков контента -->
+    <template id="text-block-template">
+        <div class="content-block text-block mb-3 border border-gray rounded p-3" draggable="true" data-type="text">
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-sm font-medium">Текстовый блок</span>
+                <div class="flex space-x-1">
+                    <button type="button" class="move-block-up text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="move-block-down text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <textarea class="block-content w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" rows="3" placeholder="Введите текст..."></textarea>
+        </div>
+    </template>
+
+    <template id="image-block-template">
+        <div class="content-block image-block mb-3 border border-gray rounded p-3" draggable="true" data-type="image">
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-sm font-medium">Изображение</span>
+                <div class="flex space-x-1">
+                    <button type="button" class="move-block-up text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="move-block-down text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center mb-2">
+                <div class="mb-2 image-placeholder">
+                    <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p class="text-sm text-gray mb-1">Перетащите изображение сюда или</p>
+                    <button type="button" class="image-upload-btn text-blue-600 hover:text-blue-800 font-medium">
+                        выберите файл
+                    </button>
+                    <input type="file" class="image-upload hidden" accept="image/*">
+                </div>
+                <div class="image-preview hidden">
+                    <img src="" alt="Предпросмотр изображения" class="max-h-40 mx-auto mb-2">
+                    <button type="button" class="remove-image text-red-600 hover:text-red-800 text-sm">
+                        Удалить изображение
+                    </button>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Подпись к изображению</label>
+                <input type="text" class="image-caption w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" placeholder="Введите подпись...">
+            </div>
+        </div>
+    </template>
+
+    <!-- Шаблон для блока с двумя изображениями -->
+    <template id="two-images-block-template">
+        <div class="content-block two-images-block mb-3 border border-gray rounded p-3" draggable="true" data-type="two-images">
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-sm font-medium">Два изображения в ряд</span>
+                <div class="flex space-x-1">
+                    <button type="button" class="move-block-up text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="move-block-down text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Первое изображение -->
+                <div>
+                    <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center mb-2">
+                        <div class="mb-2 image-placeholder-left">
+                            <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="text-sm text-gray mb-1">Изображение слева</p>
+                            <button type="button" class="image-upload-btn-left text-blue-600 hover:text-blue-800 font-medium">
+                                выберите файл
+                            </button>
+                            <input type="file" class="image-upload-left hidden" accept="image/*">
+                        </div>
+                        <div class="image-preview-left hidden">
+                            <img src="" alt="Предпросмотр изображения" class="max-h-40 mx-auto mb-2">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Подпись</label>
+                        <input type="text" class="image-caption-left w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" placeholder="Подпись к левому изображению...">
+                    </div>
+                </div>
+                
+                <!-- Второе изображение -->
+                <div>
+                    <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center mb-2">
+                        <div class="mb-2 image-placeholder-right">
+                            <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="text-sm text-gray mb-1">Изображение справа</p>
+                            <button type="button" class="image-upload-btn-right text-blue-600 hover:text-blue-800 font-medium">
+                                выберите файл
+                            </button>
+                            <input type="file" class="image-upload-right hidden" accept="image/*">
+                        </div>
+                        <div class="image-preview-right hidden">
+                            <img src="" alt="Предпросмотр изображения" class="max-h-40 mx-auto mb-2">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Подпись</label>
+                        <input type="text" class="image-caption-right w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" placeholder="Подпись к правому изображению...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Шаблон для блока изображение + текст -->
+    <template id="image-text-block-template">
+        <div class="content-block image-text-block mb-3 border border-gray rounded p-3" draggable="true" data-type="image-text">
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-sm font-medium">Изображение + Текст</span>
+                <div class="flex space-x-1">
+                    <button type="button" class="move-block-up text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="move-block-down text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Изображение слева -->
+                <div>
+                    <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center mb-2">
+                        <div class="mb-2 image-placeholder-combo">
+                            <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="text-sm text-gray mb-1">Изображение</p>
+                            <button type="button" class="image-upload-btn-combo text-blue-600 hover:text-blue-800 font-medium">
+                                выберите файл
+                            </button>
+                            <input type="file" class="image-upload-combo hidden" accept="image/*">
+                        </div>
+                        <div class="image-preview-combo hidden">
+                            <img src="" alt="Предпросмотр изображения" class="max-h-40 mx-auto mb-2">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Подпись</label>
+                        <input type="text" class="image-caption-combo w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" placeholder="Подпись к изображению...">
+                    </div>
+                </div>
+                
+                <!-- Текст справа -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Текст</label>
+                    <textarea class="combo-text w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" rows="8" placeholder="Введите текст..."></textarea>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Шаблон для блока текст + изображение -->
+    <template id="text-image-block-template">
+        <div class="content-block text-image-block mb-3 border border-gray rounded p-3" draggable="true" data-type="text-image">
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-sm font-medium">Текст + Изображение</span>
+                <div class="flex space-x-1">
+                    <button type="button" class="move-block-up text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="move-block-down text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Текст слева -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Текст</label>
+                    <textarea class="combo-text w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" rows="8" placeholder="Введите текст..."></textarea>
+                </div>
+                
+                <!-- Изображение справа -->
+                <div>
+                    <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center mb-2">
+                        <div class="mb-2 image-placeholder-combo">
+                            <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="text-sm text-gray mb-1">Изображение</p>
+                            <button type="button" class="image-upload-btn-combo text-blue-600 hover:text-blue-800 font-medium">
+                                выберите файл
+                            </button>
+                            <input type="file" class="image-upload-combo hidden" accept="image/*">
+                        </div>
+                        <div class="image-preview-combo hidden">
+                            <img src="" alt="Предпросмотр изображения" class="max-h-40 mx-auto mb-2">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Подпись</label>
+                        <input type="text" class="image-caption-combo w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" placeholder="Подпись к изображению...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Шаблоны для блоков контента статьи -->
+    <template id="article-text-block-template">
+        <div class="content-block text-block mb-3 border border-gray rounded p-3" draggable="true" data-type="text">
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-sm font-medium">Текстовый блок</span>
+                <div class="flex space-x-1">
+                    <button type="button" class="move-block-up text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="move-block-down text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <textarea class="block-content w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" rows="3" placeholder="Введите текст статьи..."></textarea>
+        </div>
+    </template>
+
+    <template id="article-image-block-template">
+        <div class="content-block image-block mb-3 border border-gray rounded p-3" draggable="true" data-type="image">
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-sm font-medium">Изображение</span>
+                <div class="flex space-x-1">
+                    <button type="button" class="move-block-up text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="move-block-down text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center mb-2">
+                <div class="mb-2 image-placeholder">
+                    <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p class="text-sm text-gray mb-1">Перетащите изображение сюда или</p>
+                    <button type="button" class="image-upload-btn text-blue-600 hover:text-blue-800 font-medium">
+                        выберите файл
+                    </button>
+                    <input type="file" class="image-upload hidden" accept="image/*">
+                </div>
+                <div class="image-preview hidden">
+                    <img src="" alt="Предпросмотр изображения" class="max-h-40 mx-auto mb-2">
+                    <button type="button" class="remove-image text-red-600 hover:text-red-800 text-sm">
+                        Удалить изображение
+                    </button>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Подпись к изображению</label>
+                <input type="text" class="image-caption w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" placeholder="Введите подпись...">
+            </div>
+        </div>
+    </template>
+
+    <script>
+    // Глобальные переменные
+    let isEditMode = false;
+    let editingProjectId = null;
+    let projectImageIndex = 0;
+    
+    // Глобальная функция для открытия модального окна проекта
+    function openProjectModal(project = null) {
+        const projectModal = document.getElementById('project-modal');
+        const modalTitle = document.querySelector('#project-modal h3');
+        
+        // Обновляем заголовок модального окна
+        if (modalTitle) {
+            modalTitle.textContent = project ? 'Редактировать проект' : 'Добавить новый проект';
+        }
+        
+        projectModal.classList.remove('hidden');
+        
+        // Очищаем форму
+        const projectForm = document.getElementById('project-form');
+        if (projectForm) {
+            projectForm.reset();
+        }
+        
+        // Очищаем поле исходных данных
+        const descriptionField = document.getElementById('project-description');
+        if (descriptionField) {
+            descriptionField.value = '';
+        }
+        
+        // Очищаем обложку проекта
+        const coverUpload = document.getElementById('cover-upload');
+        const coverPreview = document.getElementById('cover-preview');
+        
+        if (coverUpload) {
+            coverUpload.value = '';
+        }
+        if (coverPreview) {
+            coverPreview.classList.add('hidden');
+            const img = coverPreview.querySelector('img');
+            if (img) {
+                img.src = '';
+            }
+        }
+        
+        // Очищаем контейнер блоков при открытии модального окна
+        const contentBlocks = document.getElementById('content-blocks');
+        contentBlocks.innerHTML = '';
+        const emptyMessage = document.createElement('div');
+        emptyMessage.className = 'text-gray text-center py-8';
+        emptyMessage.textContent = 'Добавьте блоки контента для вашего проекта';
+        contentBlocks.appendChild(emptyMessage);
+        
+        // Сбрасываем счетчик изображений
+        projectImageIndex = 0;
+        
+        if (project) {
+            // Заполняем форму данными проекта
+            document.getElementById('project-title').value = project.title || '';
+            document.getElementById('project-type').value = project.project_type || '';
+            document.getElementById('project-description').value = project.description || '';
+            document.getElementById('project-area').value = project.area || '';
+            document.getElementById('project-location').value = project.location || '';
+            document.getElementById('project-year').value = project.year_completed || '';
+            document.getElementById('project-status').value = project.status || 'draft';
+            
+            // Показываем текущую обложку если есть
+            if (project.path_to_file && coverPreview) {
+                const img = coverPreview.querySelector('img');
+                if (img) {
+                    img.src = project.path_to_file;
+                    coverPreview.classList.remove('hidden');
+                }
+            }
+            
+            // Загружаем блоки контента
+            if (project.contentBlocks && project.contentBlocks.length > 0) {
+                loadProjectContentBlocks(project.contentBlocks);
+            }
+        }
+    }
+    
+    // Глобальная функция для закрытия модального окна проекта
+    function closeProjectModal() {
+        const projectModal = document.getElementById('project-modal');
+        projectModal.classList.add('hidden');
+        // Сбрасываем режим редактирования
+        isEditMode = false;
+        editingProjectId = null;
+    }
+    
+    // Глобальная функция для загрузки блоков контента проекта
+    function loadProjectContentBlocks(contentBlocks) {
+        const contentContainer = document.getElementById('content-blocks');
+        if (!contentContainer) {
+            console.error('Контейнер блоков контента не найден');
+            return;
+        }
+        
+        // Очищаем контейнер
+        contentContainer.innerHTML = '';
+        
+        if (!contentBlocks || contentBlocks.length === 0) {
+            const emptyMessage = document.createElement('div');
+            emptyMessage.className = 'text-gray text-center py-8';
+            emptyMessage.textContent = 'Добавьте блоки контента для вашего проекта';
+            contentContainer.appendChild(emptyMessage);
+            return;
+        }
+        
+        // Создаем блоки по порядку
+        contentBlocks.forEach((block, index) => {
+            let blockElement;
+            
+            switch (block.block_type) {
+                case 'text':
+                    blockElement = createExistingTextBlock(block, index);
+                    break;
+                case 'image':
+                    blockElement = createExistingImageBlock(block, index);
+                    break;
+                case 'two_images':
+                    blockElement = createExistingTwoImagesBlock(block, index);
+                    break;
+                case 'image_text':
+                    blockElement = createExistingImageTextBlock(block, index);
+                    break;
+                case 'text_image':
+                    blockElement = createExistingTextImageBlock(block, index);
+                    break;
+                default:
+                    console.warn('Неизвестный тип блока:', block.block_type);
+                    return;
+            }
+            
+            if (blockElement) {
+                contentContainer.appendChild(blockElement);
+            }
+        });
+    }
+    
+    // Глобальные функции для создания существующих блоков
+    function createExistingTextBlock(block, index) {
+        const blockDiv = document.createElement('div');
+        blockDiv.className = 'content-block text-block mb-3 border border-gray rounded p-3';
+        blockDiv.setAttribute('draggable', 'true');
+        blockDiv.setAttribute('data-type', 'text');
+        blockDiv.setAttribute('data-block-id', block.id); // Добавляем ID блока
+        blockDiv.innerHTML = `
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-sm font-medium">Текстовый блок</span>
+                <div class="flex space-x-1">
+                    <button type="button" class="move-block-up text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="move-block-down text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <textarea class="block-content w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" rows="3" placeholder="Введите текст...">${block.content || ''}</textarea>
+        `;
+        
+        // Добавляем обработчики
+        addProjectBlockHandlers(blockDiv);
+        return blockDiv;
+    }
+    
+    function createExistingImageBlock(block, index) {
+        const blockDiv = document.createElement('div');
+        blockDiv.className = 'content-block image-block mb-3 border border-gray rounded p-3';
+        blockDiv.setAttribute('draggable', 'true');
+        blockDiv.setAttribute('data-type', 'image');
+        blockDiv.setAttribute('data-block-id', block.id); // Добавляем ID блока
+        blockDiv.innerHTML = `
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-sm font-medium">Изображение</span>
+                <div class="flex space-x-1">
+                    <button type="button" class="move-block-up text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="move-block-down text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center mb-2">
+                <div class="mb-2 image-placeholder ${block.image_path ? 'hidden' : ''}">
+                    <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p class="text-sm text-gray mb-1">Перетащите изображение сюда или</p>
+                    <button type="button" class="image-upload-btn text-blue-600 hover:text-blue-800 font-medium">
+                        выберите файл
+                    </button>
+                    <input type="file" class="image-upload hidden" accept="image/*" data-existing-path="${block.image_path || ''}">
+                </div>
+                <div class="image-preview ${!block.image_path ? 'hidden' : ''}">
+                    <img src="${block.image_path || ''}" alt="Предпросмотр изображения" class="max-h-40 mx-auto mb-2">
+                    <button type="button" class="remove-image text-red-600 hover:text-red-800 text-sm">
+                        Удалить изображение
+                    </button>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Подпись к изображению</label>
+                <input type="text" class="image-caption w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" placeholder="Введите подпись..." value="${block.caption || ''}">
+            </div>
+        `;
+        
+        // Добавляем обработчики
+        addProjectBlockHandlers(blockDiv);
+        addProjectImageUploadHandler(blockDiv);
+        return blockDiv;
+    }
+    
+    function createExistingTwoImagesBlock(block, index) {
+        const blockDiv = document.createElement('div');
+        blockDiv.className = 'content-block two-images-block mb-3 border border-gray rounded p-3';
+        blockDiv.setAttribute('draggable', 'true');
+        blockDiv.setAttribute('data-type', 'two-images');
+        blockDiv.setAttribute('data-block-id', block.id); // Добавляем ID блока
+        blockDiv.innerHTML = `
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-sm font-medium">Два изображения в ряд</span>
+                <div class="flex space-x-1">
+                    <button type="button" class="move-block-up text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="move-block-down text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Первое изображение -->
+                <div>
+                    <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center mb-2">
+                        <div class="mb-2 image-placeholder-left ${block.image_path ? 'hidden' : ''}">
+                            <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="text-sm text-gray mb-1">Изображение слева</p>
+                            <button type="button" class="image-upload-btn-left text-blue-600 hover:text-blue-800 font-medium">
+                                выберите файл
+                            </button>
+                            <input type="file" class="image-upload-left hidden" accept="image/*" data-existing-path="${block.image_path || ''}">
+                        </div>
+                        <div class="image-preview-left ${!block.image_path ? 'hidden' : ''}">
+                            <img src="${block.image_path || ''}" alt="Предпросмотр изображения" class="max-h-40 mx-auto mb-2">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Подпись</label>
+                        <input type="text" class="image-caption-left w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" placeholder="Подпись к левому изображению..." value="${block.image_alt || ''}">
+                    </div>
+                </div>
+                
+                <!-- Второе изображение -->
+                <div>
+                    <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center mb-2">
+                        <div class="mb-2 image-placeholder-right ${block.image_path_2 ? 'hidden' : ''}">
+                            <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="text-sm text-gray mb-1">Изображение справа</p>
+                            <button type="button" class="image-upload-btn-right text-blue-600 hover:text-blue-800 font-medium">
+                                выберите файл
+                            </button>
+                            <input type="file" class="image-upload-right hidden" accept="image/*" data-existing-path="${block.image_path_2 || ''}">
+                        </div>
+                        <div class="image-preview-right ${!block.image_path_2 ? 'hidden' : ''}">
+                            <img src="${block.image_path_2 || ''}" alt="Предпросмотр изображения" class="max-h-40 mx-auto mb-2">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Подпись</label>
+                        <input type="text" class="image-caption-right w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" placeholder="Подпись к правому изображению..." value="${block.image_alt_2 || ''}">
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Добавляем обработчики
+        addProjectBlockHandlers(blockDiv);
+        addProjectTwoImagesUploadHandler(blockDiv);
+        return blockDiv;
+    }
+    
+    function createExistingImageTextBlock(block, index) {
+        const blockDiv = document.createElement('div');
+        blockDiv.className = 'content-block image-text-block mb-3 border border-gray rounded p-3';
+        blockDiv.setAttribute('draggable', 'true');
+        blockDiv.setAttribute('data-type', 'image-text');
+        blockDiv.setAttribute('data-block-id', block.id); // Добавляем ID блока
+        blockDiv.innerHTML = `
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-sm font-medium">Изображение + Текст</span>
+                <div class="flex space-x-1">
+                    <button type="button" class="move-block-up text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="move-block-down text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Изображение слева -->
+                <div>
+                    <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center mb-2">
+                        <div class="mb-2 image-placeholder-combo ${block.image_path ? 'hidden' : ''}">
+                            <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="text-sm text-gray mb-1">Изображение</p>
+                            <button type="button" class="image-upload-btn-combo text-blue-600 hover:text-blue-800 font-medium">
+                                выберите файл
+                            </button>
+                            <input type="file" class="image-upload-combo hidden" accept="image/*" data-existing-path="${block.image_path || ''}">
+                        </div>
+                        <div class="image-preview-combo ${!block.image_path ? 'hidden' : ''}">
+                            <img src="${block.image_path || ''}" alt="Предпросмотр изображения" class="max-h-40 mx-auto mb-2">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Подпись</label>
+                        <input type="text" class="image-caption-combo w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" placeholder="Подпись к изображению..." value="${block.caption || ''}">
+                    </div>
+                </div>
+                
+                <!-- Текст справа -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Текст</label>
+                    <textarea class="combo-text w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" rows="8" placeholder="Введите текст...">${block.content || ''}</textarea>
+                </div>
+            </div>
+        `;
+        
+        // Добавляем обработчики
+        addProjectBlockHandlers(blockDiv);
+        addProjectComboUploadHandler(blockDiv);
+        return blockDiv;
+    }
+    
+    function createExistingTextImageBlock(block, index) {
+        const blockDiv = document.createElement('div');
+        blockDiv.className = 'content-block text-image-block mb-3 border border-gray rounded p-3';
+        blockDiv.setAttribute('draggable', 'true');
+        blockDiv.setAttribute('data-type', 'text-image');
+        blockDiv.setAttribute('data-block-id', block.id); // Добавляем ID блока
+        blockDiv.innerHTML = `
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-sm font-medium">Текст + Изображение</span>
+                <div class="flex space-x-1">
+                    <button type="button" class="move-block-up text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="move-block-down text-gray hover:text-dark-gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Текст слева -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Текст</label>
+                    <textarea class="combo-text w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" rows="8" placeholder="Введите текст...">${block.content || ''}</textarea>
+                </div>
+                
+                <!-- Изображение справа -->
+                <div>
+                    <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center mb-2">
+                        <div class="mb-2 image-placeholder-combo ${block.image_path ? 'hidden' : ''}">
+                            <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="text-sm text-gray mb-1">Изображение</p>
+                            <button type="button" class="image-upload-btn-combo text-blue-600 hover:text-blue-800 font-medium">
+                                выберите файл
+                            </button>
+                            <input type="file" class="image-upload-combo hidden" accept="image/*" data-existing-path="${block.image_path || ''}">
+                        </div>
+                        <div class="image-preview-combo ${!block.image_path ? 'hidden' : ''}">
+                            <img src="${block.image_path || ''}" alt="Предпросмотр изображения" class="max-h-40 mx-auto mb-2">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Подпись</label>
+                        <input type="text" class="image-caption-combo w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" placeholder="Подпись к изображению..." value="${block.caption || ''}">
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Добавляем обработчики
+        addProjectBlockHandlers(blockDiv);
+        addProjectComboUploadHandler(blockDiv);
+        return blockDiv;
+    }
+    
+    // Глобальные функции для обработки блоков
+    function addProjectBlockHandlers(blockElement) {
+        // Удаление блока
+        const deleteBtn = blockElement.querySelector('.delete-block');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', function() {
+                if (confirm('Удалить этот блок?')) {
+                    this.closest('.content-block').remove();
+                    
+                    // Если удалили все блоки, показываем сообщение
+                    const contentBlocks = document.getElementById('content-blocks');
+                    if (contentBlocks.children.length === 0) {
+                        const emptyMessage = document.createElement('div');
+                        emptyMessage.className = 'text-gray text-center py-8';
+                        emptyMessage.textContent = 'Добавьте блоки контента для вашего проекта';
+                        contentBlocks.appendChild(emptyMessage);
+                    }
+                }
+            });
+        }
+        
+        // Перемещение блока вверх
+        const moveUpBtn = blockElement.querySelector('.move-block-up');
+        if (moveUpBtn) {
+            moveUpBtn.addEventListener('click', function() {
+                const currentBlock = this.closest('.content-block');
+                const previousBlock = currentBlock.previousElementSibling;
+                if (previousBlock && previousBlock.classList.contains('content-block')) {
+                    currentBlock.parentNode.insertBefore(currentBlock, previousBlock);
+                }
+            });
+        }
+        
+        // Перемещение блока вниз
+        const moveDownBtn = blockElement.querySelector('.move-block-down');
+        if (moveDownBtn) {
+            moveDownBtn.addEventListener('click', function() {
+                const currentBlock = this.closest('.content-block');
+                const nextBlock = currentBlock.nextElementSibling;
+                if (nextBlock && nextBlock.classList.contains('content-block')) {
+                    currentBlock.parentNode.insertBefore(nextBlock, currentBlock);
+                }
+            });
+        }
+    }
+    
+    function addProjectImageUploadHandler(blockElement) {
+        const uploadBtn = blockElement.querySelector('.image-upload-btn');
+        const uploadInput = blockElement.querySelector('.image-upload');
+        const placeholder = blockElement.querySelector('.image-placeholder');
+        const preview = blockElement.querySelector('.image-preview');
+        const removeBtn = blockElement.querySelector('.remove-image');
+        
+        if (uploadBtn && uploadInput) {
+            uploadBtn.addEventListener('click', function() {
+                uploadInput.click();
+            });
+            
+            uploadInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = preview.querySelector('img');
+                        if (img) {
+                            img.src = e.target.result;
+                            placeholder.classList.add('hidden');
+                            preview.classList.remove('hidden');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        
+        if (removeBtn) {
+            removeBtn.addEventListener('click', function() {
+                uploadInput.value = '';
+                const img = preview.querySelector('img');
+                if (img) {
+                    img.src = '';
+                }
+                preview.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+            });
+        }
+    }
+    
+    function addProjectTwoImagesUploadHandler(blockElement) {
+        // Левое изображение
+        const uploadBtnLeft = blockElement.querySelector('.image-upload-btn-left');
+        const uploadInputLeft = blockElement.querySelector('.image-upload-left');
+        const placeholderLeft = blockElement.querySelector('.image-placeholder-left');
+        const previewLeft = blockElement.querySelector('.image-preview-left');
+        
+        if (uploadBtnLeft && uploadInputLeft) {
+            uploadBtnLeft.addEventListener('click', function() {
+                uploadInputLeft.click();
+            });
+            
+            uploadInputLeft.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = previewLeft.querySelector('img');
+                        if (img) {
+                            img.src = e.target.result;
+                            placeholderLeft.classList.add('hidden');
+                            previewLeft.classList.remove('hidden');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        
+        // Правое изображение
+        const uploadBtnRight = blockElement.querySelector('.image-upload-btn-right');
+        const uploadInputRight = blockElement.querySelector('.image-upload-right');
+        const placeholderRight = blockElement.querySelector('.image-placeholder-right');
+        const previewRight = blockElement.querySelector('.image-preview-right');
+        
+        if (uploadBtnRight && uploadInputRight) {
+            uploadBtnRight.addEventListener('click', function() {
+                uploadInputRight.click();
+            });
+            
+            uploadInputRight.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = previewRight.querySelector('img');
+                        if (img) {
+                            img.src = e.target.result;
+                            placeholderRight.classList.add('hidden');
+                            previewRight.classList.remove('hidden');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    }
+    
+    function addProjectComboUploadHandler(blockElement) {
+        const uploadBtn = blockElement.querySelector('.image-upload-btn-combo');
+        const uploadInput = blockElement.querySelector('.image-upload-combo');
+        const placeholder = blockElement.querySelector('.image-placeholder-combo');
+        const preview = blockElement.querySelector('.image-preview-combo');
+        
+        if (uploadBtn && uploadInput) {
+            uploadBtn.addEventListener('click', function() {
+                uploadInput.click();
+            });
+            
+            uploadInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = preview.querySelector('img');
+                        if (img) {
+                            img.src = e.target.result;
+                            placeholder.classList.add('hidden');
+                            preview.classList.remove('hidden');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Проверяем авторизацию при загрузке страницы
+        checkAuthentication();
+        
+        // Обработчик кнопки выхода
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', handleLogout);
+        }
+        // Обработка модального окна проектов
+        const addProjectBtn = document.getElementById('add-project-btn');
+        const closeModalBtn = document.getElementById('close-modal');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const projectModal = document.getElementById('project-modal');
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+        addProjectBtn.addEventListener('click', openProjectModal);
+        closeModalBtn.addEventListener('click', closeProjectModal);
+        cancelBtn.addEventListener('click', closeProjectModal);
+        
+        // Обработка модального окна статей
+        const addArticleBtn = document.getElementById('add-article-btn');
+        const closeArticleModalBtn = document.getElementById('close-article-modal');
+        const cancelArticleBtn = document.getElementById('cancel-article-btn');
+        const articleModal = document.getElementById('article-modal');
+        
+        function openArticleModal() {
+            articleModal.classList.remove('hidden');
+            
+            // Очищаем форму
+            const articleForm = document.querySelector('#article-modal form');
+            articleForm.reset();
+            
+            // Очищаем главное изображение
+            const mainImageUpload = document.getElementById('main-image-upload');
+            const mainImagePlaceholder = document.getElementById('main-image-placeholder');
+            const mainImagePreview = document.getElementById('main-image-preview');
+            
+            if (mainImageUpload) {
+                mainImageUpload.value = '';
+            }
+            if (mainImagePlaceholder) {
+                mainImagePlaceholder.classList.remove('hidden');
+            }
+            if (mainImagePreview) {
+                mainImagePreview.classList.add('hidden');
+            }
+            
+            // Очищаем контейнер блоков при открытии модального окна
+            const articleContentBlocks = document.getElementById('article-content-blocks');
+            articleContentBlocks.innerHTML = '';
+            const emptyMessage = document.createElement('div');
+            emptyMessage.className = 'text-gray text-center py-8';
+            emptyMessage.textContent = 'Добавьте блоки контента для вашей статьи';
+            articleContentBlocks.appendChild(emptyMessage);
+            
+            // Загружаем авторов
+            loadAuthors();
+        }
+        
+        // Функция для загрузки авторов из базы данных
+        async function loadAuthors() {
+            try {
+                const response = await fetch('/api/db/architects');
+                const data = await response.json();
+                
+                const authorSelect = document.getElementById('article-author');
+                authorSelect.innerHTML = '<option value="">Выберите автора</option>';
+                
+                if (data.success && data.architects) {
+                    data.architects.forEach(architect => {
+                        const option = document.createElement('option');
+                        option.value = architect.id;
+                        option.textContent = architect.full_name;
+                        authorSelect.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки авторов:', error);
+                showNotification('Ошибка загрузки списка авторов', 'error');
+            }
+        }
+        
+        // Функция для показа уведомлений
+        function showNotification(message, type = 'info') {
+            // Создаем элемент уведомления
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded shadow-lg transition-opacity duration-300 max-w-md ${
+                type === 'error' ? 'bg-red-500 text-white' : 
+                type === 'success' ? 'bg-green-500 text-white' : 
+                'bg-blue-500 text-white'
+            }`;
+            
+            // Создаем содержимое уведомления
+            const messageDiv = document.createElement('div');
+            messageDiv.innerHTML = message;
+            notification.appendChild(messageDiv);
+            
+            // Добавляем на страницу
+            document.body.appendChild(notification);
+            
+            // Удаляем через 6 секунд для успешных операций, 8 для ошибок
+            const timeout = type === 'error' ? 8000 : (type === 'success' ? 6000 : 4000);
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, timeout);
+        }
+        
+        // Функция для загрузки статей из базы данных
+        async function loadArticles() {
+            try {
+                const response = await fetch('/api/db/articles');
+                const data = await response.json();
+                
+                if (data.success && data.articles) {
+                    renderArticlesTable(data.articles);
+                } else {
+                    throw new Error(data.error || 'Ошибка загрузки статей');
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки статей:', error);
+                showArticlesError('Ошибка загрузки статей: ' + error.message);
+            }
+        }
+        
+        // Функция для отрисовки таблицы статей (глобальная версия)
+        function renderArticlesTable(articles) {
+            const tbody = document.getElementById('articles-tbody');
+            
+            if (!articles || articles.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-8 px-4 text-center text-gray">
+                            Статьи не найдены. <a href="#" onclick="loadArticles()" class="text-gold-1 hover:text-gold-2">Обновить</a>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = articles.map(article => {
+                const authorName = article.architects && article.architects.length > 0 
+                    ? article.architects[0].full_name 
+                    : 'Не указан';
+                
+                const date = article.publication_date 
+                    ? new Date(article.publication_date).toLocaleDateString('ru-RU')
+                    : 'Не указана';
+                
+                // Экранируем название статьи для безопасного использования в onclick
+                const escapedTitle = article.title.replace(/'/g, "\\'").replace(/"/g, '\\"');
+                
+                return `
+                    <tr class="border-b hover:bg-light-gray">
+                        <td class="py-3 px-4">${article.id}</td>
+                        <td class="py-3 px-4">
+                            <a href="article.html?id=${article.id}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                                ${article.title}
+                            </a>
+                        </td>
+                        <td class="py-3 px-4">${article.category || 'Не указана'}</td>
+                        <td class="py-3 px-4">${date}</td>
+                        <td class="py-3 px-4">${authorName}</td>
+                        <td class="py-3 px-4">
+                            <div class="flex space-x-2">
+                                <button class="text-blue-600 hover:text-blue-800" title="Редактировать" onclick="editArticle(${article.id})">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
+                                </button>
+                                <button class="text-red-600 hover:text-red-800" title="Удалить" onclick="deleteArticle(${article.id}, '${escapedTitle}')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        // Функция для показа ошибки загрузки статей (глобальная версия)
+        function showArticlesError(message) {
+            const tbody = document.getElementById('articles-tbody');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="py-8 px-4 text-center">
+                        <div class="text-red-500 mb-2">⚠️ ${message}</div>
+                        <button onclick="loadArticles()" class="bg-gold-1 text-black px-4 py-2 rounded hover:bg-gold-2 transition-colors">
+                            Попробовать снова
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }
+        
+        // Функция для редактирования статьи (глобальная версия)
+        function editArticle(articleId) {
+            showNotification(`Редактирование статьи ID: ${articleId} (функция в разработке)`, 'info');
+        }
+        
+        // Функция для удаления статьи (глобальная версия)
+        async function deleteArticle(articleId, title) {
+            if (confirm(`Вы уверены, что хотите удалить статью "${title}"?\n\nЭто действие нельзя отменить!`)) {
+                try {
+                    // Показываем индикатор загрузки
+                    showNotification('Удаление статьи...', 'info');
+                    
+                    // Отправляем DELETE запрос к API
+                    const response = await fetch(`/api/db/articles/${articleId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        showNotification('Статья успешно удалена!', 'success');
+                        // Обновляем список статей
+                        loadArticles();
+                    } else {
+                        throw new Error(result.error || 'Ошибка удаления статьи');
+                    }
+                    
+                } catch (error) {
+                    console.error('Ошибка удаления статьи:', error);
+                    showNotification('Ошибка удаления статьи: ' + error.message, 'error');
+                }
+            }
+        }
+        
+        // Загружаем статьи и проекты при загрузке страницы
+        loadArticles();
+        loadProjects();
+        
+        // ОБРАБОТЧИКИ ДЛЯ БЛОКОВ КОНТЕНТА ПРОЕКТОВ
+        
+
+        
+        // Добавление текстового блока в проект
+        const addTextBlock = document.getElementById('add-text-block');
+        if (addTextBlock) {
+            addTextBlock.addEventListener('click', function() {
+                const contentBlocks = document.getElementById('content-blocks');
+                const emptyMessage = contentBlocks.querySelector('.text-gray.text-center');
+                if (emptyMessage) {
+                    emptyMessage.remove();
+                }
+                
+                const template = document.getElementById('text-block-template');
+                const clone = template.content.cloneNode(true);
+                const blockElement = clone.querySelector('.content-block');
+                
+                // НЕ устанавливаем data-block-id для новых блоков - они будут созданы заново
+                
+                // Добавляем обработчики для кнопок управления блоком
+                addProjectBlockHandlers(blockElement);
+                
+                contentBlocks.appendChild(clone);
+            });
+        }
+        
+        // Добавление блока изображения в проект
+        const addImageBlock = document.getElementById('add-image-block');
+        if (addImageBlock) {
+            addImageBlock.addEventListener('click', function() {
+                const contentBlocks = document.getElementById('content-blocks');
+                const emptyMessage = contentBlocks.querySelector('.text-gray.text-center');
+                if (emptyMessage) {
+                    emptyMessage.remove();
+                }
+                
+                const template = document.getElementById('image-block-template');
+                const clone = template.content.cloneNode(true);
+                const blockElement = clone.querySelector('.content-block');
+                
+                // Устанавливаем уникальный индекс для изображения
+                const imageUpload = clone.querySelector('.image-upload');
+                if (imageUpload) {
+                    imageUpload.setAttribute('data-image-index', projectImageIndex);
+                    projectImageIndex++;
+                }
+                
+                // НЕ устанавливаем data-block-id для новых блоков - они будут созданы заново
+                
+                // Добавляем обработчики для кнопок управления блоком
+                addProjectBlockHandlers(blockElement);
+                
+                // Добавляем обработчик загрузки изображения
+                addProjectImageUploadHandler(blockElement);
+                
+                contentBlocks.appendChild(clone);
+            });
+        }
+        
+        // Добавление блока с двумя изображениями
+        const addTwoImagesBlock = document.getElementById('add-two-images-block');
+        if (addTwoImagesBlock) {
+            addTwoImagesBlock.addEventListener('click', function() {
+                const contentBlocks = document.getElementById('content-blocks');
+                const emptyMessage = contentBlocks.querySelector('.text-gray.text-center');
+                if (emptyMessage) {
+                    emptyMessage.remove();
+                }
+                
+                const template = document.getElementById('two-images-block-template');
+                const clone = template.content.cloneNode(true);
+                const blockElement = clone.querySelector('.content-block');
+                
+                // Устанавливаем уникальные индексы для изображений
+                const imageUploadLeft = clone.querySelector('.image-upload-left');
+                const imageUploadRight = clone.querySelector('.image-upload-right');
+                if (imageUploadLeft) {
+                    imageUploadLeft.setAttribute('data-image-index', projectImageIndex);
+                    projectImageIndex++;
+                }
+                if (imageUploadRight) {
+                    imageUploadRight.setAttribute('data-image-index', projectImageIndex);
+                    projectImageIndex++;
+                }
+                
+                // НЕ устанавливаем data-block-id для новых блоков - они будут созданы заново
+                
+                // Добавляем обработчики для кнопок управления блоком
+                addProjectBlockHandlers(blockElement);
+                
+                // Добавляем обработчики загрузки изображений
+                addProjectTwoImagesUploadHandler(blockElement);
+                
+                contentBlocks.appendChild(clone);
+                loadArticles    });
+        }
+        
+        // Добавление блока изображение + текст
+        const addImageTextBlock = document.getElementById('add-image-text-block');
+        if (addImageTextBlock) {
+            addImageTextBlock.addEventListener('click', function() {
+                const contentBlocks = document.getElementById('content-blocks');
+                const emptyMessage = contentBlocks.querySelector('.text-gray.text-center');
+                if (emptyMessage) {
+                    emptyMessage.remove();
+                }
+                
+                const template = document.getElementById('image-text-block-template');
+                const clone = template.content.cloneNode(true);
+                const blockElement = clone.querySelector('.content-block');
+                
+                // Устанавливаем уникальный индекс для изображения
+                const imageUpload = clone.querySelector('.image-upload-combo');
+                if (imageUpload) {
+                    imageUpload.setAttribute('data-image-index', projectImageIndex);
+                    projectImageIndex++;
+                }
+                
+                // НЕ устанавливаем data-block-id для новых блоков - они будут созданы заново
+                
+                // Добавляем обработчики для кнопок управления блоком
+                addProjectBlockHandlers(blockElement);
+                
+                // Добавляем обработчик загрузки изображения
+                addProjectComboUploadHandler(blockElement);
+                
+                contentBlocks.appendChild(clone);
+            });
+        }
+        
+        // Добавление блока текст + изображение
+        const addTextImageBlock = document.getElementById('add-text-image-block');
+        if (addTextImageBlock) {
+            addTextImageBlock.addEventListener('click', function() {
+                const contentBlocks = document.getElementById('content-blocks');
+                const emptyMessage = contentBlocks.querySelector('.text-gray.text-center');
+                if (emptyMessage) {
+                    emptyMessage.remove();
+                }
+                
+                const template = document.getElementById('text-image-block-template');
+                const clone = template.content.cloneNode(true);
+                const blockElement = clone.querySelector('.content-block');
+                
+                // Устанавливаем уникальный индекс для изображения
+                const imageUpload = clone.querySelector('.image-upload-combo');
+                if (imageUpload) {
+                    imageUpload.setAttribute('data-image-index', projectImageIndex);
+                    projectImageIndex++;
+                }
+                
+                // НЕ устанавливаем data-block-id для новых блоков - они будут созданы заново
+                
+                // Добавляем обработчики для кнопок управления блоком
+                addProjectBlockHandlers(blockElement);
+                
+                // Добавляем обработчик загрузки изображения
+                addProjectComboUploadHandler(blockElement);
+                
+                contentBlocks.appendChild(clone);
+            });
+        }
+        
+
+        
+        // ОБРАБОТЧИК ДЛЯ ОБЛОЖКИ ПРОЕКТА
+        const coverUploadBtn = document.getElementById('cover-upload-btn');
+        const coverUpload = document.getElementById('cover-upload');
+        const coverPreview = document.getElementById('cover-preview');
+        
+        if (coverUploadBtn && coverUpload) {
+            coverUploadBtn.addEventListener('click', function() {
+                coverUpload.click();
+            });
+            
+            coverUpload.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = coverPreview.querySelector('img');
+                        if (img) {
+                            img.src = e.target.result;
+                            coverPreview.classList.remove('hidden');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        
+        // ОБРАБОТЧИК ОТПРАВКИ ФОРМЫ ПРОЕКТА
+        const projectForm = document.getElementById('project-form');
+        if (projectForm) {
+            projectForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    const formData = new FormData();
+                    
+                    // Собираем основные данные формы
+                    formData.append('title', document.getElementById('project-title').value);
+                    formData.append('type', document.getElementById('project-type').value);
+                    formData.append('description', document.getElementById('project-description').value);
+                    formData.append('area', document.getElementById('project-area').value);
+                    formData.append('location', document.getElementById('project-location').value);
+                    formData.append('year', document.getElementById('project-year').value);
+                    formData.append('status', document.getElementById('project-status').value);
+                    
+                    // Добавляем обложку проекта
+                    if (coverUpload.files[0]) {
+                        formData.append('coverImage', coverUpload.files[0]);
+                    }
+                    
+                    // Собираем блоки контента
+                    const contentBlocks = [];
+                    const blocks = document.querySelectorAll('#content-blocks .content-block');
+                    
+                    blocks.forEach((block, index) => {
+                        const blockType = block.dataset.type;
+                        
+                        if (blockType === 'text') {
+                            const textContent = block.querySelector('.block-content').value;
+                            const blockId = block.getAttribute('data-block-id');
+                            // Всегда добавляем текстовый блок, даже если он пустой
+                            const blockData = {
+                                type: 'text',
+                                content: textContent,
+                                order: index
+                            };
+                            
+                            // Добавляем ID существующего блока если есть
+                            if (blockId) {
+                                blockData.existingBlockId = parseInt(blockId);
+                            }
+                            
+                            contentBlocks.push(blockData);
+                        } else if (blockType === 'image') {
+                            const imageUpload = block.querySelector('.image-upload');
+                            const caption = block.querySelector('.image-caption').value;
+                            const blockId = block.getAttribute('data-block-id');
+                            const existingPath = imageUpload.getAttribute('data-existing-path');
+                            
+                            // Всегда добавляем блок изображения
+                            const blockData = {
+                                type: 'image',
+                                caption: caption,
+                                order: index
+                            };
+                            
+                            // Добавляем ID существующего блока если есть
+                            if (blockId) {
+                                blockData.existingBlockId = parseInt(blockId);
+                            }
+                            
+                            // Добавляем путь к существующему изображению если есть
+                            if (existingPath) {
+                                blockData.existingImagePath = existingPath;
+                            }
+                            
+                            // Добавляем новый файл если он есть
+                            if (imageUpload.files[0]) {
+                                const imageIndex = imageUpload.getAttribute('data-image-index') || index;
+                                formData.append(`blockImage_${imageIndex}`, imageUpload.files[0]);
+                                blockData.imageIndex = parseInt(imageIndex);
+                            }
+                            
+                            contentBlocks.push(blockData);
+                        } else if (blockType === 'two-images') {
+                            const imageUploadLeft = block.querySelector('.image-upload-left');
+                            const imageUploadRight = block.querySelector('.image-upload-right');
+                            const captionLeft = block.querySelector('.image-caption-left').value;
+                            const captionRight = block.querySelector('.image-caption-right').value;
+                            const blockId = block.getAttribute('data-block-id');
+                            const existingPathLeft = imageUploadLeft.getAttribute('data-existing-path');
+                            const existingPathRight = imageUploadRight.getAttribute('data-existing-path');
+                            
+                            // Всегда добавляем блок two-images, даже если нет новых файлов
+                            const blockData = {
+                                type: 'two_images',
+                                order: index,
+                                captionLeft: captionLeft,
+                                captionRight: captionRight
+                            };
+                            
+                            // Добавляем ID существующего блока если есть
+                            if (blockId) {
+                                blockData.existingBlockId = parseInt(blockId);
+                            }
+                            
+                            // Добавляем пути к существующим изображениям если есть
+                            if (existingPathLeft) {
+                                blockData.existingImagePathLeft = existingPathLeft;
+                            }
+                            if (existingPathRight) {
+                                blockData.existingImagePathRight = existingPathRight;
+                            }
+                            
+                            // Добавляем новые файлы если они есть
+                            if (imageUploadLeft.files[0]) {
+                                const imageIndexLeft = imageUploadLeft.getAttribute('data-image-index') || `${index}_left`;
+                                formData.append(`blockImage_${imageIndexLeft}`, imageUploadLeft.files[0]);
+                                blockData.imageIndexLeft = imageIndexLeft;
+                            }
+                            
+                            if (imageUploadRight.files[0]) {
+                                const imageIndexRight = imageUploadRight.getAttribute('data-image-index') || `${index}_right`;
+                                formData.append(`blockImage_${imageIndexRight}`, imageUploadRight.files[0]);
+                                blockData.imageIndexRight = imageIndexRight;
+                            }
+                            
+                            contentBlocks.push(blockData);
+                        } else if (blockType === 'image-text' || blockType === 'text-image') {
+                            const imageUpload = block.querySelector('.image-upload-combo');
+                            const caption = block.querySelector('.image-caption-combo').value;
+                            const textContent = block.querySelector('.combo-text').value;
+                            const blockId = block.getAttribute('data-block-id');
+                            const existingPath = imageUpload.getAttribute('data-existing-path');
+                            
+                            // Всегда добавляем комбинированный блок
+                            const blockData = {
+                                type: blockType.replace('-', '_'), // Заменяем дефис на подчеркивание
+                                content: textContent,
+                                order: index,
+                                caption: caption
+                            };
+                            
+                            // Добавляем ID существующего блока если есть
+                            if (blockId) {
+                                blockData.existingBlockId = parseInt(blockId);
+                            }
+                            
+                            // Добавляем путь к существующему изображению если есть
+                            if (existingPath) {
+                                blockData.existingImagePath = existingPath;
+                            }
+                            
+                            // Добавляем новый файл если он есть
+                            if (imageUpload.files[0]) {
+                                const imageIndex = imageUpload.getAttribute('data-image-index') || index;
+                                formData.append(`blockImage_${imageIndex}`, imageUpload.files[0]);
+                                blockData.imageIndex = parseInt(imageIndex);
+                            }
+                            
+                            contentBlocks.push(blockData);
+                        }
+                    });
+                    
+                    // Добавляем блоки контента в formData
+                    formData.append('contentBlocks', JSON.stringify(contentBlocks));
+                    
+                    console.log('Отправляю данные проекта:', {
+                        title: document.getElementById('project-title').value,
+                        type: document.getElementById('project-type').value,
+                        contentBlocks: contentBlocks,
+                        isEditMode: isEditMode,
+                        editingProjectId: editingProjectId
+                    });
+                    
+                    // Определяем URL и метод в зависимости от режима
+                    const url = isEditMode ? `/api/db/projects/${editingProjectId}` : '/api/db/projects';
+                    const method = isEditMode ? 'PUT' : 'POST';
+                    
+                    // Отправляем запрос
+                    const response = await fetch(url, {
+                        method: method,
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        const message = isEditMode ? 'Проект успешно обновлен!' : 'Проект успешно создан!';
+                        showNotification(message, 'success');
+                        closeProjectModal();
+                        // Обновляем список проектов
+                        loadProjects();
+                    } else {
+                        const errorMessage = isEditMode ? 'Ошибка обновления проекта' : 'Ошибка создания проекта';
+                        throw new Error(result.error || errorMessage);
+                    }
+                    
+                } catch (error) {
+                    console.error('Ошибка создания проекта:', error);
+                    showNotification('Ошибка создания проекта: ' + error.message, 'error');
+                }
+            });
+        }
+        
+        // ДОБАВЛЯЮ ОБРАБОТЧИКИ ДЛЯ МОДАЛЬНОГО ОКНА СТАТЕЙ
+        addArticleBtn.addEventListener('click', openArticleModal);
+        closeArticleModalBtn.addEventListener('click', closeArticleModal);
+        cancelArticleBtn.addEventListener('click', closeArticleModal);
+        
+        // Закрытие модального окна статей при клике вне его
+        articleModal.addEventListener('click', function(e) {
+            if (e.target === articleModal) {
+                closeArticleModal();
+            }
+        });
+        
+        function closeArticleModal() {
+            articleModal.classList.add('hidden');
+        }
+        
+        // ОБРАБОТЧИКИ ДЛЯ БЛОКОВ КОНТЕНТА СТАТЕЙ
+        
+        // Переменная для отслеживания индекса изображений
+        let articleImageIndex = 0;
+        
+        // Добавление текстового блока в статью
+        const addArticleTextBlock = document.getElementById('add-article-text-block');
+        if (addArticleTextBlock) {
+            addArticleTextBlock.addEventListener('click', function() {
+                const contentBlocks = document.getElementById('article-content-blocks');
+                const emptyMessage = contentBlocks.querySelector('.text-gray.text-center');
+                if (emptyMessage) {
+                    emptyMessage.remove();
+                }
+                
+                const template = document.getElementById('article-text-block-template');
+                const clone = template.content.cloneNode(true);
+                
+                // Добавляем обработчики для кнопок управления блоком
+                addArticleBlockHandlers(clone);
+                
+                contentBlocks.appendChild(clone);
+            });
+        }
+        
+        // Добавление блока изображения в статью
+        const addArticleImageBlock = document.getElementById('add-article-image-block');
+        if (addArticleImageBlock) {
+            addArticleImageBlock.addEventListener('click', function() {
+                const contentBlocks = document.getElementById('article-content-blocks');
+                const emptyMessage = contentBlocks.querySelector('.text-gray.text-center');
+                if (emptyMessage) {
+                    emptyMessage.remove();
+                }
+                
+                const template = document.getElementById('article-image-block-template');
+                const clone = template.content.cloneNode(true);
+                
+                // Устанавливаем уникальный индекс для изображения
+                const imageUpload = clone.querySelector('.image-upload');
+                if (imageUpload) {
+                    imageUpload.setAttribute('data-image-index', articleImageIndex);
+                    articleImageIndex++;
+                }
+                
+                // Добавляем обработчики для кнопок управления блоком
+                addArticleBlockHandlers(clone);
+                
+                // Добавляем обработчик загрузки изображения
+                addArticleImageUploadHandler(clone);
+                
+                contentBlocks.appendChild(clone);
+            });
+        }
+        
+        // Функция для добавления обработчиков кнопок управления блоком статьи
+        function addArticleBlockHandlers(blockElement) {
+            // Удаление блока
+            const deleteBtn = blockElement.querySelector('.delete-block');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', function() {
+                    if (confirm('Удалить этот блок?')) {
+                        this.closest('.content-block').remove();
+                        
+                        // Если удалили все блоки, показываем сообщение
+                        const contentBlocks = document.getElementById('article-content-blocks');
+                        if (contentBlocks.children.length === 0) {
+                            const emptyMessage = document.createElement('div');
+                            emptyMessage.className = 'text-gray text-center py-8';
+                            emptyMessage.textContent = 'Добавьте блоки контента для вашей статьи';
+                            contentBlocks.appendChild(emptyMessage);
+                        }
+                    }
+                });
+            }
+            
+            // Перемещение блока вверх
+            const moveUpBtn = blockElement.querySelector('.move-block-up');
+            if (moveUpBtn) {
+                moveUpBtn.addEventListener('click', function() {
+                    const currentBlock = this.closest('.content-block');
+                    const previousBlock = currentBlock.previousElementSibling;
+                    if (previousBlock && previousBlock.classList.contains('content-block')) {
+                        currentBlock.parentNode.insertBefore(currentBlock, previousBlock);
+                    }
+                });
+            }
+            
+            // Перемещение блока вниз
+            const moveDownBtn = blockElement.querySelector('.move-block-down');
+            if (moveDownBtn) {
+                moveDownBtn.addEventListener('click', function() {
+                    const currentBlock = this.closest('.content-block');
+                    const nextBlock = currentBlock.nextElementSibling;
+                    if (nextBlock && nextBlock.classList.contains('content-block')) {
+                        currentBlock.parentNode.insertBefore(nextBlock, currentBlock);
+                    }
+                });
+            }
+        }
+        
+        // Функция для добавления обработчика загрузки изображения в блок статьи
+        function addArticleImageUploadHandler(blockElement) {
+            const uploadBtn = blockElement.querySelector('.image-upload-btn');
+            const uploadInput = blockElement.querySelector('.image-upload');
+            const placeholder = blockElement.querySelector('.image-placeholder');
+            const preview = blockElement.querySelector('.image-preview');
+            const removeBtn = blockElement.querySelector('.remove-image');
+            
+            if (uploadBtn && uploadInput) {
+                uploadBtn.addEventListener('click', function() {
+                    uploadInput.click();
+                });
+                
+                uploadInput.addEventListener('change', function() {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const img = preview.querySelector('img');
+                            if (img) {
+                                img.src = e.target.result;
+                                placeholder.classList.add('hidden');
+                                preview.classList.remove('hidden');
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+            
+            if (removeBtn) {
+                removeBtn.addEventListener('click', function() {
+                    uploadInput.value = '';
+                    const img = preview.querySelector('img');
+                    if (img) {
+                        img.src = '';
+                    }
+                    preview.classList.add('hidden');
+                    placeholder.classList.remove('hidden');
+                });
+            }
+        }
+        
+        // ОБРАБОТЧИК ДЛЯ ГЛАВНОГО ИЗОБРАЖЕНИЯ СТАТЬИ
+        const mainImageUploadBtn = document.getElementById('main-image-upload-btn');
+        const mainImageUpload = document.getElementById('main-image-upload');
+        const mainImagePlaceholder = document.getElementById('main-image-placeholder');
+        const mainImagePreview = document.getElementById('main-image-preview');
+        const removeMainImage = document.getElementById('remove-main-image');
+        
+        if (mainImageUploadBtn && mainImageUpload) {
+            mainImageUploadBtn.addEventListener('click', function() {
+                mainImageUpload.click();
+            });
+            
+            mainImageUpload.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = mainImagePreview.querySelector('img');
+                        if (img) {
+                            img.src = e.target.result;
+                            mainImagePlaceholder.classList.add('hidden');
+                            mainImagePreview.classList.remove('hidden');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        
+        if (removeMainImage) {
+            removeMainImage.addEventListener('click', function() {
+                mainImageUpload.value = '';
+                const img = mainImagePreview.querySelector('img');
+                if (img) {
+                    img.src = '';
+                }
+                mainImagePreview.classList.add('hidden');
+                mainImagePlaceholder.classList.remove('hidden');
+            });
+        }
+        
+        // ОБРАБОТЧИК ОТПРАВКИ ФОРМЫ СТАТЬИ
+        const articleForm = document.querySelector('#article-modal form');
+        if (articleForm) {
+            articleForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    const formData = new FormData();
+                    
+                    // Собираем основные данные формы
+                    formData.append('title', document.getElementById('article-title').value);
+                    formData.append('category', document.getElementById('article-category').value);
+                    formData.append('publicationDate', document.getElementById('article-date').value);
+                    formData.append('authorId', document.getElementById('article-author').value);
+                    formData.append('shortDescription', document.getElementById('article-short').value);
+                    
+                    // Добавляем главное изображение
+                    if (mainImageUpload.files[0]) {
+                        formData.append('mainImage', mainImageUpload.files[0]);
+                    }
+                    
+                    // Собираем блоки контента
+                    const contentBlocks = [];
+                    const blocks = document.querySelectorAll('#article-content-blocks .content-block');
+                    
+                    blocks.forEach((block, index) => {
+                        const blockType = block.dataset.type;
+                        
+                        if (blockType === 'text') {
+                            const textContent = block.querySelector('.block-content').value;
+                            if (textContent.trim()) {
+                                contentBlocks.push({
+                                    type: 'text',
+                                    content: textContent,
+                                    order: index
+                                });
+                            }
+                        } else if (blockType === 'image') {
+                            const imageUpload = block.querySelector('.image-upload');
+                            const caption = block.querySelector('.image-caption').value;
+                            
+                            if (imageUpload.files[0]) {
+                                const imageIndex = imageUpload.getAttribute('data-image-index') || index;
+                                formData.append(`blockImage_${imageIndex}`, imageUpload.files[0]);
+                                
+                                contentBlocks.push({
+                                    type: 'image',
+                                    caption: caption,
+                                    imageIndex: parseInt(imageIndex),
+                                    order: index
+                                });
+                            }
+                        }
+                    });
+                    
+                    // Добавляем блоки контента в формData
+                    formData.append('contentBlocks', JSON.stringify(contentBlocks));
+                    
+                    console.log('Отправляю данные статьи:', {
+                        title: document.getElementById('article-title').value,
+                        category: document.getElementById('article-category').value,
+                        contentBlocks: contentBlocks
+                    });
+                    
+                    // Отправляем запрос
+                    const response = await fetch('/api/db/articles', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        showNotification('Статья успешно создана!', 'success');
+                        closeArticleModal();
+                        loadArticles(); // Обновляем список статей
+                    } else {
+                        throw new Error(result.error || 'Ошибка создания статьи');
+                    }
+                    
+                } catch (error) {
+                    console.error('Ошибка создания статьи:', error);
+                    showNotification('Ошибка создания статьи: ' + error.message, 'error');
+                }
+            });
+        }
+    });
+    
+    // ГЛОБАЛЬНЫЕ ФУНКЦИИ (доступны из HTML onclick)
+    
+    // Функция для показа уведомлений (глобальная версия)
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 z-50 p-4 rounded shadow-lg transition-opacity duration-300 max-w-md ${
+            type === 'error' ? 'bg-red-500 text-white' : 
+            type === 'success' ? 'bg-green-500 text-white' : 
+            'bg-blue-500 text-white'
+        }`;
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.innerHTML = message;
+        notification.appendChild(messageDiv);
+        
+        document.body.appendChild(notification);
+        
+        const timeout = type === 'error' ? 8000 : (type === 'success' ? 6000 : 4000);
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 300);
+        }, timeout);
+    }
+    
+    // Функция для загрузки статей из базы данных (глобальная версия)
+    async function loadArticles() {
+        try {
+            const response = await fetch('/api/db/articles');
+            const data = await response.json();
+            
+            if (data.success && data.articles) {
+                renderArticlesTable(data.articles);
+            } else {
+                throw new Error(data.error || 'Ошибка загрузки статей');
+            }
+        } catch (error) {
+            console.error('Ошибка загрузки статей:', error);
+            showArticlesError('Ошибка загрузки статей: ' + error.message);
+        }
+    }
+    
+    // Функция для отрисовки таблицы статей (глобальная версия)
+    function renderArticlesTable(articles) {
+        const tbody = document.getElementById('articles-tbody');
+        
+        if (!articles || articles.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="py-8 px-4 text-center text-gray">
+                        Статьи не найдены. <a href="#" onclick="loadArticles()" class="text-gold-1 hover:text-gold-2">Обновить</a>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+        
+        tbody.innerHTML = articles.map(article => {
+            const authorName = article.architects && article.architects.length > 0 
+                ? article.architects[0].full_name 
+                : 'Не указан';
+            
+            const date = article.publication_date 
+                ? new Date(article.publication_date).toLocaleDateString('ru-RU')
+                : 'Не указана';
+            
+            // Экранируем название статьи для безопасного использования в onclick
+            const escapedTitle = article.title.replace(/'/g, "\\'").replace(/"/g, '\\"');
+            
+            return `
+                <tr class="border-b hover:bg-light-gray">
+                    <td class="py-3 px-4">${article.id}</td>
+                    <td class="py-3 px-4">
+                        <a href="article.html?id=${article.id}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                            ${article.title}
+                        </a>
+                    </td>
+                    <td class="py-3 px-4">${article.category || 'Не указана'}</td>
+                    <td class="py-3 px-4">${date}</td>
+                    <td class="py-3 px-4">${authorName}</td>
+                    <td class="py-3 px-4">
+                        <div class="flex space-x-2">
+                            <button class="text-blue-600 hover:text-blue-800" title="Редактировать" onclick="editArticle(${article.id})">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                            </button>
+                            <button class="text-red-600 hover:text-red-800" title="Удалить" onclick="deleteArticle(${article.id}, '${escapedTitle}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+    
+    // Функция для показа ошибки загрузки статей (глобальная версия)
+    function showArticlesError(message) {
+        const tbody = document.getElementById('articles-tbody');
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6" class="py-8 px-4 text-center">
+                    <div class="text-red-500 mb-2">⚠️ ${message}</div>
+                    <button onclick="loadArticles()" class="bg-gold-1 text-black px-4 py-2 rounded hover:bg-gold-2 transition-colors">
+                        Попробовать снова
+                    </button>
+                </td>
+            </tr>
+        `;
+    }
+    
+    // Функция для редактирования статьи (глобальная версия)
+    function editArticle(articleId) {
+        showNotification(`Редактирование статьи ID: ${articleId} (функция в разработке)`, 'info');
+    }
+    
+    // Функция для удаления статьи (глобальная версия)
+    async function deleteArticle(articleId, title) {
+        if (confirm(`Вы уверены, что хотите удалить статью "${title}"?\n\nЭто действие нельзя отменить!`)) {
+            try {
+                // Показываем индикатор загрузки
+                showNotification('Удаление статьи...', 'info');
+                
+                // Отправляем DELETE запрос к API
+                const response = await fetch(`/api/db/articles/${articleId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification('Статья успешно удалена!', 'success');
+                    // Обновляем список статей
+                    loadArticles();
+                } else {
+                    throw new Error(result.error || 'Ошибка удаления статьи');
+                }
+                
+            } catch (error) {
+                console.error('Ошибка удаления статьи:', error);
+                showNotification('Ошибка удаления статьи: ' + error.message, 'error');
+            }
+        }
+    }
+    
+    // Функция для загрузки проектов из базы данных (глобальная версия)
+    async function loadProjects() {
+        try {
+            const response = await fetch('/api/db/projects');
+            const data = await response.json();
+            
+            if (data.success && data.projects) {
+                renderProjectsTable(data.projects);
+            } else {
+                throw new Error(data.error || 'Ошибка загрузки проектов');
+            }
+        } catch (error) {
+            console.error('Ошибка загрузки проектов:', error);
+            showProjectsError('Ошибка загрузки проектов: ' + error.message);
+        }
+    }
+    
+    // Функция для отрисовки таблицы проектов (глобальная версия)
+    function renderProjectsTable(projects) {
+        const tbody = document.getElementById('projects-tbody');
+        
+        if (!projects || projects.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="py-8 px-4 text-center text-gray">
+                        Проекты не найдены. <a href="#" onclick="loadProjects()" class="text-gold-1 hover:text-gold-2">Обновить</a>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+        
+        tbody.innerHTML = projects.map(project => {
+            // Получаем название типа проекта
+            const projectTypeName = getProjectTypeName(project.project_type);
+            
+            // Форматируем год
+            const year = project.year_completed || 'Не указан';
+            
+            // Форматируем статус
+            const statusText = project.status === 'published' ? 'Опубликован' : 'Черновик';
+            const statusClass = project.status === 'published' ? 'text-green-600' : 'text-yellow-600';
+            
+            // Экранируем название проекта для безопасного использования в onclick
+            const escapedTitle = project.title.replace(/'/g, "\\'").replace(/"/g, '\\"');
+            
+            return `
+                <tr class="border-b hover:bg-light-gray">
+                    <td class="py-3 px-4">${project.id}</td>
+                    <td class="py-3 px-4">
+                        <a href="project.html?id=${project.id}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                            ${project.title}
+                        </a>
+                    </td>
+                    <td class="py-3 px-4">${projectTypeName}</td>
+                    <td class="py-3 px-4">${year}</td>
+                    <td class="py-3 px-4 ${statusClass}">${statusText}</td>
+                    <td class="py-3 px-4">
+                        <div class="flex space-x-2">
+                            <button class="text-blue-600 hover:text-blue-800" title="Редактировать" onclick="editProject(${project.id})">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                            </button>
+                            <button class="text-red-600 hover:text-red-800" title="Удалить" onclick="deleteProject(${project.id}, '${escapedTitle}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+    
+    // Функция для показа ошибки загрузки проектов (глобальная версия)
+    function showProjectsError(message) {
+        const tbody = document.getElementById('projects-tbody');
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6" class="py-8 px-4 text-center">
+                    <div class="text-red-500 mb-2">⚠️ ${message}</div>
+                    <button onclick="loadProjects()" class="bg-gold-1 text-black px-4 py-2 rounded hover:bg-gold-2 transition-colors">
+                        Попробовать снова
+                    </button>
+                </td>
+            </tr>
+        `;
+    }
+    
+    // Функция получения названия типа проекта (глобальная версия)
+    function getProjectTypeName(type) {
+        const types = {
+            'residential': 'Жилые интерьеры',
+            'country': 'Загородные дома',
+            'office': 'Офисные интерьеры'
+        };
+        return types[type] || 'Не указан';
+    }
+    
+    // Глобальная функция для удаления блока контента
+    function removeBlock(button) {
+        const block = button.closest('.project-content-block');
+        if (block) {
+            block.remove();
+            // Проверяем, нужно ли показать пустое сообщение
+            const contentContainer = document.getElementById('content-blocks');
+            if (contentContainer && contentContainer.children.length === 0) {
+                const emptyMessage = document.createElement('div');
+                emptyMessage.className = 'text-gray text-center py-8';
+                emptyMessage.textContent = 'Добавьте блоки контента для вашего проекта';
+                contentContainer.appendChild(emptyMessage);
+            }
+        }
+    }
+    
+    // Функция для редактирования проекта (глобальная версия)
+    async function editProject(projectId) {
+        try {
+            showNotification('Загрузка данных проекта...', 'info');
+            
+            // Загружаем данные проекта
+            const response = await fetch(`/api/db/projects/${projectId}`);
+            const data = await response.json();
+            
+            if (!data.success) {
+                throw new Error(data.error || 'Ошибка загрузки проекта');
+            }
+            
+            const project = data.project;
+            console.log('Загружен проект для редактирования:', project);
+            
+            // Переходим в режим редактирования
+            isEditMode = true;
+            editingProjectId = projectId;
+            
+            // Открываем модальное окно проекта
+            openProjectModal(project);
+            
+        } catch (error) {
+            console.error('Ошибка загрузки проекта:', error);
+            showNotification('Ошибка загрузки проекта: ' + error.message, 'error');
+        }
+    }
+    
+    // Функция для удаления проекта (глобальная версия)
+    async function deleteProject(projectId, title) {
+        if (confirm(`Вы уверены, что хотите удалить проект "${title}"?\n\nЭто действие нельзя отменить!`)) {
+            try {
+                // Показываем индикатор загрузки
+                showNotification('Удаление проекта...', 'info');
+                
+                // Отправляем DELETE запрос к API
+                const response = await fetch(`/api/db/projects/${projectId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification('Проект успешно удален!', 'success');
+                    // Обновляем список проектов
+                    loadProjects();
+                } else {
+                    throw new Error(result.error || 'Ошибка удаления проекта');
+                }
+                
+            } catch (error) {
+                console.error('Ошибка удаления проекта:', error);
+                showNotification('Ошибка удаления проекта: ' + error.message, 'error');
+            }
+        }
+    }
+    
+    // Функция проверки авторизации
+    async function checkAuthentication() {
+        try {
+            const response = await fetch('/api/admin/check-session', {
+                method: 'GET',
+                credentials: 'include'
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.authenticated) {
+                    // Обновляем имя администратора в шапке
+                    const adminNameElement = document.getElementById('admin-name');
+                    if (adminNameElement && data.admin) {
+                        adminNameElement.textContent = data.admin.full_name || data.admin.username;
+                    }
+                    return true;
+                } else {
+                    // Не авторизован, перенаправляем на страницу входа  
+                    window.location.href = '/admin/login';
+                    return false;
+                }
+            } else {
+                // Ошибка проверки, перенаправляем на страницу входа
+                window.location.href = '/admin/login';
+                return false;
+            }
+        } catch (error) {
+            console.error('Ошибка проверки авторизации:', error);
+            // В случае ошибки перенаправляем на страницу входа
+            window.location.href = '/admin/login';
+            return false;
+        }
+    }
+    
+    // Функция выхода из системы
+    async function handleLogout() {
+        if (confirm('Вы уверены, что хотите выйти из системы?')) {
+            try {
+                const response = await fetch('/api/admin/logout', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Успешный выход, перенаправляем на страницу входа
+                    window.location.href = '/admin/login';
+                } else {
+                    // Ошибка выхода, но все равно перенаправляем
+                    console.error('Ошибка при выходе из системы');
+                    window.location.href = '/admin/login';
+                }
+            } catch (error) {
+                console.error('Ошибка выхода:', error);
+                // В случае ошибки все равно перенаправляем
+                window.location.href = '/admin/login';
+            }
+        }
+    }
+
+    // Обработчики для модального окна управления статьями (контент)
+    const articleContentModal = document.getElementById('article-content-modal');
+    const addArticleContentBtn = document.getElementById('add-article-content-btn');
+    const closeArticleContentModal = document.getElementById('close-article-content-modal');
+    const cancelArticleContentBtn = document.getElementById('cancel-article-content-btn');
+
+    // Открытие модального окна
+    addArticleContentBtn.addEventListener('click', () => {
+        articleContentModal.classList.remove('hidden');
+    });
+
+    // Закрытие модального окна
+    const closeArticleContentModalHandler = () => {
+        articleContentModal.classList.add('hidden');
+    };
+
+    closeArticleContentModal.addEventListener('click', closeArticleContentModalHandler);
+    cancelArticleContentBtn.addEventListener('click', closeArticleContentModalHandler);
+
+    // Закрытие при клике вне модального окна
+    articleContentModal.addEventListener('click', (e) => {
+        if (e.target === articleContentModal) {
+            closeArticleContentModalHandler();
+        }
+    });
+
+    // Существующий код
+// ... existing code ...
+
+        // Функции для работы с контент-блоками статей
+        const contentBlocksContainer = document.getElementById('article-content-blocks-container');
+        const addTextBlockBtn = document.getElementById('add-article-content-text-block');
+        const addImageBlockBtn = document.getElementById('add-article-content-image-block');
+        let blockCounter = 0;
+
+        // Добавление текстового блока
+        addTextBlockBtn.addEventListener('click', () => {
+            const blockId = `content-block-${blockCounter++}`;
+            const textBlock = document.createElement('div');
+            textBlock.className = 'mb-4 p-4 border border-gray rounded';
+            textBlock.setAttribute('draggable', 'true');
+            textBlock.id = blockId;
+            
+            textBlock.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-2">
+                        <div class="flex flex-col">
+                            <button type="button" class="text-gray hover:text-dark-gray move-up-btn" title="Переместить вверх">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            <button type="button" class="text-gray hover:text-dark-gray move-down-btn" title="Переместить вниз">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="text-sm font-medium">Текстовый блок</span>
+                    </div>
+                    <button type="button" class="text-red-600 hover:text-red-800" onclick="removeBlock('${blockId}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+                <textarea class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1" rows="4"></textarea>
+            `;
+            
+            // Удаляем placeholder если это первый блок
+            if (contentBlocksContainer.querySelector('.text-gray.text-center')) {
+                contentBlocksContainer.innerHTML = '';
+            }
+            
+            contentBlocksContainer.appendChild(textBlock);
+            setupDragAndDrop(textBlock);
+            setupMoveButtons(textBlock);
+        });
+
+        // Добавление блока с изображением
+        addImageBlockBtn.addEventListener('click', () => {
+            const blockId = `content-block-${blockCounter++}`;
+            const imageBlock = document.createElement('div');
+            imageBlock.className = 'mb-4 p-4 border border-gray rounded';
+            imageBlock.setAttribute('draggable', 'true');
+            imageBlock.id = blockId;
+            
+            imageBlock.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-2">
+                        <div class="flex flex-col">
+                            <button type="button" class="text-gray hover:text-dark-gray move-up-btn" title="Переместить вверх">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            <button type="button" class="text-gray hover:text-dark-gray move-down-btn" title="Переместить вниз">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="text-sm font-medium">Блок изображения</span>
+                    </div>
+                    <button type="button" class="text-red-600 hover:text-red-800" onclick="removeBlock('${blockId}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="border-2 border-dashed border-gray p-4 rounded-lg text-center">
+                    <div class="mb-2 image-placeholder">
+                        <svg class="mx-auto h-12 w-12 text-gray" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <p class="text-sm text-gray mb-1">Перетащите файл сюда или</p>
+                        <button type="button" class="text-blue-600 hover:text-blue-800 font-medium upload-image-btn">
+                            выберите файл
+                        </button>
+                    </div>
+                    <div class="image-preview hidden">
+                        <img src="" alt="Предпросмотр изображения" class="max-h-40 mx-auto mb-2">
+                        <button type="button" class="text-red-600 hover:text-red-800 text-sm remove-image-btn">
+                            Удалить изображение
+                        </button>
+                    </div>
+                    <input type="file" class="hidden image-upload" accept="image/*">
+                </div>
+            `;
+            
+            // Удаляем placeholder если это первый блок
+            if (contentBlocksContainer.querySelector('.text-gray.text-center')) {
+                contentBlocksContainer.innerHTML = '';
+            }
+            
+            contentBlocksContainer.appendChild(imageBlock);
+            setupDragAndDrop(imageBlock);
+            setupImageUpload(imageBlock);
+            setupMoveButtons(imageBlock);
+        });
+
+        // Функция настройки кнопок перемещения
+        function setupMoveButtons(block) {
+            const upBtn = block.querySelector('.move-up-btn');
+            const downBtn = block.querySelector('.move-down-btn');
+
+            upBtn.addEventListener('click', () => {
+                const prevBlock = block.previousElementSibling;
+                if (prevBlock) {
+                    contentBlocksContainer.insertBefore(block, prevBlock);
+                }
+            });
+
+            downBtn.addEventListener('click', () => {
+                const nextBlock = block.nextElementSibling;
+                if (nextBlock) {
+                    contentBlocksContainer.insertBefore(nextBlock, block);
+                }
+            });
+        }
+
+        // Функция удаления блока
+        window.removeBlock = (blockId) => {
+            const block = document.getElementById(blockId);
+            block.remove();
+            
+            // Если блоков больше нет, показываем placeholder
+            if (contentBlocksContainer.children.length === 0) {
+                contentBlocksContainer.innerHTML = '<div class="text-gray text-center py-8">Добавьте блоки контента для вашей статьи</div>';
+            }
+        };
+
+        // Настройка drag and drop для блоков
+        function setupDragAndDrop(block) {
+            block.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', block.id);
+                block.classList.add('opacity-50');
+            });
+
+            block.addEventListener('dragend', () => {
+                block.classList.remove('opacity-50');
+            });
+
+            contentBlocksContainer.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                const draggingBlock = document.querySelector('.opacity-50');
+                const closestBlock = getClosestBlock(e.clientY);
+                
+                if (closestBlock && draggingBlock !== closestBlock) {
+                    const rect = closestBlock.getBoundingClientRect();
+                    const middle = rect.top + rect.height / 2;
+                    
+                    if (e.clientY < middle) {
+                        contentBlocksContainer.insertBefore(draggingBlock, closestBlock);
+                    } else {
+                        contentBlocksContainer.insertBefore(draggingBlock, closestBlock.nextSibling);
+                    }
+                }
+            });
+        }
+
+        // Получение ближайшего блока по Y-координате
+        function getClosestBlock(y) {
+            const blocks = [...contentBlocksContainer.children];
+            return blocks.reduce((closest, block) => {
+                const rect = block.getBoundingClientRect();
+                const distance = Math.abs(rect.top + rect.height / 2 - y);
+                
+                if (!closest || distance < closest.distance) {
+                    return { element: block, distance };
+                }
+                return closest;
+            }, null)?.element;
+        }
+
+        // Настройка загрузки изображений для блоков
+        function setupImageUpload(block) {
+            const uploadBtn = block.querySelector('.upload-image-btn');
+            const fileInput = block.querySelector('.image-upload');
+            const preview = block.querySelector('.image-preview');
+            const placeholder = block.querySelector('.image-placeholder');
+            const previewImg = preview.querySelector('img');
+            const removeBtn = block.querySelector('.remove-image-btn');
+
+            uploadBtn.addEventListener('click', () => fileInput.click());
+
+            fileInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImg.src = e.target.result;
+                        placeholder.classList.add('hidden');
+                        preview.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+
+            removeBtn.addEventListener('click', () => {
+                fileInput.value = '';
+                previewImg.src = '';
+                preview.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+            });
+
+            // Drag and drop для изображений
+            block.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                block.classList.add('border-blue-500');
+            });
+
+            block.addEventListener('dragleave', () => {
+                block.classList.remove('border-blue-500');
+            });
+
+            block.addEventListener('drop', (e) => {
+                e.preventDefault();
+                block.classList.remove('border-blue-500');
+
+                const files = e.dataTransfer.files;
+                if (files && files[0]) {
+                    fileInput.files = files;
+                    const event = new Event('change');
+                    fileInput.dispatchEvent(event);
+                }
+            });
+        }
+
+        // Настройка загрузки главного изображения статьи
+        const mainImageUploadBtn = document.getElementById('main-image-content-upload-btn');
+        const mainImageInput = document.getElementById('main-image-content-upload');
+        const mainImagePreview = document.getElementById('main-image-content-preview');
+        const mainImagePlaceholder = document.getElementById('main-image-content-placeholder');
+        const mainImagePreviewImg = mainImagePreview.querySelector('img');
+        const removeMainImageBtn = document.getElementById('remove-main-image-content');
+
+        mainImageUploadBtn.addEventListener('click', () => mainImageInput.click());
+
+        mainImageInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    mainImagePreviewImg.src = e.target.result;
+                    mainImagePlaceholder.classList.add('hidden');
+                    mainImagePreview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        removeMainImageBtn.addEventListener('click', () => {
+            mainImageInput.value = '';
+            mainImagePreviewImg.src = '';
+            mainImagePreview.classList.add('hidden');
+            mainImagePlaceholder.classList.remove('hidden');
+        });
+
+        // Drag and drop для главного изображения
+        const mainImageContainer = mainImageInput.parentElement;
+        
+        mainImageContainer.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            mainImageContainer.classList.add('border-blue-500');
+        });
+
+        mainImageContainer.addEventListener('dragleave', () => {
+            mainImageContainer.classList.remove('border-blue-500');
+        });
+
+        mainImageContainer.addEventListener('drop', (e) => {
+            e.preventDefault();
+            mainImageContainer.classList.remove('border-blue-500');
+
+            const files = e.dataTransfer.files;
+            if (files && files[0]) {
+                mainImageInput.files = files;
+                const event = new Event('change');
+                mainImageInput.dispatchEvent(event);
+            }
+        });
+    </script>
+</body>
+</html> 

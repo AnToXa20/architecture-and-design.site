@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест загрузки авторов</title>
+</head>
+<body>
+    <h1>Тест загрузки авторов</h1>
+    <button id="loadAuthors">Загрузить авторов</button>
+    <div id="result"></div>
+    <div id="log"></div>
+
+    <script>
+        document.getElementById('loadAuthors').addEventListener('click', async function() {
+            const resultDiv = document.getElementById('result');
+            const logDiv = document.getElementById('log');
+            
+            try {
+                logDiv.innerHTML += '<p>Начинаем загрузку авторов...</p>';
+                
+                const response = await fetch('/api/authors');
+                logDiv.innerHTML += `<p>Ответ получен: ${response.status} ${response.statusText}</p>`;
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                logDiv.innerHTML += '<p>Данные получены:</p>';
+                logDiv.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                
+                if (data.success) {
+                    resultDiv.innerHTML = '<h3>Авторы:</h3>';
+                    data.authors.forEach(author => {
+                        resultDiv.innerHTML += `<p>ID: ${author.id}, Имя: ${author.full_name}, Должность: ${author.position}</p>`;
+                    });
+                } else {
+                    resultDiv.innerHTML = '<p style="color: red;">Ошибка: ' + data.error + '</p>';
+                }
+            } catch (error) {
+                logDiv.innerHTML += `<p style="color: red;">Ошибка: ${error.message}</p>`;
+                resultDiv.innerHTML = '<p style="color: red;">Ошибка подключения к серверу</p>';
+            }
+        });
+    </script>
+</body>
+</html> 

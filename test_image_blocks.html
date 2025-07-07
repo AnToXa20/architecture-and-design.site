@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест изображений в блоках</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { margin-top: 20px; padding: 10px; border-radius: 4px; }
+        .image-block { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Тест загрузки изображений в блоки</h1>
+    
+    <form id="testForm" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Название статьи:</label>
+            <input type="text" id="title" name="title" value="Тест изображений блоков" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="category">Категория:</label>
+            <select id="category" name="category" required>
+                <option value="Архитектура">Архитектура</option>
+                <option value="Дизайн">Дизайн</option>
+                <option value="Новости">Новости</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="authorId">ID автора:</label>
+            <input type="number" id="authorId" name="authorId" value="1">
+        </div>
+        
+        <div class="form-group">
+            <label for="shortDescription">Краткое описание:</label>
+            <textarea id="shortDescription" name="shortDescription">Тестируем загрузку изображений в блоки контента.</textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="mainImage">Главное изображение:</label>
+            <input type="file" id="mainImage" name="mainImage" accept="image/*">
+        </div>
+        
+        <h3>Блоки контента:</h3>
+        
+        <div class="image-block">
+            <h4>Текстовый блок:</h4>
+            <textarea id="textContent" placeholder="Введите текст блока">Это первый текстовый блок статьи.</textarea>
+        </div>
+        
+        <div class="image-block">
+            <h4>Блок изображения 1:</h4>
+            <input type="file" id="blockImage1" accept="image/*">
+            <input type="text" id="blockCaption1" placeholder="Подпись к изображению" value="Первое изображение блока">
+        </div>
+        
+        <div class="image-block">
+            <h4>Еще один текстовый блок:</h4>
+            <textarea id="textContent2" placeholder="Введите текст блока">Это второй текстовый блок статьи.</textarea>
+        </div>
+        
+        <div class="image-block">
+            <h4>Блок изображения 2:</h4>
+            <input type="file" id="blockImage2" accept="image/*">
+            <input type="text" id="blockCaption2" placeholder="Подпись к изображению" value="Второе изображение блока">
+        </div>
+        
+        <button type="submit">Создать статью с блоками</button>
+    </form>
+    
+    <div id="result" class="result" style="display: none;"></div>
+    <pre id="responseDetails" style="background: #f4f4f4; padding: 10px; margin-top: 10px; display: none;"></pre>
+
+    <script>
+        document.getElementById('testForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('category', document.getElementById('category').value);
+            formData.append('authorId', document.getElementById('authorId').value);
+            formData.append('shortDescription', document.getElementById('shortDescription').value);
+            formData.append('publicationDate', new Date().toISOString().split('T')[0]);
+            formData.append('status', 'draft');
+            
+            // Главное изображение
+            const mainImageFile = document.getElementById('mainImage').files[0];
+            if (mainImageFile) {
+                formData.append('mainImage', mainImageFile);
+            }
+            
+            // Создаем блоки контента
+            const contentBlocks = [];
+            let imageIndex = 0;
+            
+            // Первый текстовый блок
+            const textContent1 = document.getElementById('textContent').value;
+            if (textContent1.trim()) {
+                contentBlocks.push({
+                    type: 'text',
+                    content: textContent1,
+                    order: 0
+                });
+            }
+            
+            // Первое изображение блока
+            const blockImage1 = document.getElementById('blockImage1').files[0];
+            const blockCaption1 = document.getElementById('blockCaption1').value;
+            if (blockImage1) {
+                contentBlocks.push({
+                    type: 'image',
+                    caption: blockCaption1,
+                    order: 1,
+                    imageIndex: imageIndex
+                });
+                formData.append(`blockImage_${imageIndex}`, blockImage1);
+                imageIndex++;
+            }
+            
+            // Второй текстовый блок
+            const textContent2 = document.getElementById('textContent2').value;
+            if (textContent2.trim()) {
+                contentBlocks.push({
+                    type: 'text',
+                    content: textContent2,
+                    order: 2
+                });
+            }
+            
+            // Второе изображение блока
+            const blockImage2 = document.getElementById('blockImage2').files[0];
+            const blockCaption2 = document.getElementById('blockCaption2').value;
+            if (blockImage2) {
+                contentBlocks.push({
+                    type: 'image',
+                    caption: blockCaption2,
+                    order: 3,
+                    imageIndex: imageIndex
+                });
+                formData.append(`blockImage_${imageIndex}`, blockImage2);
+                imageIndex++;
+            }
+            
+            // Добавляем данные блоков
+            if (contentBlocks.length > 0) {
+                formData.append('contentBlocks', JSON.stringify(contentBlocks));
+            }
+            
+            const resultDiv = document.getElementById('result');
+            const responseDetails = document.getElementById('responseDetails');
+            
+            resultDiv.innerHTML = 'Создание статьи...';
+            resultDiv.style.display = 'block';
+            resultDiv.style.background = '#fff3cd';
+            resultDiv.style.color = '#856404';
+            
+            try {
+                console.log('Отправляю данные с блоками и изображениями...');
+                console.log('Блоки контента:', contentBlocks);
+                
+                const response = await fetch('/api/db/articles', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                console.log('Ответ сервера:', data);
+                
+                responseDetails.textContent = JSON.stringify(data, null, 2);
+                responseDetails.style.display = 'block';
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `✅ Статья создана!<br>
+                        ID: ${data.articleId}<br>
+                        Slug: ${data.slug}<br>
+                        Главное изображение: ${data.mainImageUrl ? 'Загружено' : 'Не загружено'}<br>
+                        Блоков контента: ${contentBlocks.length}`;
+                    resultDiv.style.background = '#d4edda';
+                    resultDiv.style.color = '#155724';
+                } else {
+                    resultDiv.innerHTML = `❌ Ошибка: ${data.error}`;
+                    resultDiv.style.background = '#f8d7da';
+                    resultDiv.style.color = '#721c24';
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                resultDiv.innerHTML = `❌ Ошибка сети: ${error.message}`;
+                resultDiv.style.background = '#f8d7da';
+                resultDiv.style.color = '#721c24';
+                responseDetails.textContent = 'Ошибка сети: ' + error.message;
+                responseDetails.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html> 

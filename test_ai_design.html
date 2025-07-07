@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Тест ИИ дизайна - Отладка</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gold-1': '#FFC107',
+                        'gold-2': '#E8A317',
+                        'dark-gray': '#2F2F2F',
+                        'light-gray': '#E6E6E6',
+                        'gray': '#A6A6A6'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="p-4 bg-gray-100">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold mb-6 text-center">🧪 Тест ИИ дизайна - Отладка</h1>
+        
+        <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h3 class="font-bold text-blue-800 mb-2">🔄 Гибридный режим</h3>
+            <p class="text-sm text-blue-700 mb-2">
+                Система сначала пытается использовать реальные модели Hugging Face API, 
+                но при ошибках создает качественные PNG демо-изображения.
+            </p>
+            <p class="text-xs text-blue-600">
+                Токен: <code class="bg-blue-100 px-1 rounded">hf_uJbDowG...Ifn</code> | 
+                Модель: <code class="bg-blue-100 px-1 rounded">stable-diffusion-v1-5</code>
+            </p>
+        </div>
+        
+        <!-- Статус подключения -->
+        <div id="connection-status" class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h3 class="font-bold text-blue-800 mb-2">🔗 Статус подключения</h3>
+            <div id="server-status" class="text-sm">Проверяем сервер...</div>
+        </div>
+        
+        <!-- Форма для тестирования -->
+        <form id="test-form" class="space-y-6 border-2 border-dashed border-gray-300 p-6 rounded-lg">
+            <!-- Загрузка изображения -->
+            <div>
+                <label class="block text-lg font-medium mb-2">📎 Загрузить изображение</label>
+                <input type="file" id="photo-upload" accept="image/*" class="block w-full p-3 border border-gray-300 rounded-md">
+                <p class="text-sm text-gray-500 mt-1">JPG, PNG до 5MB</p>
+                
+                <!-- Превью изображения -->
+                <div id="image-preview" class="mt-4 hidden">
+                    <img id="preview-img" class="max-w-xs h-auto border rounded">
+                    <p id="image-info" class="text-sm text-gray-600 mt-2"></p>
+                </div>
+            </div>
+            
+            <!-- Выбор стиля -->
+            <div>
+                <label class="block text-lg font-medium mb-2">🎨 Стиль интерьера</label>
+                <select id="style-select" class="w-full p-3 border border-gray-300 rounded-md">
+                    <option value="">Выберите стиль</option>
+                    <option value="minimalist">Минимализм</option>
+                    <option value="scandinavian">Скандинавский</option>
+                    <option value="loft">Лофт</option>
+                    <option value="modern">Современный</option>
+                    <option value="industrial">Индустриальный</option>
+                </select>
+            </div>
+            
+            <!-- Описание -->
+            <div>
+                <label class="block text-lg font-medium mb-2">📝 Описание изменений</label>
+                <textarea id="prompt-input" rows="3" class="w-full p-3 border border-gray-300 rounded-md" 
+                          placeholder="Например: светлая гостиная с большим диваном и яркими подушками"></textarea>
+            </div>
+            
+            <!-- Кнопка отправки -->
+            <button type="button" id="submit-btn" class="w-full bg-gold-1 text-black p-3 rounded-md hover:bg-gold-2 transition-colors font-medium">
+                🚀 Создать дизайн
+            </button>
+        </form>
+        
+        <!-- Прогресс -->
+        <div id="progress-container" class="mt-6 hidden">
+            <div class="bg-gray-200 rounded-full h-4">
+                <div id="progress-bar" class="bg-gold-1 h-4 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <p id="progress-text" class="text-center mt-2 text-sm">Обрабатываем...</p>
+        </div>
+        
+        <!-- Результат -->
+        <div id="result" class="mt-8 hidden border-2 border-green-200 p-6 rounded-lg bg-green-50">
+            <h2 class="text-2xl font-bold mb-4">✨ Результат</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-medium mb-3 text-center">Исходное изображение</h3>
+                    <div class="border-2 border-gray-300 rounded-lg overflow-hidden">
+                        <img id="original-img" class="w-full h-auto">
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-medium mb-3 text-center">Новый дизайн</h3>
+                    <div class="border-2 border-gold-1 rounded-lg overflow-hidden">
+                        <img id="edited-img" class="w-full h-auto">
+                    </div>
+                </div>
+            </div>
+            <div id="result-info" class="mt-6 p-4 bg-white rounded-md border"></div>
+            
+            <!-- Кнопки действий -->
+            <div class="mt-4 flex flex-wrap gap-3 justify-center">
+                <a id="download-btn" href="#" download="ai-design-result.png" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                    📥 Скачать результат
+                </a>
+                <button onclick="location.reload()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    🔄 Новый дизайн
+                </button>
+            </div>
+        </div>
+        
+        <!-- Логи отладки -->
+        <div id="logs" class="mt-8">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="font-bold text-lg">📋 Логи отладки</h3>
+                <div class="flex gap-2">
+                    <button onclick="clearLogs()" class="text-sm bg-gray-200 px-3 py-1 rounded hover:bg-gray-300">
+                        🗑️ Очистить
+                    </button>
+                    <button onclick="exportLogs()" class="text-sm bg-blue-200 px-3 py-1 rounded hover:bg-blue-300">
+                        💾 Экспорт
+                    </button>
+                </div>
+            </div>
+            <div class="bg-gray-900 text-green-400 rounded-md text-sm font-mono p-4 max-h-80 overflow-y-auto">
+                <pre id="log-content" class="whitespace-pre-wrap"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let logContent = '';
+        
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const emoji = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+            logContent += `${timestamp} ${emoji} ${message}\n`;
+            document.getElementById('log-content').textContent = logContent;
+            
+            // Автоскролл вниз
+            const logElement = document.getElementById('log-content');
+            logElement.scrollTop = logElement.scrollHeight;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+        
+        function clearLogs() {
+            logContent = '';
+            document.getElementById('log-content').textContent = '';
+            addLog('Логи очищены');
+        }
+        
+        function exportLogs() {
+            const blob = new Blob([logContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ai-design-logs-${new Date().toISOString().slice(0,19).replace(/:/g,'-')}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            addLog('Логи экспортированы');
+        }
+        
+        function updateProgress(percent, text) {
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
+            if (percent === 0) {
+                progressContainer.classList.add('hidden');
+            } else {
+                progressContainer.classList.remove('hidden');
+                progressBar.style.width = percent + '%';
+                progressText.textContent = text;
+            }
+        }
+        
+        // Проверка подключения к серверу
+        async function checkServerConnection() {
+            try {
+                addLog('Проверяем подключение к серверу...');
+                const response = await fetch('/api/health');
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('server-status').innerHTML = `
+                        <span class="text-green-600">✅ Сервер работает</span><br>
+                        <small>Версия: ${data.version}, Время: ${new Date(data.timestamp).toLocaleString()}</small>
+                    `;
+                    addLog('Сервер доступен и работает', 'success');
+                    return true;
+                } else {
+                    throw new Error('Неверный ответ сервера');
+                }
+            } catch (error) {
+                document.getElementById('server-status').innerHTML = `
+                    <span class="text-red-600">❌ Сервер недоступен: ${error.message}</span>
+                `;
+                addLog(`Сервер недоступен: ${error.message}`, 'error');
+                return false;
+            }
+        }
+        
+        // Обработка выбора файла
+        document.getElementById('photo-upload').onchange = function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                addLog(`Файл выбран: ${file.name} (${Math.round(file.size/1024)} KB)`);
+                
+                // Показываем превью
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('image-preview');
+                    const img = document.getElementById('preview-img');
+                    const info = document.getElementById('image-info');
+                    
+                    img.src = e.target.result;
+                    info.textContent = `${file.name} • ${Math.round(file.size/1024)} KB • ${file.type}`;
+                    preview.classList.remove('hidden');
+                    
+                    addLog('Превью изображения загружено', 'success');
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        
+        // Основная функция тестирования
+        document.getElementById('submit-btn').onclick = async function() {
+            addLog('🚀 НАЧАЛО ТЕСТИРОВАНИЯ ИИ ДИЗАЙНА', 'info');
+            
+            const photoUpload = document.getElementById('photo-upload');
+            const styleSelect = document.getElementById('style-select');
+            const promptInput = document.getElementById('prompt-input');
+            const submitBtn = document.getElementById('submit-btn');
+            
+            // Скрываем результат от предыдущего теста
+            document.getElementById('result').classList.add('hidden');
+            
+            // Валидация
+            if (!photoUpload.files[0]) {
+                addLog('Файл не выбран', 'error');
+                alert('Выберите файл изображения');
+                return;
+            }
+            
+            if (!styleSelect.value) {
+                addLog('Стиль не выбран', 'error');
+                alert('Выберите стиль интерьера');
+                return;
+            }
+            
+            if (!promptInput.value.trim()) {
+                addLog('Описание пустое', 'error');
+                alert('Введите описание изменений');
+                return;
+            }
+            
+            addLog('Валидация прошла успешно', 'success');
+            
+            // Блокируем форму
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Обрабатываем...';
+            updateProgress(10, 'Подготавливаем данные...');
+            
+            try {
+                // Подготавливаем данные
+                const formData = new FormData();
+                formData.append('image', photoUpload.files[0]);
+                formData.append('style', styleSelect.value);
+                formData.append('prompt', promptInput.value);
+                
+                addLog(`Данные подготовлены:`, 'info');
+                addLog(`  • Файл: ${photoUpload.files[0].name}`, 'info');
+                addLog(`  • Размер: ${Math.round(photoUpload.files[0].size/1024)} KB`, 'info');
+                addLog(`  • Тип: ${photoUpload.files[0].type}`, 'info');
+                addLog(`  • Стиль: ${styleSelect.value}`, 'info');
+                addLog(`  • Промт: "${promptInput.value}"`, 'info');
+                
+                updateProgress(25, 'Отправляем запрос к ИИ...');
+                
+                // Отправляем запрос
+                addLog('Отправляем POST запрос к /api/ai-design-huggingface');
+                const response = await fetch('/api/ai-design-huggingface', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                addLog(`Получен ответ: ${response.status} ${response.statusText}`);
+                updateProgress(50, 'Получаем ответ от сервера...');
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    addLog(`HTTP ошибка ${response.status}: ${errorText}`, 'error');
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+                
+                updateProgress(75, 'Обрабатываем результат...');
+                const result = await response.json();
+                addLog('JSON ответ получен и распарсен', 'success');
+                
+                if (result.success) {
+                    addLog('🎉 УСПЕХ! Результат получен', 'success');
+                    updateProgress(100, 'Готово!');
+                    
+                    // Отображаем результат
+                    document.getElementById('original-img').src = result.originalImage;
+                    document.getElementById('edited-img').src = result.editedImage;
+                    document.getElementById('download-btn').href = result.editedImage;
+                    
+                    // Информация о результате
+                    const infoDiv = document.getElementById('result-info');
+                    infoDiv.innerHTML = `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div><strong>Стиль:</strong> ${result.style}</div>
+                            <div><strong>Время:</strong> ${new Date(result.timestamp).toLocaleString()}</div>
+                            <div class="col-span-full"><strong>Использованный промт:</strong> ${result.enhancedPrompt}</div>
+                            ${result.analysis ? `<div class="col-span-full"><strong>Анализ ИИ:</strong> ${result.analysis}</div>` : ''}
+                        </div>
+                    `;
+                    
+                    document.getElementById('result').classList.remove('hidden');
+                    addLog('Результат отображен на странице', 'success');
+                    
+                    // Скроллим к результату
+                    setTimeout(() => {
+                        document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+                        updateProgress(0, '');
+                    }, 1000);
+                    
+                } else {
+                    addLog(`Ошибка API: ${result.error}`, 'error');
+                    if (result.details) {
+                        addLog(`Детали: ${result.details}`, 'error');
+                    }
+                    updateProgress(0, '');
+                    alert(`Ошибка: ${result.error}`);
+                }
+                
+            } catch (error) {
+                addLog(`Исключение: ${error.message}`, 'error');
+                updateProgress(0, '');
+                alert(`Ошибка: ${error.message}`);
+            }
+            
+            // Разблокируем форму
+            submitBtn.disabled = false;
+            submitBtn.textContent = '🚀 Создать дизайн';
+            
+            addLog('🏁 ТЕСТИРОВАНИЕ ЗАВЕРШЕНО');
+        };
+        
+        // Инициализация страницы
+        document.addEventListener('DOMContentLoaded', async function() {
+            addLog('Страница загружена, начинаем инициализацию');
+            
+            // Проверяем сервер
+            const serverOk = await checkServerConnection();
+            
+            if (serverOk) {
+                addLog('Система готова к работе', 'success');
+            } else {
+                addLog('Проблемы с сервером, проверьте подключение', 'warning');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Услуги и цены - Архитектурное Бюро</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'white': '#FFFFFF',
+                        'black': '#000000',
+                        'light-gray': '#E6E6E6',
+                        'gray': '#A6A6A6',
+                        'dark-gray': '#2F2F2F',
+                        'gold-1': '#FFC107',
+                        'gold-2': '#E8A317',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-roboto text-dark-gray bg-white">
+    <!-- Шапка сайта -->
+    <header class="bg-white fixed w-full top-0 shadow-md z-50">
+        <div class="container mx-auto py-4 px-4 flex justify-between items-center">
+            <!-- Логотип -->
+            <a href="index.html" class="flex items-center">
+                <img src="Logo_black.svg" alt="Логотип" class="logo-image">
+            </a>
+
+            <!-- Навигация для десктопа -->
+            <nav class="hidden lg:flex">
+                <a href="portfolio.html" class="header-link">Портфолио</a>
+                <a href="stages.html" class="header-link">Этапы работы</a>
+                <a href="articles.html" class="header-link">Статьи</a>
+                <a href="services.html" class="header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="header-link">ИИ дизайн</a>
+                <a href="about.html" class="header-link">О нас</a>
+                <a href="contacts.html" class="header-link">Контакты</a>
+            </nav>
+
+            <!-- Кнопка мобильного меню -->
+            <button id="mobile-menu-button" class="lg:hidden flex flex-col justify-center items-center">
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black"></span>
+            </button>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="lg:hidden hidden absolute top-full left-0 w-full bg-white shadow-md">
+            <nav class="flex flex-col p-4">
+                <a href="portfolio.html" class="py-2 header-link">Портфолио</a>
+                <a href="stages.html" class="py-2 header-link">Этапы работы</a>
+                <a href="articles.html" class="py-2 header-link">Статьи</a>
+                <a href="services.html" class="py-2 header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="py-2 header-link">ИИ дизайн</a>
+                <a href="about.html" class="py-2 header-link">О нас</a>
+                <a href="contacts.html" class="py-2 header-link">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main class="pt-32 pb-20">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-montserrat font-bold mb-4 text-center">
+                Услуги и цены
+            </h1>
+            <div class="w-20 h-1 bg-gold-1 mx-auto mb-12"></div>
+            
+            <!-- Введение -->
+            <div class="max-w-4xl mx-auto mb-16">
+                <p class="text-xl text-center mb-8">
+                    Наше архитектурное бюро предлагает полный спектр услуг по проектированию жилых, 
+                    общественных и коммерческих объектов. Мы сопровождаем проект от первоначальной 
+                    концепции до реализации.
+                </p>
+                <p class="text-lg text-center">
+                    Стоимость наших услуг зависит от площади объекта, сложности проекта и выбранных 
+                    этапов работы. Индивидуальный подход к каждому клиенту позволяет нам создавать 
+                    гибкие предложения, адаптированные под ваши потребности и бюджет.
+                </p>
+            </div>
+            
+            <!-- Архитектурное проектирование -->
+            <div class="mb-20">
+                <h2 class="text-3xl font-montserrat font-bold mb-6 text-center">
+                    Архитектурное проектирование
+                </h2>
+                <div class="w-16 h-1 bg-gold-1 mx-auto mb-10"></div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                    <div>
+                        <p class="text-lg mb-6">
+                            Архитектурное проектирование — это комплексный процесс, в ходе которого 
+                            разрабатывается концепция будущего здания, его внешний вид, функциональность, 
+                            технические характеристики и взаимосвязь с окружающей средой.
+                        </p>
+                        <p class="text-lg mb-6">
+                            Наши специалисты создают уникальные проекты, учитывающие особенности участка, 
+                            климатические условия, требования заказчика и современные тенденции в архитектуре. 
+                            Мы работаем с объектами любой сложности: от частных домов до многофункциональных комплексов.
+                        </p>
+                        <div class="mb-6">
+                            <h3 class="text-xl font-montserrat font-semibold mb-3">Стоимость:</h3>
+                            <ul class="list-disc list-inside space-y-2 text-lg">
+                                <li>Эскизный проект: от 1000 ₽/м²</li>
+                                <li>Рабочий проект: от 1500 ₽/м²</li>
+                                <li>Полный комплекс (все этапы): от 3000 ₽/м²</li>
+                            </ul>
+                        </div>
+                        <p class="text-lg font-medium">
+                            Финальная стоимость зависит от площади объекта и количества выбранных этапов работы.
+                        </p>
+                    </div>
+                    <div class="h-96 rounded-lg overflow-hidden relative">
+                        <img 
+                            id="architecture-image" 
+                            src="" 
+                            alt="Чертеж архитектурного проекта" 
+                            class="w-full h-full object-cover rounded-lg hidden"
+                        >
+                        <div id="architecture-placeholder" class="h-full bg-light-gray rounded-lg flex items-center justify-center">
+                            <span class="text-xl font-montserrat text-dark-gray">Чертеж архитектурного проекта</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Дизайн интерьера -->
+            <div class="mb-20">
+                <h2 class="text-3xl font-montserrat font-bold mb-6 text-center">
+                    Дизайн интерьера
+                </h2>
+                <div class="w-16 h-1 bg-gold-1 mx-auto mb-10"></div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                    <div class="order-2 lg:order-1 h-96 rounded-lg overflow-hidden relative">
+                        <img 
+                            id="interior-image" 
+                            src="" 
+                            alt="Визуализация интерьера" 
+                            class="w-full h-full object-cover rounded-lg hidden"
+                        >
+                        <div id="interior-placeholder" class="h-full bg-light-gray rounded-lg flex items-center justify-center">
+                            <span class="text-xl font-montserrat text-dark-gray">Визуализация интерьера</span>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <p class="text-lg mb-6">
+                            Дизайн интерьера — это искусство создания функционального, эстетичного и 
+                            комфортного внутреннего пространства. Наша команда дизайнеров разрабатывает 
+                            уникальные интерьерные решения, которые отражают индивидуальность клиента и 
+                            соответствуют его образу жизни.
+                        </p>
+                        <p class="text-lg mb-6">
+                            Мы создаем дизайн-проекты для жилых и коммерческих помещений, включая 
+                            планировочные решения, подбор отделочных материалов, мебели, освещения и 
+                            декоративных элементов. Наши проекты сопровождаются детальной технической 
+                            документацией для строителей.
+                        </p>
+                        <div class="mb-6">
+                            <h3 class="text-xl font-montserrat font-semibold mb-3">Стоимость:</h3>
+                            <ul class="list-disc list-inside space-y-2 text-lg">
+                                <li>Планировочное решение: от 800 ₽/м²</li>
+                                <li>Эскизный дизайн-проект: от 1200 ₽/м²</li>
+                                <li>Полный дизайн-проект: от 2500 ₽/м²</li>
+                                <li>Авторский надзор: от 25 000 ₽/месяц</li>
+                            </ul>
+                        </div>
+                        <p class="text-lg font-medium">
+                            Окончательная стоимость рассчитывается индивидуально в зависимости от 
+                            площади, сложности и объема работ.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ландшафтный дизайн -->
+            <div class="mb-20">
+                <h2 class="text-3xl font-montserrat font-bold mb-6 text-center">
+                    Ландшафтный дизайн
+                </h2>
+                <div class="w-16 h-1 bg-gold-1 mx-auto mb-10"></div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                    <div>
+                        <p class="text-lg mb-6">
+                            Ландшафтный дизайн объединяет архитектуру, садоводство и дизайн в единую 
+                            концепцию благоустройства территории. Мы создаем гармоничные ландшафтные 
+                            решения, которые подчеркивают архитектурные особенности здания и создают 
+                            комфортную среду для отдыха и деятельности.
+                        </p>
+                        <p class="text-lg mb-6">
+                            Наши услуги включают разработку генерального плана участка, проектирование 
+                            зон отдыха, дорожек, подбор растений, систем освещения и полива, создание малых 
+                            архитектурных форм и водных объектов.
+                        </p>
+                        <div class="mb-6">
+                            <h3 class="text-xl font-montserrat font-semibold mb-3">Стоимость:</h3>
+                            <ul class="list-disc list-inside space-y-2 text-lg">
+                                <li>Эскизная концепция: от 500 ₽/сотка</li>
+                                <li>Детальный проект: от 1000 ₽/сотка</li>
+                                <li>Дендроплан с подбором растений: от 700 ₽/сотка</li>
+                                <li>Полный ландшафтный проект: от 2000 ₽/сотка</li>
+                            </ul>
+                        </div>
+                        <p class="text-lg font-medium">
+                            Стоимость зависит от площади участка, рельефа местности и сложности 
+                            планируемых элементов благоустройства.
+                        </p>
+                    </div>
+                    <div class="h-96 rounded-lg overflow-hidden relative">
+                        <img 
+                            id="landscape-image" 
+                            src="" 
+                            alt="План ландшафтного дизайна" 
+                            class="w-full h-full object-cover rounded-lg hidden"
+                        >
+                        <div id="landscape-placeholder" class="h-full bg-light-gray rounded-lg flex items-center justify-center">
+                            <span class="text-xl font-montserrat text-dark-gray">План ландшафтного дизайна</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Информация о стоимости -->
+            <div class="max-w-4xl mx-auto bg-light-gray p-8 rounded-lg">
+                <h3 class="text-2xl font-montserrat font-bold mb-4 text-center">Индивидуальный подход к ценообразованию</h3>
+                <p class="text-lg mb-4">
+                    Стоимость наших услуг формируется на основе нескольких факторов:
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-lg mb-6">
+                    <li>Площадь объекта (квадратные метры или сотки)</li>
+                    <li>Количество выбранных этапов работы</li>
+                    <li>Сложность проекта и его уникальность</li>
+                    <li>Сроки выполнения работ</li>
+                    <li>Необходимость дополнительных согласований</li>
+                </ul>
+                <p class="text-lg mb-4">
+                    Для каждого проекта мы составляем детальную смету, которая учитывает все необходимые 
+                    работы и позволяет клиенту понимать структуру затрат. Наша ценовая политика прозрачна 
+                    и не предполагает скрытых платежей.
+                </p>
+                <p class="text-lg font-medium text-center">
+                    Свяжитесь с нами для получения индивидуального коммерческого предложения, 
+                    адаптированного под ваш проект и бюджет.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer class="bg-dark-gray text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Контакты</h3>
+                    <ul class="space-y-2">
+                        <li>Телефон: +7 XXX XXX XX XX</li>
+                        <li>Email: info@architecture-bureau.com</li>
+                        <li>Адрес: г. Москва, Новинский бульвар 25 к.10 оф.18</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Наши услуги</h3>
+                    <ul class="space-y-2">
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Архитектурное проектирование</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Дизайн интерьера</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Ландшафтный дизайн</a></li>
+                        <li><a href="ai-design.html" class="text-white hover:text-gold-1 transition-colors">ИИ дизайн</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Информация</h3>
+                    <ul class="space-y-2">
+                        <li><a href="stages.html" class="text-white hover:text-gold-1 transition-colors">Этапы работы</a></li>
+                        <li><a href="portfolio.html" class="text-white hover:text-gold-1 transition-colors">Портфолио</a></li>
+                        <li><a href="about.html" class="text-white hover:text-gold-1 transition-colors">О нас</a></li>
+                        <li><a href="articles.html" class="text-white hover:text-gold-1 transition-colors">Статьи</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-center mt-8 pt-8 border-t border-gray">
+                <img src="Logo.svg" alt="Логотип" class="w-32 h-32 mb-4">
+                <p class="text-center text-sm">© <span id="current-year"></span> Архитектурное Бюро. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    
+    <script>
+    // Функция для загрузки изображений услуг
+    async function loadServicesImages() {
+        try {
+            console.log('Загрузка изображений услуг...');
+            
+            const response = await fetch('http://localhost:3001/api/services');
+            const result = await response.json();
+            
+            if (!result.success) {
+                throw new Error(result.error || 'Ошибка загрузки изображений услуг');
+            }
+            
+            const images = result.data;
+            console.log('Получено изображений услуг:', images.length);
+            
+            // Сопоставляем изображения с элементами
+            const imageMapping = {
+                '3d': { imgId: 'architecture-image', placeholderId: 'architecture-placeholder' },
+                'blueprint': { imgId: 'interior-image', placeholderId: 'interior-placeholder' }, 
+                'landscape': { imgId: 'landscape-image', placeholderId: 'landscape-placeholder' }
+            };
+            
+            // Загружаем каждое изображение
+            images.forEach(image => {
+                // Определяем тип изображения
+                let imageType = '';
+                const title = (image.title || image.alt_text || '').toLowerCase();
+                
+                if (title.includes('3d')) {
+                    imageType = '3d';
+                } else if (title.includes('blueprint')) {
+                    imageType = 'blueprint';
+                } else if (title.includes('landscape')) {
+                    imageType = 'landscape';
+                }
+                
+                const mapping = imageMapping[imageType];
+                if (mapping && image.direct_url) {
+                    const imgElement = document.getElementById(mapping.imgId);
+                    const placeholderElement = document.getElementById(mapping.placeholderId);
+                    
+                    if (imgElement && placeholderElement) {
+                        console.log(`Загружаем изображение ${imageType}`);
+                        
+                        // Устанавливаем обработчики
+                        imgElement.onload = function() {
+                            console.log(`✅ Изображение ${imageType} загружено успешно`);
+                            // Показываем изображение, скрываем заглушку
+                            this.classList.remove('hidden');
+                            placeholderElement.style.display = 'none';
+                        };
+                        
+                        imgElement.onerror = function() {
+                            console.log(`❌ Ошибка загрузки изображения ${imageType}`);
+                            // Оставляем заглушку видимой
+                            this.classList.add('hidden');
+                            placeholderElement.style.display = 'flex';
+                        };
+                        
+                        // Загружаем изображение
+                        imgElement.src = image.direct_url;
+                    }
+                }
+            });
+            
+        } catch (error) {
+            console.error('Ошибка загрузки изображений услуг:', error);
+            // При ошибке API оставляем все заглушки как есть
+        }
+    }
+    
+    // Загружаем изображения при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        loadServicesImages();
+    });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #2F2F2F;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            font-size: 24px;
+        }
+        .admin-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .panel-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            flex: 1;
+            min-width: 300px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: #2F2F2F;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #FFC107;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        input, select, button, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        button {
+            background-color: #2F2F2F;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #FFC107;
+            color: #000;
+        }
+        .folder-list, .file-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        .folder-item, .file-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .folder-item:last-child, .file-item:last-child {
+            border-bottom: none;
+        }
+        .folder-name, .file-name {
+            font-weight: 500;
+        }
+        .folder-date, .file-date {
+            color: #999;
+            font-size: 12px;
+        }
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .hidden {
+            display: none;
+        }
+        .file-link {
+            color: #FFC107;
+            word-break: break-all;
+        }
+        .tab-nav {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .tab-button.active {
+            background-color: #2F2F2F;
+            color: white;
+            border-color: #2F2F2F;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        table th {
+            background-color: #f5f5f5;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Административная панель</h1>
+    </header>
+
+    <div class="container">
+        <div class="tab-nav">
+            <button class="tab-button active" data-tab="folders-tab">Управление файлами</button>
+            <button class="tab-button" data-tab="projects-tab">Проекты</button>
+            <button class="tab-button" data-tab="articles-tab">Статьи</button>
+            <button class="tab-button" data-tab="architects-tab">Сотрудники</button>
+        </div>
+
+        <!-- Вкладка управления файлами Яндекс.Диска -->
+        <div id="folders-tab" class="tab-content active">
+            <div class="admin-panel">
+                <div class="panel-section">
+                    <h2>Управление папками</h2>
+                    <form id="folderForm">
+                        <label for="folderName">Название новой папки:</label>
+                        <input type="text" id="folderName" name="folderName" required>
+                        <button type="submit">Создать папку</button>
+                    </form>
+                    <div id="folderStatus" class="status hidden"></div>
+
+                    <h3>Список папок:</h3>
+                    <ul id="folderList" class="folder-list">
+                        <li class="folder-item">Загрузка списка папок...</li>
+                    </ul>
+                </div>
+
+                <div class="panel-section">
+                    <h2>Загрузка файлов</h2>
+                    <form id="fileForm">
+                        <label for="folderSelect">Выберите папку:</label>
+                        <select id="folderSelect" name="folderSelect" required>
+                            <option value="">-- Выберите папку --</option>
+                        </select>
+
+                        <label for="entityType">Тип сущности:</label>
+                        <select id="entityType" name="entityType">
+                            <option value="">-- Без привязки к БД --</option>
+                            <option value="project">Проект</option>
+                            <option value="article">Статья</option>
+                        </select>
+
+                        <div id="entityIdContainer" class="hidden">
+                            <label for="entityId">ID сущности:</label>
+                            <input type="number" id="entityId" name="entityId" min="1">
+                        </div>
+
+                        <label for="fileUpload">Выберите файл:</label>
+                        <input type="file" id="fileUpload" name="fileUpload" required>
+                        
+                        <button type="submit">Загрузить файл</button>
+                    </form>
+                    <div id="fileStatus" class="status hidden"></div>
+
+                    <h3>Загруженные файлы:</h3>
+                    <ul id="fileList" class="file-list">
+                        <li class="file-item">Выберите папку для просмотра файлов</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладка управления проектами -->
+        <div id="projects-tab" class="tab-content">
+            <div class="panel-section">
+                <h2>Список проектов из БД</h2>
+                <div id="projectsContainer">Загрузка проектов...</div>
+            </div>
+        </div>
+
+        <!-- Вкладка управления статьями -->
+        <div id="articles-tab" class="tab-content">
+            <div class="panel-section">
+                <h2>Список статей из БД</h2>
+                <div id="articlesContainer">Загрузка статей...</div>
+            </div>
+        </div>
+
+        <!-- Вкладка управления сотрудниками -->
+        <div id="architects-tab" class="tab-content">
+            <div class="panel-section">
+                <h2>Список сотрудников из БД</h2>
+                <div id="architectsContainer">Загрузка сотрудников...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM элементы
+        const folderForm = document.getElementById('folderForm');
+        const folderNameInput = document.getElementById('folderName');
+        const folderStatus = document.getElementById('folderStatus');
+        const folderList = document.getElementById('folderList');
+        const folderSelect = document.getElementById('folderSelect');
+        const fileForm = document.getElementById('fileForm');
+        const fileUpload = document.getElementById('fileUpload');
+        const fileStatus = document.getElementById('fileStatus');
+        const fileList = document.getElementById('fileList');
+        const entityType = document.getElementById('entityType');
+        const entityIdContainer = document.getElementById('entityIdContainer');
+        const entityId = document.getElementById('entityId');
+        const projectsContainer = document.getElementById('projectsContainer');
+        const articlesContainer = document.getElementById('articlesContainer');
+        const architectsContainer = document.getElementById('architectsContainer');
+
+        // Вкладки
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        // Базовый путь
+        const BASE_PATH = 'Architecture&design';
+
+        // Переключение вкладок
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                // Убираем активный класс у всех кнопок и содержимого вкладок
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Добавляем активный класс нужной кнопке и вкладке
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+                
+                // Загружаем данные при переключении на вкладку
+                if (tabId === 'folders-tab') {
+                    loadFolders();
+                } else if (tabId === 'projects-tab') {
+                    loadProjects();
+                } else if (tabId === 'articles-tab') {
+                    loadArticles();
+                } else if (tabId === 'architects-tab') {
+                    loadArchitects();
+                }
+            });
+        });
+
+        // Отображение/скрытие поля ID сущности
+        entityType.addEventListener('change', () => {
+            if (entityType.value) {
+                entityIdContainer.classList.remove('hidden');
+            } else {
+                entityIdContainer.classList.add('hidden');
+                entityId.value = '';
+            }
+        });
+
+        // Загрузка всех данных при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFolders();
+        });
+
+        // Обработчик формы создания папки
+        folderForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const folderName = folderNameInput.value.trim();
+            
+            if (!folderName) {
+                showStatus(folderStatus, 'Введите название папки', 'error');
+                return;
+            }
+
+            try {
+                showStatus(folderStatus, 'Создание папки...', 'loading');
+                
+                const response = await fetch('/api/folders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ folderName })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showStatus(folderStatus, `Папка "${folderName}" успешно создана`, 'success');
+                    folderNameInput.value = '';
+                    loadFolders();
+                } else {
+                    showStatus(folderStatus, `Ошибка: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                showStatus(folderStatus, `Ошибка: ${error.message}`, 'error');
+            }
+        });
+
+        // Обработчик формы загрузки файла
+        fileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const folderPath = folderSelect.value;
+            const file = fileUpload.files[0];
+            const entityTypeValue = entityType.value;
+            const entityIdValue = entityId.value;
+            
+            if (!folderPath) {
+                showStatus(fileStatus, 'Выберите папку', 'error');
+                return;
+            }
+            
+            if (!file) {
+                showStatus(fileStatus, 'Выберите файл', 'error');
+                return;
+            }
+
+            if (entityTypeValue && !entityIdValue) {
+                showStatus(fileStatus, 'Укажите ID сущности', 'error');
+                return;
+            }
+
+            try {
+                showStatus(fileStatus, 'Загрузка файла...', 'loading');
+                
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('folderPath', folderPath);
+                
+                if (entityTypeValue && entityIdValue) {
+                    formData.append('entityType', entityTypeValue);
+                    formData.append('entityId', entityIdValue);
+                }
+                
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showStatus(fileStatus, `Файл "${file.name}" успешно загружен`, 'success');
+                    fileUpload.value = '';
+                    entityType.value = '';
+                    entityId.value = '';
+                    entityIdContainer.classList.add('hidden');
+                    
+                    if (data.publicUrl) {
+                        fileStatus.innerHTML += `<br>Публичная ссылка: <a href="${data.publicUrl}" target="_blank" class="file-link">${data.publicUrl}</a>`;
+                    }
+                    
+                    // Обновление списка файлов в выбранной папке
+                    loadFiles(folderPath);
+                } else {
+                    showStatus(fileStatus, `Ошибка: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                showStatus(fileStatus, `Ошибка: ${error.message}`, 'error');
+            }
+        });
+
+        // Обработчик изменения выбранной папки
+        folderSelect.addEventListener('change', (e) => {
+            const folderPath = e.target.value;
+            if (folderPath) {
+                loadFiles(folderPath);
+            } else {
+                fileList.innerHTML = '<li class="file-item">Выберите папку для просмотра файлов</li>';
+            }
+        });
+
+        // Загрузка списка папок
+        async function loadFolders() {
+            try {
+                folderList.innerHTML = '<li class="folder-item">Загрузка списка папок...</li>';
+                
+                const response = await fetch('/api/folders');
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateFolderList(data.folders);
+                    updateFolderSelect(data.folders);
+                } else {
+                    folderList.innerHTML = `<li class="folder-item">Ошибка: ${data.error}</li>`;
+                    folderSelect.innerHTML = '<option value="">-- Ошибка загрузки папок --</option>';
+                }
+            } catch (error) {
+                folderList.innerHTML = `<li class="folder-item">Ошибка: ${error.message}</li>`;
+                folderSelect.innerHTML = '<option value="">-- Ошибка загрузки папок --</option>';
+            }
+        }
+
+        // Загрузка списка проектов
+        async function loadProjects() {
+            try {
+                projectsContainer.innerHTML = 'Загрузка проектов...';
+                
+                const response = await fetch('/api/db/projects');
+                const data = await response.json();
+                
+                if (data.success && data.projects.length > 0) {
+                    let html = '<table>';
+                    html += '<tr><th>ID</th><th>Название</th><th>Slug</th><th>Описание</th><th>Изображение</th></tr>';
+                    
+                    data.projects.forEach(project => {
+                        html += `<tr>
+                            <td>${project.id}</td>
+                            <td>${project.title}</td>
+                            <td>${project.slug}</td>
+                            <td>${project.description ? project.description.substring(0, 50) + '...' : '-'}</td>
+                            <td>${project.main_image_url ? `<a href="${project.main_image_url}" target="_blank">Смотреть</a>` : '-'}</td>
+                        </tr>`;
+                    });
+                    
+                    html += '</table>';
+                    projectsContainer.innerHTML = html;
+                } else if (data.success && data.projects.length === 0) {
+                    projectsContainer.innerHTML = 'Проекты не найдены в базе данных';
+                } else {
+                    projectsContainer.innerHTML = `Ошибка: ${data.error}`;
+                }
+            } catch (error) {
+                projectsContainer.innerHTML = `Ошибка: ${error.message}`;
+            }
+        }
+
+        // Загрузка списка статей
+        async function loadArticles() {
+            try {
+                articlesContainer.innerHTML = 'Загрузка статей...';
+                
+                const response = await fetch('/api/db/articles');
+                const data = await response.json();
+                
+                if (data.success && data.articles.length > 0) {
+                    let html = '<table>';
+                    html += '<tr><th>ID</th><th>Название</th><th>Slug</th><th>Описание</th><th>Изображение</th><th>Статус</th></tr>';
+                    
+                    data.articles.forEach(article => {
+                        html += `<tr>
+                            <td>${article.id}</td>
+                            <td>${article.title}</td>
+                            <td>${article.slug}</td>
+                            <td>${article.excerpt ? article.excerpt.substring(0, 50) + '...' : '-'}</td>
+                            <td>${article.main_image_url ? `<a href="${article.main_image_url}" target="_blank">Смотреть</a>` : '-'}</td>
+                            <td>${article.status}</td>
+                        </tr>`;
+                    });
+                    
+                    html += '</table>';
+                    articlesContainer.innerHTML = html;
+                } else if (data.success && data.articles.length === 0) {
+                    articlesContainer.innerHTML = 'Статьи не найдены в базе данных';
+                } else {
+                    articlesContainer.innerHTML = `Ошибка: ${data.error}`;
+                }
+            } catch (error) {
+                articlesContainer.innerHTML = `Ошибка: ${error.message}`;
+            }
+        }
+
+        // Загрузка списка сотрудников
+        async function loadArchitects() {
+            try {
+                architectsContainer.innerHTML = 'Загрузка сотрудников...';
+                
+                const response = await fetch('/api/db/architects');
+                const data = await response.json();
+                
+                if (data.success && data.architects.length > 0) {
+                    let html = '<table>';
+                    html += '<tr><th>ID</th><th>ФИО</th><th>Должность</th><th>Фото</th><th>Email</th></tr>';
+                    
+                    data.architects.forEach(architect => {
+                        html += `<tr>
+                            <td>${architect.id}</td>
+                            <td>${architect.full_name}</td>
+                            <td>${architect.position}</td>
+                            <td>${architect.photo_url ? `<a href="${architect.photo_url}" target="_blank">Смотреть</a>` : '-'}</td>
+                            <td>${architect.email || '-'}</td>
+                        </tr>`;
+                    });
+                    
+                    html += '</table>';
+                    architectsContainer.innerHTML = html;
+                } else if (data.success && data.architects.length === 0) {
+                    architectsContainer.innerHTML = 'Сотрудники не найдены в базе данных';
+                } else {
+                    architectsContainer.innerHTML = `Ошибка: ${data.error}`;
+                }
+            } catch (error) {
+                architectsContainer.innerHTML = `Ошибка: ${error.message}`;
+            }
+        }
+
+        // Обновление списка папок в интерфейсе
+        function updateFolderList(folders) {
+            if (folders.length === 0) {
+                folderList.innerHTML = '<li class="folder-item">Нет доступных папок</li>';
+                return;
+            }
+            
+            folderList.innerHTML = folders.map(folder => `
+                <li class="folder-item">
+                    <span class="folder-name">${folder.name}</span>
+                    <span class="folder-date">${new Date(folder.created).toLocaleString()}</span>
+                </li>
+            `).join('');
+        }
+
+        // Обновление выпадающего списка папок
+        function updateFolderSelect(folders) {
+            if (folders.length === 0) {
+                folderSelect.innerHTML = '<option value="">-- Нет доступных папок --</option>';
+                return;
+            }
+            
+            folderSelect.innerHTML = '<option value="">-- Выберите папку --</option>';
+            folders.forEach(folder => {
+                const option = document.createElement('option');
+                option.value = folder.path;
+                option.textContent = folder.name;
+                folderSelect.appendChild(option);
+            });
+            
+            // Добавляем корневую папку
+            const rootOption = document.createElement('option');
+            rootOption.value = BASE_PATH;
+            rootOption.textContent = 'Корневая папка';
+            folderSelect.insertBefore(rootOption, folderSelect.firstChild.nextSibling);
+        }
+
+        // Загрузка списка файлов в выбранной папке
+        async function loadFiles(folderPath) {
+            try {
+                fileList.innerHTML = '<li class="file-item">Загрузка списка файлов...</li>';
+                
+                const response = await fetch(`https://cloud-api.yandex.net/v1/disk/resources?path=${encodeURIComponent(folderPath)}`, {
+                    headers: {
+                        'Authorization': `OAuth y0__xCiw9GsARjA8zcg_drjmRPYVRdg8smUUH0pJWclVDOPZc2Erg`
+                    }
+                });
+
+                if (!response.ok) {
+                    fileList.innerHTML = '<li class="file-item">Ошибка получения списка файлов</li>';
+                    return;
+                }
+
+                const data = await response.json();
+                const files = data._embedded.items.filter(item => item.type === 'file');
+                
+                if (files.length === 0) {
+                    fileList.innerHTML = '<li class="file-item">В этой папке нет файлов</li>';
+                    return;
+                }
+                
+                fileList.innerHTML = files.map(file => `
+                    <li class="file-item">
+                        <span class="file-name">${file.name}</span>
+                        <span class="file-date">${new Date(file.created).toLocaleString()}</span>
+                    </li>
+                `).join('');
+            } catch (error) {
+                fileList.innerHTML = `<li class="file-item">Ошибка: ${error.message}</li>`;
+            }
+        }
+
+        // Отображение статуса операции
+        function showStatus(element, message, type) {
+            element.textContent = message;
+            element.className = 'status ' + type;
+            
+            if (type === 'loading') {
+                element.innerHTML = message + ' <div class="loading"></div>';
+            }
+            
+            if (type === 'success' || type === 'error') {
+                element.classList.remove('hidden');
+                setTimeout(() => {
+                    element.classList.add('hidden');
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html> 

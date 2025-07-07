@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Простой тест создания статьи</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold mb-4">Простое создание статьи</h1>
+        
+        <form id="simpleForm">
+            <div class="mb-4">
+                <label for="title" class="block text-sm font-medium mb-1">Заголовок:</label>
+                <input type="text" id="title" name="title" class="w-full p-2 border rounded" value="Тестовая статья простая">
+            </div>
+            
+            <div class="mb-4">
+                <label for="category" class="block text-sm font-medium mb-1">Категория:</label>
+                <select id="category" name="category" class="w-full p-2 border rounded">
+                    <option value="architecture">Архитектура</option>
+                    <option value="interior">Дизайн интерьера</option>
+                    <option value="country">Загородные дома</option>
+                </select>
+            </div>
+            
+            <div class="mb-4">
+                <label for="authorId" class="block text-sm font-medium mb-1">Автор ID:</label>
+                <select id="authorId" name="authorId" class="w-full p-2 border rounded">
+                    <option value="">Выберите автора</option>
+                    <option value="1">ID 1 (Иванов Иван)</option>
+                    <option value="2">ID 2 (Петрова Елена)</option>
+                    <option value="3">ID 3 (Сидоров Алексей)</option>
+                    <option value="4">ID 4 (Козлова Мария)</option>
+                </select>
+            </div>
+            
+            <div class="mb-4">
+                <label for="shortDescription" class="block text-sm font-medium mb-1">Описание:</label>
+                <textarea id="shortDescription" name="shortDescription" class="w-full p-2 border rounded" rows="2">Краткое описание тестовой статьи</textarea>
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+                Создать статью (без изображений)
+            </button>
+        </form>
+        
+        <div id="result" class="mt-4 p-3 rounded hidden"></div>
+        
+        <div class="mt-6 p-4 bg-gray-50 rounded">
+            <h3 class="font-bold mb-2">Результат последнего запроса:</h3>
+            <pre id="responseDetails" class="text-xs bg-white p-2 rounded overflow-x-auto"></pre>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('simpleForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('category', document.getElementById('category').value);
+            formData.append('authorId', document.getElementById('authorId').value);
+            formData.append('shortDescription', document.getElementById('shortDescription').value);
+            formData.append('publicationDate', new Date().toISOString().split('T')[0]);
+            formData.append('status', 'draft');
+            
+            const resultDiv = document.getElementById('result');
+            const responseDetails = document.getElementById('responseDetails');
+            
+            resultDiv.innerHTML = 'Отправка данных...';
+            resultDiv.className = 'mt-4 p-3 rounded bg-yellow-100 text-yellow-800';
+            resultDiv.classList.remove('hidden');
+            
+            try {
+                console.log('Отправляю данные:', {
+                    title: document.getElementById('title').value,
+                    category: document.getElementById('category').value,
+                    authorId: document.getElementById('authorId').value,
+                    shortDescription: document.getElementById('shortDescription').value
+                });
+                
+                const response = await fetch('/api/db/articles', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                console.log('Статус ответа:', response.status);
+                
+                const data = await response.json();
+                console.log('Ответ сервера:', data);
+                
+                responseDetails.textContent = JSON.stringify(data, null, 2);
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `✅ Статья создана успешно!<br>ID: ${data.articleId}<br>Slug: ${data.slug}`;
+                    resultDiv.className = 'mt-4 p-3 rounded bg-green-100 text-green-800';
+                } else {
+                    resultDiv.innerHTML = `❌ Ошибка: ${data.error}`;
+                    resultDiv.className = 'mt-4 p-3 rounded bg-red-100 text-red-800';
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                resultDiv.innerHTML = `❌ Ошибка сети: ${error.message}`;
+                resultDiv.className = 'mt-4 p-3 rounded bg-red-100 text-red-800';
+                responseDetails.textContent = 'Ошибка сети: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html> 

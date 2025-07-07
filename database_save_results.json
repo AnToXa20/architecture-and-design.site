@@ -1,0 +1,333 @@
+{
+  "timestamp": "2025-05-23T21:48:19.455Z",
+  "totalFiles": 20,
+  "savedCount": 20,
+  "statistics": {
+    "Загородные дома": [
+      {
+        "id": 11,
+        "name": "Дом в КП Векшино.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/2605aa962b012d048dd20d861f365975696cdf139f0525ca075efe519eaa07ad/68312552/OUiJv7ajqdjilrmSHYmR9181G1YU13mUzlIrgvSV3ULUmxF4HF7s1N64vRag7hfVcDjSm3wcjYb8kcU8MuYTzw%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%9A%D0%9F%20%D0%92%D0%B5%D0%BA%D1%88%D0%B8%D0%BD%D0%BE.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=54684&hid=9afbd78e7151fce8ec07d833137833b2&media_type=image&tknv=v3&etag=40d9cdf8d7af1b30ccea03b0891ba728",
+        "entityId": 2,
+        "entityType": "houses",
+        "entityDisplayName": "Загородные дома"
+      },
+      {
+        "id": 12,
+        "name": "Дом в КП Клуб 20’71.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/a3d80b77f8eaa64a95108ed8d7e8cdb4cb6e9a239761a114884e862c326626cf/68312553/OUiJv7ajqdjilrmSHYmR91cB2Ai1mpqIFKccxSW5CjAec1CGGFzKM9FutFrswL-CTjQlq_zfMfG0aaWU7O1XVw%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%9A%D0%9F%20%D0%9A%D0%BB%D1%83%D0%B1%2020%E2%80%9971.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=69988&hid=1cdadbabbec91236f8371ddeccedc6f4&media_type=image&tknv=v3&etag=7b951373da2591a237203096e95a267d",
+        "entityId": 2,
+        "entityType": "houses",
+        "entityDisplayName": "Загородные дома"
+      },
+      {
+        "id": 13,
+        "name": "Дом в КП Мартемьяново.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/2c31a34539799b46f2cc04c4de68af54a80a39e1ca380d081ba97f3dc20dc0cd/68312554/OUiJv7ajqdjilrmSHYmR9_y0HmlSXbtNOOtC5h0GLrUXZ1oJ0qctjDvDvToCJQsl7mLCc34JNgw4v22_SrannQ%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%9A%D0%9F%20%D0%9C%D0%B0%D1%80%D1%82%D0%B5%D0%BC%D1%8C%D1%8F%D0%BD%D0%BE%D0%B2%D0%BE.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=221125&hid=40281612006f9c61bee59bb5f1e4ab82&media_type=image&tknv=v3&etag=0b1b5febd6952f2f5d67b457519a4280",
+        "entityId": 2,
+        "entityType": "houses",
+        "entityDisplayName": "Загородные дома"
+      },
+      {
+        "id": 14,
+        "name": "Дом в КП Третья Охота.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/68df22faa19bc62110c8ecf01839701dbed9cf3ff574935c763cef4f2c702142/68312555/OUiJv7ajqdjilrmSHYmR9xcO1Z6kxL_lQVBPyChYN1nAKKtCi944M07a8XzcVN1o-CAfc0A0X1DUZxYqbpmxBg%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%9A%D0%9F%20%D0%A2%D1%80%D0%B5%D1%82%D1%8C%D1%8F%20%D0%9E%D1%85%D0%BE%D1%82%D0%B0.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=42677&hid=42d4121dbeb24c60c9ac0671a954dafc&media_type=image&tknv=v3&etag=2d5060e87e11e23a97bd43d749c6b4dc",
+        "entityId": 2,
+        "entityType": "houses",
+        "entityDisplayName": "Загородные дома"
+      },
+      {
+        "id": 15,
+        "name": "Дом в Поселке Петрово-Дальнее.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/0c0b86c28f9404ee4b90adc28cef7192c21685fc4547ec1b26172d0a3d04fcef/68312555/OUiJv7ajqdjilrmSHYmR9_6sEhtFWHbEtFV5a4HIc2v5kiCEAovIaCjmWJzM0rU8vFDmPLF9J0yoiSDuDzNYNQ%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%9F%D0%BE%D1%81%D0%B5%D0%BB%D0%BA%D0%B5%20%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D0%BE-%D0%94%D0%B0%D0%BB%D1%8C%D0%BD%D0%B5%D0%B5.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=48392&hid=c8b7efe18f403f93e39cde04d23b0bc5&media_type=image&tknv=v3&etag=1db8e609c74935e1a97b5fcbfb6ca98f",
+        "entityId": 2,
+        "entityType": "houses",
+        "entityDisplayName": "Загородные дома"
+      },
+      {
+        "id": 16,
+        "name": "Дом в деревне Мышецкое.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/c6334eb2fb56d9b8a26d14974cf84fbf678f88fa52d39973d3a371fbeaffd678/68312556/OUiJv7ajqdjilrmSHYmR923u1tRrFBpf3jl596e0ZAFnoZHSNFq9Ga1Mqle8n70lOpPiyV-oZ7aWr1i3IYgr9g%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%BD%D0%B5%20%D0%9C%D1%8B%D1%88%D0%B5%D1%86%D0%BA%D0%BE%D0%B5.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=46124&hid=27487e3ab95724edd0dae0ab4ef4e415&media_type=image&tknv=v3&etag=e4f19053332d203ff95872a6a3b7be8c",
+        "entityId": 2,
+        "entityType": "houses",
+        "entityDisplayName": "Загородные дома"
+      },
+      {
+        "id": 17,
+        "name": "Дом в поселке “Истра Кантри Клаб”.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/e9b48759585b2983d9c799c47aae2e730a634672bd990397abc067e0f6bbf323/68312557/OUiJv7ajqdjilrmSHYmR96aibAGkf1p-pgayed10p1XTgF_N_GIlfwwYULbLFEZRdp3QL43cSo9ptVuY3lT8lw%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%BF%D0%BE%D1%81%D0%B5%D0%BB%D0%BA%D0%B5%20%E2%80%9C%D0%98%D1%81%D1%82%D1%80%D0%B0%20%D0%9A%D0%B0%D0%BD%D1%82%D1%80%D0%B8%20%D0%9A%D0%BB%D0%B0%D0%B1%E2%80%9D.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=33701&hid=cf63bc6aa23ae95bfa402814e8f19f23&media_type=image&tknv=v3&etag=882c0ef12484c31d71027a12eb6fb0e3",
+        "entityId": 2,
+        "entityType": "houses",
+        "entityDisplayName": "Загородные дома"
+      },
+      {
+        "id": 30,
+        "name": "Мансарда в загородном жилом доме.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/5f055ebc035118037c6a8ba5edc7b4c7f862df4486d9cbed6077920efbca86b6/68312562/OUiJv7ajqdjilrmSHYmR96LJeteApg7tSt0Hb5HaDoYFX3zEInKZyxGXtzdinh4s1ylp3_yQu5scc4AZnoPYGg%3D%3D?uid=362045858&filename=%D0%9C%D0%B0%D0%BD%D1%81%D0%B0%D1%80%D0%B4%D0%B0%20%D0%B2%20%D0%B7%D0%B0%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%BD%D0%BE%D0%BC%20%D0%B6%D0%B8%D0%BB%D0%BE%D0%BC%20%D0%B4%D0%BE%D0%BC%D0%B5.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=47775&hid=a19360995f8a045c0fd0dcd36d390af9&media_type=image&tknv=v3&etag=794609c6f430159fa28036f5c5528e34",
+        "entityId": 2,
+        "entityType": "houses",
+        "entityDisplayName": "Загородные дома"
+      }
+    ],
+    "Интерьеры (квартиры)": [
+      {
+        "id": 18,
+        "name": "Интерьеры Дома в КП Клуб 20’71.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/c60fd18aabee1d08fb1e891576d2a6092a9ae06e0c20ffed2ad261e43352b81a/68312558/OUiJv7ajqdjilrmSHYmR97kjnSB4T1zFuFoTkw3r6QUW4MGDlkcfQCkdxi84aTeVeYb8eu2Vq4iRbV6bOIk1hg%3D%3D?uid=362045858&filename=%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%8C%D0%B5%D1%80%D1%8B%20%D0%94%D0%BE%D0%BC%D0%B0%20%D0%B2%20%D0%9A%D0%9F%20%D0%9A%D0%BB%D1%83%D0%B1%2020%E2%80%9971.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=49170&hid=c66dead86e7e0f03365519f342b7f45e&media_type=image&tknv=v3&etag=dfcd5ad79ffc7b21f3a5975a85002ae6",
+        "entityId": 1,
+        "entityType": "apartments",
+        "entityDisplayName": "Интерьеры (квартиры)"
+      },
+      {
+        "id": 19,
+        "name": "Интерьеры дома в КП Третья Охота.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/014e3dad022cc4fdaa68c536bc4a4ee77b238029e47d3bb3233313f7ed99e556/68312559/OUiJv7ajqdjilrmSHYmR97OUmb3MtIkDHstXXzT0RFFEmxSWr5MxMUgYtK1mXz1HXkVs2iQRGCjEzgoKSZjEvg%3D%3D?uid=362045858&filename=%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%8C%D0%B5%D1%80%D1%8B%20%D0%B4%D0%BE%D0%BC%D0%B0%20%D0%B2%20%D0%9A%D0%9F%20%D0%A2%D1%80%D0%B5%D1%82%D1%8C%D1%8F%20%D0%9E%D1%85%D0%BE%D1%82%D0%B0.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=51035&hid=68cbefea15051e48510d6ec3b4364b76&media_type=image&tknv=v3&etag=85debd95190505894f35c3ba14bf3234",
+        "entityId": 1,
+        "entityType": "apartments",
+        "entityDisplayName": "Интерьеры (квартиры)"
+      },
+      {
+        "id": 20,
+        "name": "Интерьеры квартиры в Петрово-Дальнем.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/bf13103e2d40233efe6188ef5aa72a2b18d3a50c7a517069ec28d465081ba3c4/68312559/OUiJv7ajqdjilrmSHYmR94oyHQomaA5XJSXb7vPyBFKK8HqzMzsnDj2vHbPhKGLsDE1MjWZGKUhJIkcRLXaSPQ%3D%3D?uid=362045858&filename=%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%8C%D0%B5%D1%80%D1%8B%20%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%8B%20%D0%B2%20%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D0%BE-%D0%94%D0%B0%D0%BB%D1%8C%D0%BD%D0%B5%D0%BC.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=34076&hid=c5640010d2b8684a0cc6feee3685ae3a&media_type=image&tknv=v3&etag=920226d9e398aabd0163ffd111c96e8e",
+        "entityId": 1,
+        "entityType": "apartments",
+        "entityDisplayName": "Интерьеры (квартиры)"
+      },
+      {
+        "id": 21,
+        "name": "Кв-ра в ЖК Loft Garden.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/c3b8ea5ed83b913b3b00d8ddab278d52c0de86ce9c86ca707df8cfc86ff608f9/6831255a/OUiJv7ajqdjilrmSHYmR92aVKWZYyrD9mo1dCwI-NORJyMAVbjqlu9uvYFFWJwE4S6hPnK_kAaARDzIgr7JlPg%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20Loft%20Garden.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=198118&hid=a4045e7376eb3e2385c9c8fec3b3b0f5&media_type=image&tknv=v3&etag=14700d916b3be610a5f2da2df8a4ac71",
+        "entityId": 1,
+        "entityType": "apartments",
+        "entityDisplayName": "Интерьеры (квартиры)"
+      },
+      {
+        "id": 22,
+        "name": "Кв-ра в ЖК «Английский квартал».jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/13c29eda6bbf81badd4ee1355685075a0ae2b3357e8db0acee28bcc12db31a59/6831255b/OUiJv7ajqdjilrmSHYmR9y_CzXC1_tPiiH5irIo0Nn-8EcGy4Bb0vPmjKeK-Q70MnTAnO9Bgl_ZBnxiTgnPKyg%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20%C2%AB%D0%90%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B0%D0%BB%C2%BB.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=46676&hid=ff22e977934e8d176ceb68471efa7829&media_type=image&tknv=v3&etag=1f9ef1e57157c2eaf7358223cce16536",
+        "entityId": 1,
+        "entityType": "apartments",
+        "entityDisplayName": "Интерьеры (квартиры)"
+      },
+      {
+        "id": 23,
+        "name": "Кв-ра в ЖК Конева 14.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/12fd28b11a9dec860ffa25e6c70c667c04e49572de908989daa02bb74b682e50/6831255c/OUiJv7ajqdjilrmSHYmR93d7ayrSLl2pZsCYwXjjAgXwLUPTKOyLPqJCOLuezFSTsQZm7qFMUkDlmUtqizlXvg%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20%D0%9A%D0%BE%D0%BD%D0%B5%D0%B2%D0%B0%2014.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=42713&hid=f75c96d17f7cd605720e7a850b701b82&media_type=image&tknv=v3&etag=0d1f3c755f47cf1a2d515ae15f1dd586",
+        "entityId": 1,
+        "entityType": "apartments",
+        "entityDisplayName": "Интерьеры (квартиры)"
+      },
+      {
+        "id": 24,
+        "name": "Кв-ра в ЖК Континенталь.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/bac03a287313f91be9a3dbc2ecac590d409d68fd96e4a237cb5d9021a6904cd4/6831255d/OUiJv7ajqdjilrmSHYmR92dtw0gFYgUiHj9boXhm1Kk5H72YXH0pvwKl7Gk2F_94sFijbErpFQN0wk5KQ9KdgQ%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20%D0%9A%D0%BE%D0%BD%D1%82%D0%B8%D0%BD%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=50089&hid=e7937de4f8673c103fe84954f78b9676&media_type=image&tknv=v3&etag=27233d2089a39565209ce09964044344",
+        "entityId": 1,
+        "entityType": "apartments",
+        "entityDisplayName": "Интерьеры (квартиры)"
+      },
+      {
+        "id": 25,
+        "name": "Кв-ра в ЖК Седьмое небо.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/232946f2857f88a73257122f5fa03c0ab1c9659f9a319791a9ad51c056c5f0c3/6831255d/OUiJv7ajqdjilrmSHYmR99hXqic3H6D_FZR8Hi7dZKr-K6zQW_2VQI4v-tbOfv35Wvlxio9XaHK--ULjWCXZvw%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20%D0%A1%D0%B5%D0%B4%D1%8C%D0%BC%D0%BE%D0%B5%20%D0%BD%D0%B5%D0%B1%D0%BE.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=40626&hid=97ca182a9c12b71ab62ed6141bae5ac8&media_type=image&tknv=v3&etag=3746db47cc6f314a5d0ac42707fb1c21",
+        "entityId": 1,
+        "entityType": "apartments",
+        "entityDisplayName": "Интерьеры (квартиры)"
+      },
+      {
+        "id": 26,
+        "name": "Кв-ра в ЖК Феллини, г. Геленджик.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/9c26fbc71c8d9216da5ec885a2e83c053c41af0c143dd787cd0b73aef094c7b5/6831255e/OUiJv7ajqdjilrmSHYmR9zKbYPx1SXjQ2Pn2e4zGm2aY5bon8rt7GpEARPlK1I0ZdtHMoi9IhXXqDIzO6XfC9A%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20%D0%A4%D0%B5%D0%BB%D0%BB%D0%B8%D0%BD%D0%B8%2C%20%D0%B3.%20%D0%93%D0%B5%D0%BB%D0%B5%D0%BD%D0%B4%D0%B6%D0%B8%D0%BA.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=215121&hid=014580a6308bd4d2f4428e5c5f90d6dd&media_type=image&tknv=v3&etag=c1d24f30df704e0766693cf6f4154080",
+        "entityId": 1,
+        "entityType": "apartments",
+        "entityDisplayName": "Интерьеры (квартиры)"
+      },
+      {
+        "id": 27,
+        "name": "Кв-ра в ЖК Шатер.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/b2a2dc8b4b01a26dc6001f48c400bb25177ee74fbda9e37fd98a9c8aa2f6cdf1/6831255f/OUiJv7ajqdjilrmSHYmR95jW_WRe_uPkEuQZvAnPUXdw3g8yv8y36wXssslR44bsKkm8A46bJ4hh05R56l4m7Q%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20%D0%A8%D0%B0%D1%82%D0%B5%D1%80.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=47217&hid=c467d107e276e13046f7bf25c611276d&media_type=image&tknv=v3&etag=f031af08dd158e858c6f1fb29e2234a9",
+        "entityId": 1,
+        "entityType": "apartments",
+        "entityDisplayName": "Интерьеры (квартиры)"
+      },
+      {
+        "id": 28,
+        "name": "Кв-ра на ул Демьяна Бедного 15.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/f67085190559d1bcfa3522e5732540fc3f5c5e05e1ac0dcc3b61aee2fea4e985/68312560/OUiJv7ajqdjilrmSHYmR99y7fummzpr3zN7u-ut-4J-b74xUs8fvD-TxvCYrXtR1ezHxThCsyXlsH4ZUfrb_ew%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%BD%D0%B0%20%D1%83%D0%BB%20%D0%94%D0%B5%D0%BC%D1%8C%D1%8F%D0%BD%D0%B0%20%D0%91%D0%B5%D0%B4%D0%BD%D0%BE%D0%B3%D0%BE%2015.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=250493&hid=eab026f2dad32663b20a9a35dcad92d7&media_type=image&tknv=v3&etag=4d7f29f09c15d2dce879b44c50d2ea7d",
+        "entityId": 1,
+        "entityType": "apartments",
+        "entityDisplayName": "Интерьеры (квартиры)"
+      },
+      {
+        "id": 29,
+        "name": "Кв-ра на ул Петровка.jpg",
+        "url": "https://downloader.disk.yandex.ru/disk/846e447b7d9f1b89138d698cba7eacea37e37a1cb446ef3a246ed88ed9446dfe/68312561/OUiJv7ajqdjilrmSHYmR9-8xFuSIsKQrOVidskcbOqCZKY8N7WrVj7-oChFoIYpFLjxk_1zdA4rvPcov9AAZZg%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%BD%D0%B0%20%D1%83%D0%BB%20%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D0%BA%D0%B0.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=47862&hid=f5ce62fe0c1e7a1cecd91b54af9e4ea2&media_type=image&tknv=v3&etag=5e144cdab85e15dbf92568419ab5fe0c",
+        "entityId": 1,
+        "entityType": "apartments",
+        "entityDisplayName": "Интерьеры (квартиры)"
+      }
+    ]
+  },
+  "images": [
+    {
+      "id": 11,
+      "name": "Дом в КП Векшино.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/2605aa962b012d048dd20d861f365975696cdf139f0525ca075efe519eaa07ad/68312552/OUiJv7ajqdjilrmSHYmR9181G1YU13mUzlIrgvSV3ULUmxF4HF7s1N64vRag7hfVcDjSm3wcjYb8kcU8MuYTzw%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%9A%D0%9F%20%D0%92%D0%B5%D0%BA%D1%88%D0%B8%D0%BD%D0%BE.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=54684&hid=9afbd78e7151fce8ec07d833137833b2&media_type=image&tknv=v3&etag=40d9cdf8d7af1b30ccea03b0891ba728",
+      "entityId": 2,
+      "entityType": "houses",
+      "entityDisplayName": "Загородные дома"
+    },
+    {
+      "id": 12,
+      "name": "Дом в КП Клуб 20’71.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/a3d80b77f8eaa64a95108ed8d7e8cdb4cb6e9a239761a114884e862c326626cf/68312553/OUiJv7ajqdjilrmSHYmR91cB2Ai1mpqIFKccxSW5CjAec1CGGFzKM9FutFrswL-CTjQlq_zfMfG0aaWU7O1XVw%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%9A%D0%9F%20%D0%9A%D0%BB%D1%83%D0%B1%2020%E2%80%9971.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=69988&hid=1cdadbabbec91236f8371ddeccedc6f4&media_type=image&tknv=v3&etag=7b951373da2591a237203096e95a267d",
+      "entityId": 2,
+      "entityType": "houses",
+      "entityDisplayName": "Загородные дома"
+    },
+    {
+      "id": 13,
+      "name": "Дом в КП Мартемьяново.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/2c31a34539799b46f2cc04c4de68af54a80a39e1ca380d081ba97f3dc20dc0cd/68312554/OUiJv7ajqdjilrmSHYmR9_y0HmlSXbtNOOtC5h0GLrUXZ1oJ0qctjDvDvToCJQsl7mLCc34JNgw4v22_SrannQ%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%9A%D0%9F%20%D0%9C%D0%B0%D1%80%D1%82%D0%B5%D0%BC%D1%8C%D1%8F%D0%BD%D0%BE%D0%B2%D0%BE.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=221125&hid=40281612006f9c61bee59bb5f1e4ab82&media_type=image&tknv=v3&etag=0b1b5febd6952f2f5d67b457519a4280",
+      "entityId": 2,
+      "entityType": "houses",
+      "entityDisplayName": "Загородные дома"
+    },
+    {
+      "id": 14,
+      "name": "Дом в КП Третья Охота.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/68df22faa19bc62110c8ecf01839701dbed9cf3ff574935c763cef4f2c702142/68312555/OUiJv7ajqdjilrmSHYmR9xcO1Z6kxL_lQVBPyChYN1nAKKtCi944M07a8XzcVN1o-CAfc0A0X1DUZxYqbpmxBg%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%9A%D0%9F%20%D0%A2%D1%80%D0%B5%D1%82%D1%8C%D1%8F%20%D0%9E%D1%85%D0%BE%D1%82%D0%B0.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=42677&hid=42d4121dbeb24c60c9ac0671a954dafc&media_type=image&tknv=v3&etag=2d5060e87e11e23a97bd43d749c6b4dc",
+      "entityId": 2,
+      "entityType": "houses",
+      "entityDisplayName": "Загородные дома"
+    },
+    {
+      "id": 15,
+      "name": "Дом в Поселке Петрово-Дальнее.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/0c0b86c28f9404ee4b90adc28cef7192c21685fc4547ec1b26172d0a3d04fcef/68312555/OUiJv7ajqdjilrmSHYmR9_6sEhtFWHbEtFV5a4HIc2v5kiCEAovIaCjmWJzM0rU8vFDmPLF9J0yoiSDuDzNYNQ%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%9F%D0%BE%D1%81%D0%B5%D0%BB%D0%BA%D0%B5%20%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D0%BE-%D0%94%D0%B0%D0%BB%D1%8C%D0%BD%D0%B5%D0%B5.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=48392&hid=c8b7efe18f403f93e39cde04d23b0bc5&media_type=image&tknv=v3&etag=1db8e609c74935e1a97b5fcbfb6ca98f",
+      "entityId": 2,
+      "entityType": "houses",
+      "entityDisplayName": "Загородные дома"
+    },
+    {
+      "id": 16,
+      "name": "Дом в деревне Мышецкое.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/c6334eb2fb56d9b8a26d14974cf84fbf678f88fa52d39973d3a371fbeaffd678/68312556/OUiJv7ajqdjilrmSHYmR923u1tRrFBpf3jl596e0ZAFnoZHSNFq9Ga1Mqle8n70lOpPiyV-oZ7aWr1i3IYgr9g%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%BD%D0%B5%20%D0%9C%D1%8B%D1%88%D0%B5%D1%86%D0%BA%D0%BE%D0%B5.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=46124&hid=27487e3ab95724edd0dae0ab4ef4e415&media_type=image&tknv=v3&etag=e4f19053332d203ff95872a6a3b7be8c",
+      "entityId": 2,
+      "entityType": "houses",
+      "entityDisplayName": "Загородные дома"
+    },
+    {
+      "id": 17,
+      "name": "Дом в поселке “Истра Кантри Клаб”.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/e9b48759585b2983d9c799c47aae2e730a634672bd990397abc067e0f6bbf323/68312557/OUiJv7ajqdjilrmSHYmR96aibAGkf1p-pgayed10p1XTgF_N_GIlfwwYULbLFEZRdp3QL43cSo9ptVuY3lT8lw%3D%3D?uid=362045858&filename=%D0%94%D0%BE%D0%BC%20%D0%B2%20%D0%BF%D0%BE%D1%81%D0%B5%D0%BB%D0%BA%D0%B5%20%E2%80%9C%D0%98%D1%81%D1%82%D1%80%D0%B0%20%D0%9A%D0%B0%D0%BD%D1%82%D1%80%D0%B8%20%D0%9A%D0%BB%D0%B0%D0%B1%E2%80%9D.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=33701&hid=cf63bc6aa23ae95bfa402814e8f19f23&media_type=image&tknv=v3&etag=882c0ef12484c31d71027a12eb6fb0e3",
+      "entityId": 2,
+      "entityType": "houses",
+      "entityDisplayName": "Загородные дома"
+    },
+    {
+      "id": 18,
+      "name": "Интерьеры Дома в КП Клуб 20’71.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/c60fd18aabee1d08fb1e891576d2a6092a9ae06e0c20ffed2ad261e43352b81a/68312558/OUiJv7ajqdjilrmSHYmR97kjnSB4T1zFuFoTkw3r6QUW4MGDlkcfQCkdxi84aTeVeYb8eu2Vq4iRbV6bOIk1hg%3D%3D?uid=362045858&filename=%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%8C%D0%B5%D1%80%D1%8B%20%D0%94%D0%BE%D0%BC%D0%B0%20%D0%B2%20%D0%9A%D0%9F%20%D0%9A%D0%BB%D1%83%D0%B1%2020%E2%80%9971.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=49170&hid=c66dead86e7e0f03365519f342b7f45e&media_type=image&tknv=v3&etag=dfcd5ad79ffc7b21f3a5975a85002ae6",
+      "entityId": 1,
+      "entityType": "apartments",
+      "entityDisplayName": "Интерьеры (квартиры)"
+    },
+    {
+      "id": 19,
+      "name": "Интерьеры дома в КП Третья Охота.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/014e3dad022cc4fdaa68c536bc4a4ee77b238029e47d3bb3233313f7ed99e556/68312559/OUiJv7ajqdjilrmSHYmR97OUmb3MtIkDHstXXzT0RFFEmxSWr5MxMUgYtK1mXz1HXkVs2iQRGCjEzgoKSZjEvg%3D%3D?uid=362045858&filename=%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%8C%D0%B5%D1%80%D1%8B%20%D0%B4%D0%BE%D0%BC%D0%B0%20%D0%B2%20%D0%9A%D0%9F%20%D0%A2%D1%80%D0%B5%D1%82%D1%8C%D1%8F%20%D0%9E%D1%85%D0%BE%D1%82%D0%B0.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=51035&hid=68cbefea15051e48510d6ec3b4364b76&media_type=image&tknv=v3&etag=85debd95190505894f35c3ba14bf3234",
+      "entityId": 1,
+      "entityType": "apartments",
+      "entityDisplayName": "Интерьеры (квартиры)"
+    },
+    {
+      "id": 20,
+      "name": "Интерьеры квартиры в Петрово-Дальнем.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/bf13103e2d40233efe6188ef5aa72a2b18d3a50c7a517069ec28d465081ba3c4/68312559/OUiJv7ajqdjilrmSHYmR94oyHQomaA5XJSXb7vPyBFKK8HqzMzsnDj2vHbPhKGLsDE1MjWZGKUhJIkcRLXaSPQ%3D%3D?uid=362045858&filename=%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%8C%D0%B5%D1%80%D1%8B%20%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%8B%20%D0%B2%20%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D0%BE-%D0%94%D0%B0%D0%BB%D1%8C%D0%BD%D0%B5%D0%BC.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=34076&hid=c5640010d2b8684a0cc6feee3685ae3a&media_type=image&tknv=v3&etag=920226d9e398aabd0163ffd111c96e8e",
+      "entityId": 1,
+      "entityType": "apartments",
+      "entityDisplayName": "Интерьеры (квартиры)"
+    },
+    {
+      "id": 21,
+      "name": "Кв-ра в ЖК Loft Garden.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/c3b8ea5ed83b913b3b00d8ddab278d52c0de86ce9c86ca707df8cfc86ff608f9/6831255a/OUiJv7ajqdjilrmSHYmR92aVKWZYyrD9mo1dCwI-NORJyMAVbjqlu9uvYFFWJwE4S6hPnK_kAaARDzIgr7JlPg%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20Loft%20Garden.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=198118&hid=a4045e7376eb3e2385c9c8fec3b3b0f5&media_type=image&tknv=v3&etag=14700d916b3be610a5f2da2df8a4ac71",
+      "entityId": 1,
+      "entityType": "apartments",
+      "entityDisplayName": "Интерьеры (квартиры)"
+    },
+    {
+      "id": 22,
+      "name": "Кв-ра в ЖК «Английский квартал».jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/13c29eda6bbf81badd4ee1355685075a0ae2b3357e8db0acee28bcc12db31a59/6831255b/OUiJv7ajqdjilrmSHYmR9y_CzXC1_tPiiH5irIo0Nn-8EcGy4Bb0vPmjKeK-Q70MnTAnO9Bgl_ZBnxiTgnPKyg%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20%C2%AB%D0%90%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B0%D0%BB%C2%BB.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=46676&hid=ff22e977934e8d176ceb68471efa7829&media_type=image&tknv=v3&etag=1f9ef1e57157c2eaf7358223cce16536",
+      "entityId": 1,
+      "entityType": "apartments",
+      "entityDisplayName": "Интерьеры (квартиры)"
+    },
+    {
+      "id": 23,
+      "name": "Кв-ра в ЖК Конева 14.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/12fd28b11a9dec860ffa25e6c70c667c04e49572de908989daa02bb74b682e50/6831255c/OUiJv7ajqdjilrmSHYmR93d7ayrSLl2pZsCYwXjjAgXwLUPTKOyLPqJCOLuezFSTsQZm7qFMUkDlmUtqizlXvg%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20%D0%9A%D0%BE%D0%BD%D0%B5%D0%B2%D0%B0%2014.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=42713&hid=f75c96d17f7cd605720e7a850b701b82&media_type=image&tknv=v3&etag=0d1f3c755f47cf1a2d515ae15f1dd586",
+      "entityId": 1,
+      "entityType": "apartments",
+      "entityDisplayName": "Интерьеры (квартиры)"
+    },
+    {
+      "id": 24,
+      "name": "Кв-ра в ЖК Континенталь.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/bac03a287313f91be9a3dbc2ecac590d409d68fd96e4a237cb5d9021a6904cd4/6831255d/OUiJv7ajqdjilrmSHYmR92dtw0gFYgUiHj9boXhm1Kk5H72YXH0pvwKl7Gk2F_94sFijbErpFQN0wk5KQ9KdgQ%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20%D0%9A%D0%BE%D0%BD%D1%82%D0%B8%D0%BD%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=50089&hid=e7937de4f8673c103fe84954f78b9676&media_type=image&tknv=v3&etag=27233d2089a39565209ce09964044344",
+      "entityId": 1,
+      "entityType": "apartments",
+      "entityDisplayName": "Интерьеры (квартиры)"
+    },
+    {
+      "id": 25,
+      "name": "Кв-ра в ЖК Седьмое небо.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/232946f2857f88a73257122f5fa03c0ab1c9659f9a319791a9ad51c056c5f0c3/6831255d/OUiJv7ajqdjilrmSHYmR99hXqic3H6D_FZR8Hi7dZKr-K6zQW_2VQI4v-tbOfv35Wvlxio9XaHK--ULjWCXZvw%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20%D0%A1%D0%B5%D0%B4%D1%8C%D0%BC%D0%BE%D0%B5%20%D0%BD%D0%B5%D0%B1%D0%BE.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=40626&hid=97ca182a9c12b71ab62ed6141bae5ac8&media_type=image&tknv=v3&etag=3746db47cc6f314a5d0ac42707fb1c21",
+      "entityId": 1,
+      "entityType": "apartments",
+      "entityDisplayName": "Интерьеры (квартиры)"
+    },
+    {
+      "id": 26,
+      "name": "Кв-ра в ЖК Феллини, г. Геленджик.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/9c26fbc71c8d9216da5ec885a2e83c053c41af0c143dd787cd0b73aef094c7b5/6831255e/OUiJv7ajqdjilrmSHYmR9zKbYPx1SXjQ2Pn2e4zGm2aY5bon8rt7GpEARPlK1I0ZdtHMoi9IhXXqDIzO6XfC9A%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20%D0%A4%D0%B5%D0%BB%D0%BB%D0%B8%D0%BD%D0%B8%2C%20%D0%B3.%20%D0%93%D0%B5%D0%BB%D0%B5%D0%BD%D0%B4%D0%B6%D0%B8%D0%BA.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=215121&hid=014580a6308bd4d2f4428e5c5f90d6dd&media_type=image&tknv=v3&etag=c1d24f30df704e0766693cf6f4154080",
+      "entityId": 1,
+      "entityType": "apartments",
+      "entityDisplayName": "Интерьеры (квартиры)"
+    },
+    {
+      "id": 27,
+      "name": "Кв-ра в ЖК Шатер.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/b2a2dc8b4b01a26dc6001f48c400bb25177ee74fbda9e37fd98a9c8aa2f6cdf1/6831255f/OUiJv7ajqdjilrmSHYmR95jW_WRe_uPkEuQZvAnPUXdw3g8yv8y36wXssslR44bsKkm8A46bJ4hh05R56l4m7Q%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%B2%20%D0%96%D0%9A%20%D0%A8%D0%B0%D1%82%D0%B5%D1%80.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=47217&hid=c467d107e276e13046f7bf25c611276d&media_type=image&tknv=v3&etag=f031af08dd158e858c6f1fb29e2234a9",
+      "entityId": 1,
+      "entityType": "apartments",
+      "entityDisplayName": "Интерьеры (квартиры)"
+    },
+    {
+      "id": 28,
+      "name": "Кв-ра на ул Демьяна Бедного 15.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/f67085190559d1bcfa3522e5732540fc3f5c5e05e1ac0dcc3b61aee2fea4e985/68312560/OUiJv7ajqdjilrmSHYmR99y7fummzpr3zN7u-ut-4J-b74xUs8fvD-TxvCYrXtR1ezHxThCsyXlsH4ZUfrb_ew%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%BD%D0%B0%20%D1%83%D0%BB%20%D0%94%D0%B5%D0%BC%D1%8C%D1%8F%D0%BD%D0%B0%20%D0%91%D0%B5%D0%B4%D0%BD%D0%BE%D0%B3%D0%BE%2015.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=250493&hid=eab026f2dad32663b20a9a35dcad92d7&media_type=image&tknv=v3&etag=4d7f29f09c15d2dce879b44c50d2ea7d",
+      "entityId": 1,
+      "entityType": "apartments",
+      "entityDisplayName": "Интерьеры (квартиры)"
+    },
+    {
+      "id": 29,
+      "name": "Кв-ра на ул Петровка.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/846e447b7d9f1b89138d698cba7eacea37e37a1cb446ef3a246ed88ed9446dfe/68312561/OUiJv7ajqdjilrmSHYmR9-8xFuSIsKQrOVidskcbOqCZKY8N7WrVj7-oChFoIYpFLjxk_1zdA4rvPcov9AAZZg%3D%3D?uid=362045858&filename=%D0%9A%D0%B2-%D1%80%D0%B0%20%D0%BD%D0%B0%20%D1%83%D0%BB%20%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D0%BA%D0%B0.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=47862&hid=f5ce62fe0c1e7a1cecd91b54af9e4ea2&media_type=image&tknv=v3&etag=5e144cdab85e15dbf92568419ab5fe0c",
+      "entityId": 1,
+      "entityType": "apartments",
+      "entityDisplayName": "Интерьеры (квартиры)"
+    },
+    {
+      "id": 30,
+      "name": "Мансарда в загородном жилом доме.jpg",
+      "url": "https://downloader.disk.yandex.ru/disk/5f055ebc035118037c6a8ba5edc7b4c7f862df4486d9cbed6077920efbca86b6/68312562/OUiJv7ajqdjilrmSHYmR96LJeteApg7tSt0Hb5HaDoYFX3zEInKZyxGXtzdinh4s1ylp3_yQu5scc4AZnoPYGg%3D%3D?uid=362045858&filename=%D0%9C%D0%B0%D0%BD%D1%81%D0%B0%D1%80%D0%B4%D0%B0%20%D0%B2%20%D0%B7%D0%B0%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%BD%D0%BE%D0%BC%20%D0%B6%D0%B8%D0%BB%D0%BE%D0%BC%20%D0%B4%D0%BE%D0%BC%D0%B5.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=362045858&fsize=47775&hid=a19360995f8a045c0fd0dcd36d390af9&media_type=image&tknv=v3&etag=794609c6f430159fa28036f5c5528e34",
+      "entityId": 2,
+      "entityType": "houses",
+      "entityDisplayName": "Загородные дома"
+    }
+  ]
+}

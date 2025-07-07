@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Этапы работы - Архитектурное Бюро</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'white': '#FFFFFF',
+                        'black': '#000000',
+                        'light-gray': '#E6E6E6',
+                        'gray': '#A6A6A6',
+                        'dark-gray': '#2F2F2F',
+                        'gold-1': '#FFC107',
+                        'gold-2': '#E8A317',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-roboto text-dark-gray bg-white">
+    <!-- Шапка сайта -->
+    <header class="bg-white fixed w-full top-0 shadow-md z-50">
+        <div class="container mx-auto py-4 px-4 flex justify-between items-center">
+            <!-- Логотип -->
+            <a href="index.html" class="flex items-center">
+                <img src="Logo_black.svg" alt="Логотип" class="logo-image">
+            </a>
+
+            <!-- Навигация для десктопа -->
+            <nav class="hidden lg:flex">
+                <a href="portfolio.html" class="header-link">Портфолио</a>
+                <a href="stages.html" class="header-link">Этапы работы</a>
+                <a href="articles.html" class="header-link">Статьи</a>
+                <a href="services.html" class="header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="header-link">ИИ дизайн</a>
+                <a href="about.html" class="header-link">О нас</a>
+                <a href="contacts.html" class="header-link">Контакты</a>
+            </nav>
+
+            <!-- Кнопка мобильного меню -->
+            <button id="mobile-menu-button" class="lg:hidden flex flex-col justify-center items-center">
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black"></span>
+            </button>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="lg:hidden hidden absolute top-full left-0 w-full bg-white shadow-md">
+            <nav class="flex flex-col p-4">
+                <a href="portfolio.html" class="py-2 header-link">Портфолио</a>
+                <a href="stages.html" class="py-2 header-link">Этапы работы</a>
+                <a href="articles.html" class="py-2 header-link">Статьи</a>
+                <a href="services.html" class="py-2 header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="py-2 header-link">ИИ дизайн</a>
+                <a href="about.html" class="py-2 header-link">О нас</a>
+                <a href="contacts.html" class="py-2 header-link">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main class="pt-32 pb-20">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-montserrat font-bold mb-4 text-center">
+                Этапы работы
+            </h1>
+            <div class="w-20 h-1 bg-gold-1 mx-auto mb-8"></div>
+            <p class="text-xl text-center max-w-2xl mx-auto px-4 mb-16">
+                Наша команда предлагает полный цикл архитектурно-строительного проектирования. Каждый этап имеет свои особенности и важность в общем процессе работы.
+            </p>
+            
+            <!-- Этап 1 - Предпроект -->
+            <div class="mb-20">
+                <div class="flex flex-col md:flex-row gap-8 items-center max-w-6xl mx-auto">
+                    <div class="w-full md:w-1/2">
+                        <div class="h-72 rounded-lg overflow-hidden">
+                            <img src="pics/Предпроект.jpg" alt="Предпроект - анализ участка и планирование" class="w-full h-full object-cover rounded-lg">
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-3xl font-montserrat font-bold mb-4">Предпроект</h2>
+                        <div class="w-16 h-1 bg-gold-1 mb-6"></div>
+                        <p class="text-lg mb-4">
+                            На этапе предпроекта мы проводим первичный анализ участка или помещения, учитываем все ваши пожелания и требования к будущему проекту. Изучаем нормативную документацию, получаем исходные данные и проводим необходимые исследования.
+                        </p>
+                        <p class="text-lg">
+                            На этом этапе формируется общее видение проекта, определяются ключевые задачи и ограничения, составляется техническое задание для дальнейшей работы.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Этап 2 - Планировка -->
+            <div class="mb-20">
+                <div class="flex flex-col md:flex-row-reverse gap-8 items-center max-w-6xl mx-auto">
+                    <div class="w-full md:w-1/2">
+                        <div class="h-72 rounded-lg overflow-hidden">
+                            <img src="pics/Планировка.jpg" alt="Планировка - функциональное зонирование пространства" class="w-full h-full object-cover rounded-lg">
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-3xl font-montserrat font-bold mb-4">Планировка</h2>
+                        <div class="w-16 h-1 bg-gold-1 mb-6"></div>
+                        <p class="text-lg mb-4">
+                            На этапе планировки разрабатываем варианты функционального зонирования пространства, определяем оптимальное расположение помещений и их взаимосвязь. Создаем планировочные решения с учетом эргономики, функциональности и ваших предпочтений.
+                        </p>
+                        <p class="text-lg">
+                            Результатом этого этапа является утвержденный план помещений, который станет основой для дальнейшего проектирования. Мы согласовываем с вами окончательный вариант планировки перед тем, как переходить к следующему этапу.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Этап 3 - Эскизный проект -->
+            <div class="mb-20">
+                <div class="flex flex-col md:flex-row gap-8 items-center max-w-6xl mx-auto">
+                    <div class="w-full md:w-1/2">
+                        <div class="h-72 rounded-lg overflow-hidden">
+                            <img src="pics/Эскизный проект.jpg" alt="Эскизный проект - архитектурные решения и визуализация" class="w-full h-full object-cover rounded-lg">
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-3xl font-montserrat font-bold mb-4">Эскизный проект</h2>
+                        <div class="w-16 h-1 bg-gold-1 mb-6"></div>
+                        <p class="text-lg mb-4">
+                            На этапе эскизного проекта мы разрабатываем предварительные архитектурные и дизайнерские решения, которые включают внешний вид здания, интерьерные решения, колористку, стилистику и основные материалы. Создаем визуализации, чтобы вы могли наглядно представить результат.
+                        </p>
+                        <p class="text-lg">
+                            Эскизный проект позволяет уточнить и согласовать все детали перед разработкой полной технической документации. На этом этапе еще возможно внести изменения в общую концепцию с минимальными затратами.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Этап 4 - Инженерные разделы -->
+            <div class="mb-20">
+                <div class="flex flex-col md:flex-row-reverse gap-8 items-center max-w-6xl mx-auto">
+                    <div class="w-full md:w-1/2">
+                        <div class="h-72 rounded-lg overflow-hidden">
+                            <img src="pics/Инженерные разделы.jpg" alt="Инженерные разделы - технические системы здания" class="w-full h-full object-cover rounded-lg">
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-3xl font-montserrat font-bold mb-4">Инженерные разделы</h2>
+                        <div class="w-16 h-1 bg-gold-1 mb-6"></div>
+                        <p class="text-lg mb-4">
+                            На этапе разработки инженерных разделов проектируются все технические системы: водоснабжение, канализация, отопление, вентиляция, кондиционирование, электроснабжение, слаботочные системы, автоматизация и диспетчеризация.
+                        </p>
+                        <p class="text-lg">
+                            Наши инженеры создают оптимальные решения, которые обеспечивают комфорт, безопасность и энергоэффективность проекта. Мы координируем работу всех инженерных систем для их гармоничной интеграции в общий проект.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Этап 5 - Рабочий проект -->
+            <div class="mb-20">
+                <div class="flex flex-col md:flex-row gap-8 items-center max-w-6xl mx-auto">
+                    <div class="w-full md:w-1/2">
+                        <div class="h-72 rounded-lg overflow-hidden">
+                            <img src="pics/Рабочий проект.jpg" alt="Рабочий проект - техническая документация для строительства" class="w-full h-full object-cover rounded-lg">
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-3xl font-montserrat font-bold mb-4">Рабочий проект</h2>
+                        <div class="w-16 h-1 bg-gold-1 mb-6"></div>
+                        <p class="text-lg mb-4">
+                            На этапе разработки рабочего проекта мы создаем полную техническую документацию для строительства или ремонта: детальные чертежи, спецификации материалов, ведомости работ. Документация включает все необходимые планы, разрезы, узлы и детали.
+                        </p>
+                        <p class="text-lg">
+                            Рабочий проект служит основным руководством для строителей и подрядчиков. Он содержит исчерпывающую информацию для реализации проекта в соответствии с согласованной концепцией и техническими требованиями.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Этап 6 - Авторский надзор -->
+            <div class="mb-20">
+                <div class="flex flex-col md:flex-row-reverse gap-8 items-center max-w-6xl mx-auto">
+                    <div class="w-full md:w-1/2">
+                        <div class="h-72 rounded-lg overflow-hidden">
+                            <img src="pics/Авторский надзор.jpg" alt="Авторский надзор - контроль строительного процесса" class="w-full h-full object-cover rounded-lg">
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-3xl font-montserrat font-bold mb-4">Авторский надзор</h2>
+                        <div class="w-16 h-1 bg-gold-1 mb-6"></div>
+                        <p class="text-lg mb-4">
+                            На этапе авторского надзора наши специалисты контролируют процесс строительства или ремонта, чтобы обеспечить соответствие выполняемых работ проектной документации. Мы регулярно посещаем объект, консультируем строителей и решаем возникающие вопросы.
+                        </p>
+                        <p class="text-lg">
+                            Авторский надзор помогает избежать ошибок при реализации проекта, обеспечивает высокое качество работ и соблюдение утвержденного дизайна. При необходимости мы вносим корректировки в проектную документацию в ходе строительства.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Информация о выборе этапов -->
+            <div class="max-w-4xl mx-auto bg-light-gray p-8 rounded-lg">
+                <h3 class="text-2xl font-montserrat font-bold mb-4 text-center">Индивидуальный подход к каждому проекту</h3>
+                <p class="text-lg mb-4">
+                    Мы понимаем, что каждый проект уникален, поэтому предлагаем гибкий подход к выбору этапов работы. Вы можете выбрать как полный комплекс услуг, так и отдельные этапы в зависимости от ваших потребностей и бюджета.
+                </p>
+                <p class="text-lg mb-4">
+                    Стоимость работ определяется индивидуально для каждого проекта и зависит от выбранных этапов, сложности и масштаба задачи. Мы всегда готовы предложить оптимальное решение, которое соответствует вашим ожиданиям и возможностям.
+                </p>
+                <p class="text-lg font-medium text-center">
+                    Свяжитесь с нами для консультации и получения индивидуального предложения!
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer class="bg-dark-gray text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Контакты</h3>
+                    <ul class="space-y-2">
+                        <li>Телефон: +7 (XXX) XXX-XX-XX</li>
+                        <li>Email: info@architecture-bureau.com</li>
+                        <li>Адрес: г. Москва, ул. Примерная, д. 123</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Наши услуги</h3>
+                    <ul class="space-y-2">
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Архитектурное проектирование</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Дизайн интерьера</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Ландшафтный дизайн</a></li>
+                        <li><a href="ai-design.html" class="text-white hover:text-gold-1 transition-colors">ИИ дизайн</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Информация</h3>
+                    <ul class="space-y-2">
+                        <li><a href="stages.html" class="text-white hover:text-gold-1 transition-colors">Этапы работы</a></li>
+                        <li><a href="portfolio.html" class="text-white hover:text-gold-1 transition-colors">Портфолио</a></li>
+                        <li><a href="about.html" class="text-white hover:text-gold-1 transition-colors">О нас</a></li>
+                        <li><a href="articles.html" class="text-white hover:text-gold-1 transition-colors">Статьи</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-center mt-8 pt-8 border-t border-gray">                
+                <img src="Logo.svg" alt="Логотип" class="w-32 h-32 mb-4">                
+                <p class="text-center text-sm">© <span id="current-year"></span> Архитектурное Бюро. Все права защищены.</p>            
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

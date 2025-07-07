@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест API статей</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold mb-4">Тест создания статьи</h1>
+        
+        <form id="testForm">
+            <div class="mb-4">
+                <label for="title" class="block text-sm font-medium mb-1">Заголовок:</label>
+                <input type="text" id="title" name="title" class="w-full p-2 border rounded" value="Тестовая статья">
+            </div>
+            
+            <div class="mb-4">
+                <label for="category" class="block text-sm font-medium mb-1">Категория:</label>
+                <select id="category" name="category" class="w-full p-2 border rounded">
+                    <option value="architecture">Архитектура</option>
+                    <option value="interior">Дизайн интерьера</option>
+                    <option value="country">Загородные дома</option>
+                </select>
+            </div>
+            
+            <div class="mb-4">
+                <label for="shortDescription" class="block text-sm font-medium mb-1">Описание:</label>
+                <textarea id="shortDescription" name="shortDescription" class="w-full p-2 border rounded" rows="3">Тестовое описание статьи</textarea>
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+                Создать статью
+            </button>
+        </form>
+        
+        <div id="result" class="mt-4 p-3 rounded hidden"></div>
+    </div>
+
+    <script>
+        document.getElementById('testForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('category', document.getElementById('category').value);
+            formData.append('shortDescription', document.getElementById('shortDescription').value);
+            formData.append('publicationDate', new Date().toISOString().split('T')[0]);
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Отправка...';
+            resultDiv.className = 'mt-4 p-3 rounded bg-yellow-100 text-yellow-800';
+            resultDiv.classList.remove('hidden');
+            
+            try {
+                const response = await fetch('/api/db/articles', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `✅ Статья создана! ID: ${data.articleId}, Slug: ${data.slug}`;
+                    resultDiv.className = 'mt-4 p-3 rounded bg-green-100 text-green-800';
+                } else {
+                    resultDiv.innerHTML = `❌ Ошибка: ${data.error}`;
+                    resultDiv.className = 'mt-4 p-3 rounded bg-red-100 text-red-800';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Ошибка сети: ${error.message}`;
+                resultDiv.className = 'mt-4 p-3 rounded bg-red-100 text-red-800';
+            }
+        });
+    </script>
+</body>
+</html> 

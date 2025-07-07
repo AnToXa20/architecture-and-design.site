@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавление администратора</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+        
+        input[type="text"], 
+        input[type="email"], 
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background-color: #45a049;
+        }
+        
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .message {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .required {
+            color: red;
+        }
+        
+        .admin-list {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        
+        .admin-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Добавление администратора</h1>
+        
+        <div id="message" class="message"></div>
+        
+        <form id="adminForm">
+            <div class="form-group">
+                <label for="username">Логин <span class="required">*</span></label>
+                <input type="text" id="username" name="username" required maxlength="50">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Пароль <span class="required">*</span></label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required maxlength="100">
+            </div>
+            
+            <div class="form-group">
+                <label for="full_name">Полное имя</label>
+                <input type="text" id="full_name" name="full_name" maxlength="100">
+            </div>
+            
+            <div class="form-group">
+                <label for="role">Роль <span class="required">*</span></label>
+                <select id="role" name="role" required>
+                    <option value="editor">Редактор</option>
+                    <option value="admin">Администратор</option>
+                    <option value="viewer">Наблюдатель</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn" id="submitBtn">Добавить администратора</button>
+        </form>
+        
+        <div class="admin-list">
+            <h2>Список администраторов</h2>
+            <div id="adminsList" class="loading">Загрузка...</div>
+        </div>
+    </div>
+
+    <script>
+        // Функция для отображения сообщений
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = message;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+            
+            // Автоматически скрыть сообщение через 5 секунд
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Функция для загрузки списка админов
+        async function loadAdmins() {
+            try {
+                const response = await fetch('/api/db/admins');
+                const data = await response.json();
+                
+                const adminsDiv = document.getElementById('adminsList');
+                
+                if (data.success && data.admins.length > 0) {
+                    adminsDiv.innerHTML = data.admins.map(admin => `
+                        <div class="admin-item">
+                            <strong>${admin.full_name || admin.username}</strong> (${admin.username})<br>
+                            <small>Email: ${admin.email} | Роль: ${admin.role}</small>
+                        </div>
+                    `).join('');
+                } else {
+                    adminsDiv.innerHTML = '<p>Администраторы не найдены</p>';
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки админов:', error);
+                document.getElementById('adminsList').innerHTML = '<p>Ошибка загрузки данных</p>';
+            }
+        }
+        
+        // Обработка отправки формы
+        document.getElementById('adminForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            
+            try {
+                // Блокируем кнопку во время отправки
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Добавление...';
+                
+                // Собираем данные формы
+                const formData = new FormData(e.target);
+                const data = {
+                    username: formData.get('username'),
+                    password: formData.get('password'),
+                    email: formData.get('email'),
+                    full_name: formData.get('full_name') || null,
+                    role: formData.get('role')
+                };
+                
+                // Отправляем данные на сервер
+                const response = await fetch('/api/db/admins', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage('Администратор успешно добавлен!', 'success');
+                    e.target.reset(); // Очищаем форму
+                    loadAdmins(); // Обновляем список
+                } else {
+                    showMessage(`Ошибка: ${result.error}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Ошибка отправки:', error);
+                showMessage('Ошибка подключения к серверу', 'error');
+            } finally {
+                // Разблокируем кнопку
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+        
+        // Загружаем список админов при загрузке страницы
+        document.addEventListener('DOMContentLoaded', loadAdmins);
+    </script>
+</body>
+</html> 

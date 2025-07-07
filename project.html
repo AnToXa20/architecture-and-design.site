@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проект - Архитектурное Бюро</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'white': '#FFFFFF',
+                        'black': '#000000',
+                        'light-gray': '#E6E6E6',
+                        'gray': '#A6A6A6',
+                        'dark-gray': '#2F2F2F',
+                        'gold-1': '#FFC107',
+                        'gold-2': '#E8A317',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-roboto text-dark-gray bg-white">
+    <!-- Шапка сайта -->
+    <header class="bg-white fixed w-full top-0 shadow-md z-50">
+        <div class="container mx-auto py-4 px-4 flex justify-between items-center">
+            <!-- Логотип -->
+            <a href="index.html" class="flex items-center">
+                <img src="Logo_black.svg" alt="Логотип" class="logo-image">
+            </a>
+
+            <!-- Навигация для десктопа -->
+            <nav class="hidden lg:flex">
+                <a href="portfolio.html" class="header-link">Портфолио</a>
+                <a href="stages.html" class="header-link">Этапы работы</a>
+                <a href="articles.html" class="header-link">Статьи</a>
+                <a href="services.html" class="header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="header-link">ИИ дизайн</a>
+                <a href="about.html" class="header-link">О нас</a>
+                <a href="contacts.html" class="header-link">Контакты</a>
+            </nav>
+
+            <!-- Кнопка мобильного меню -->
+            <button id="mobile-menu-button" class="lg:hidden flex flex-col justify-center items-center">
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black"></span>
+            </button>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="lg:hidden hidden absolute top-full left-0 w-full bg-white shadow-md">
+            <nav class="flex flex-col p-4">
+                <a href="portfolio.html" class="py-2 header-link">Портфолио</a>
+                <a href="stages.html" class="py-2 header-link">Этапы работы</a>
+                <a href="articles.html" class="py-2 header-link">Статьи</a>
+                <a href="services.html" class="py-2 header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="py-2 header-link">ИИ дизайн</a>
+                <a href="about.html" class="py-2 header-link">О нас</a>
+                <a href="contacts.html" class="py-2 header-link">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main class="pt-32 pb-20">
+        <div class="container mx-auto px-4">
+            <div class="mb-4">
+                <a href="portfolio.html" class="text-gray hover:text-gold-1 transition-colors flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Назад к портфолио
+                </a>
+            </div>
+            
+            <!-- Шапка проекта -->
+            <div id="project-header" class="mb-12">
+                <h1 id="project-title" class="text-4xl md:text-5xl font-montserrat font-bold mb-4"></h1>
+                <div class="w-20 h-1 bg-gold-1 mb-8"></div>
+            </div>
+            
+            <!-- Основное фото проекта -->
+            <div class="mb-16">
+                <div id="project-cover" class="w-full h-[500px] bg-light-gray rounded-lg flex items-center justify-center">
+                    <span class="text-2xl font-montserrat text-dark-gray">Главное фото проекта</span>
+                </div>
+            </div>
+            
+            <!-- Информация о проекте -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-20">
+                <div class="lg:col-span-2">
+                    <!-- Исходные данные -->
+                    <div class="mb-10">
+                        <h2 class="text-2xl md:text-3xl font-montserrat font-bold mb-4">Исходные данные</h2>
+                        <div id="project-initial-data" class="text-lg"></div>
+                    </div>
+                    
+                    <!-- Задачи -->
+                    <div class="mb-10">
+                        <h2 class="text-2xl md:text-3xl font-montserrat font-bold mb-4">Задачи</h2>
+                        <div id="project-tasks" class="text-lg"></div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="bg-light-gray p-6 rounded-lg">
+                        <h3 class="text-xl font-montserrat font-bold mb-4">Информация о проекте</h3>
+                        <ul class="space-y-4">
+                            <li>
+                                <span class="font-medium">Тип проекта:</span>
+                                <span id="project-type"></span>
+                            </li>
+                            <li>
+                                <span class="font-medium">Площадь:</span>
+                                <span id="project-area"></span>
+                            </li>
+                            <li>
+                                <span class="font-medium">Расположение:</span>
+                                <span id="project-location"></span>
+                            </li>
+                            <li>
+                                <span class="font-medium">Год реализации:</span>
+                                <span id="project-year"></span>
+                            </li>
+                            <li>
+                                <span class="font-medium">Статус:</span>
+                                <span id="project-status"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Содержимое проекта (блоки текста и изображений) -->
+            <div id="project-content" class="mb-20 max-w-5xl mx-auto">
+                <!-- Блоки будут добавлены динамически -->
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="flex justify-center">
+                    <a href="portfolio.html" class="btn bg-dark-gray text-white hover:bg-gold-1 hover:text-black transition-colors">
+                        Назад к портфолио
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer class="bg-dark-gray text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Контакты</h3>
+                    <ul class="space-y-2">
+                        <li>Телефон: +7 XXX XXX XX XX</li>
+                        <li>Email: info@architecture-bureau.com</li>
+                        <li>Адрес: г. Москва, Новинский бульвар 25 к.10 оф.18</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Наши услуги</h3>
+                    <ul class="space-y-2">
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Архитектурное проектирование</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Дизайн интерьера</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Ландшафтный дизайн</a></li>
+                        <li><a href="ai-design.html" class="text-white hover:text-gold-1 transition-colors">ИИ дизайн</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Информация</h3>
+                    <ul class="space-y-2">
+                        <li><a href="stages.html" class="text-white hover:text-gold-1 transition-colors">Этапы работы</a></li>
+                        <li><a href="portfolio.html" class="text-white hover:text-gold-1 transition-colors">Портфолио</a></li>
+                        <li><a href="about.html" class="text-white hover:text-gold-1 transition-colors">О нас</a></li>
+                        <li><a href="articles.html" class="text-white hover:text-gold-1 transition-colors">Статьи</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-center mt-8 pt-8 border-t border-gray">
+                <img src="Logo.svg" alt="Логотип" class="w-32 h-32 mb-4">
+                <p class="text-center text-sm">© <span id="current-year"></span> Архитектурное Бюро. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Функция для получения параметров из URL
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+    
+    // Получаем ID проекта из URL
+    const projectId = getUrlParameter('id');
+    
+    // Функция для получения данных проекта с сервера
+    async function fetchProjectData(id) {
+        try {
+            console.log('Загрузка данных проекта ID:', id);
+            const response = await fetch(`/api/db/projects/${id}`);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            if (!data.success) {
+                throw new Error(data.error || 'Ошибка загрузки проекта');
+            }
+            
+            console.log('Данные проекта загружены:', data.project);
+            return data.project;
+            
+        } catch (error) {
+            console.error('Ошибка загрузки проекта:', error);
+            // Возвращаем данные по умолчанию в случае ошибки
+            return {
+                title: "Ошибка загрузки проекта",
+                description: "Не удалось загрузить данные проекта из базы данных.",
+                location: "Неизвестно",
+                year_completed: "Неизвестно",
+                area: "Неизвестно",
+                status: "Неизвестно",
+                path_to_file: null,
+                contentBlocks: []
+            };
+        }
+        
+        // Старые демо-данные (оставляем для справки, но не используем)
+        const demoProjects = {
+            "1": {
+                title: "Дом в КП Клуб 20'71",
+                initialData: "Исходные данные: Участок расположен в поселке, общая площадью 34.3 сотки, приобретен на момент строительства дома по одному из типовых проектов, разработанных для КП 'Клуб 20'71', общей площадью 525 кв.м.",
+                tasks: "<ol class='list-decimal list-inside space-y-2'><li>Разработать Проект реконструкции планировок дома и заднего фасада (главный фасад по условиям Поселка должен был сохранить общепоселковую стилистику).</li><li>Разработать проект организации участка с принципиальной схемой организации ландшафта, схему дорожек и освещения участка.</li><li>Выполнить авторский надзор за проведением общестроительных и отделочных работ.</li></ol>",
+                solutions: "Реконструкция дома предполагает организацию полноценного мансардного этажа в чердачном пространстве с установкой в кровле мансардных окон. Переустройство заднего фасада с организацией большой открытой террасы, выходящей на участок с большими откидными балконами-террас в уровне второго и мансардного этажей, переходящие общим амфитеатром с террасы второго этажа на стеклянный карниз. На большой террасе в отметке первого этажа предложено организация веранды с безрамным трансформируемым остеклением немецкой фирмы Dorlop. Выход на эту веранду организован из зоны столовой, а использование инфракрасных обогревателей, дает возможность эксплуатировать ее вплоть до наступления первых заморозков.",
+                type: "Жилой дом",
+                area: "525 кв.м",
+                location: "КП Клуб 20'71",
+                year: "2009-2013",
+                status: "Реализован",
+                realization: "Проект выполнен в 2009 г. Строительство дома, включая интерьеры и организация ландшафта осуществлено в 2010-2013 годах.",
+                coverImage: "https://placehold.co/1200x800/E6E6E6/2F2F2F.png?text=Дом+в+КП+Клуб+20'71",
+                contentBlocks: [
+                    {
+                        type: "text",
+                        content: "Проект реконструкции дома в КП Клуб 20'71 представляет собой комплексное решение по изменению планировок и фасада здания. Одна из ключевых особенностей проекта — сохранение стилистики главного фасада в соответствии с требованиями поселка."
+                    },
+                    {
+                        type: "image",
+                        image: "https://placehold.co/1200x800/E6E6E6/2F2F2F.png?text=Фасад+дома",
+                        caption: "Главный фасад дома",
+                        size: "full-width"
+                    },
+                    {
+                        type: "text",
+                        content: "Особое внимание в проекте уделено организации пространства и интеграции дома с окружающим ландшафтом. Задний фасад был полностью переработан с учетом новых функциональных требований владельцев."
+                    },
+                    {
+                        type: "two-images",
+                        leftImage: "https://placehold.co/800x600/E6E6E6/2F2F2F.png?text=План+первого+этажа",
+                        leftCaption: "План первого этажа",
+                        rightImage: "https://placehold.co/800x600/E6E6E6/2F2F2F.png?text=План+второго+этажа",
+                        rightCaption: "План второго этажа"
+                    },
+                    {
+                        type: "text",
+                        content: "Мансардный этаж был организован в ранее неиспользуемом чердачном пространстве, что значительно увеличило полезную площадь дома. Установка мансардных окон обеспечила естественное освещение новых помещений."
+                    },
+                    {
+                        type: "image-text",
+                        image: "https://placehold.co/600x800/E6E6E6/2F2F2F.png?text=Терраса",
+                        caption: "Терраса с видом на сад",
+                        text: "На большой террасе в отметке первого этажа организована веранда с безрамным трансформируемым остеклением немецкой фирмы Dorlop. Выход на веранду организован из зоны столовой. Использование инфракрасных обогревателей дает возможность эксплуатировать ее вплоть до наступления первых заморозков."
+                    },
+                    {
+                        type: "text-image",
+                        image: "https://placehold.co/600x800/E6E6E6/2F2F2F.png?text=Гостиная",
+                        caption: "Интерьер гостиной",
+                        text: "Интерьер гостиной открытой планировки подчеркивает архитектурные особенности дома. Высокие потолки и панорамное остекление обеспечивают хорошее естественное освещение. Большие раздвижные двери открывают доступ к террасе, обеспечивая плавный переход между внутренним и внешним пространствами."
+                    }
+                ]
+            },
+            "2": {
+                title: "Офисное здание",
+                initialData: "Исходные данные для офисного здания...",
+                tasks: "<ol class='list-decimal list-inside space-y-2'><li>Разработать современное офисное здание.</li><li>Создать функциональное пространство для работы.</li><li>Обеспечить энергоэффективность здания.</li></ol>",
+                solutions: "Описание проектных решений для офисного здания...",
+                type: "Коммерческая недвижимость",
+                area: "1200 кв.м",
+                location: "г. Москва",
+                year: "2018",
+                status: "Реализован",
+                realization: "Проект выполнен в 2017 г. Строительство завершено в 2018 году.",
+                coverImage: "https://placehold.co/1200x800/E6E6E6/2F2F2F.png?text=Офисное+здание",
+                contentBlocks: [
+                    {
+                        type: "text",
+                        content: "Офисное здание представляет собой современный бизнес-центр класса А, расположенный в деловом районе Москвы."
+                    },
+                    {
+                        type: "image",
+                        image: "https://placehold.co/1200x800/E6E6E6/2F2F2F.png?text=Фасад+офисного+здания",
+                        caption: "Фасад офисного здания с панорамным остеклением",
+                        size: "full-width"
+                    },
+                    {
+                        type: "text",
+                        content: "Проект разработан с учетом современных требований к организации рабочего пространства и энергоэффективности."
+                    }
+                ]
+            }
+            // Здесь могут быть другие проекты
+        };
+        
+        // Возвращаем данные проекта по ID или данные по умолчанию, если проект не найден
+        return demoProjects[id] || {
+            title: "Пример проекта",
+            initialData: "Здесь будут отображаться исходные данные проекта, загруженные из базы данных.",
+            tasks: "<ol class='list-decimal list-inside space-y-2'><li>Пример задачи 1</li><li>Пример задачи 2</li><li>Пример задачи 3</li></ol>",
+            solutions: "Здесь будет описание проектных решений, загруженное из базы данных.",
+            type: "Тип проекта",
+            area: "Площадь",
+            location: "Расположение",
+            year: "Год",
+            status: "Статус",
+            realization: "Информация о реализации проекта.",
+            contentBlocks: []
+        };
+    }
+    
+    // Загрузка данных проекта
+    async function loadProjectData() {
+        const projectData = await fetchProjectData(projectId);
+        
+        // Заполняем данные на странице
+        document.getElementById('project-title').textContent = projectData.title || 'Без названия';
+        
+        // Убираем старые поля, которых нет в БД
+        document.getElementById('project-initial-data').textContent = projectData.description || 'Описание отсутствует';
+        document.getElementById('project-tasks').innerHTML = '<p>Задачи проекта будут отображаться здесь</p>';
+        
+        // Заполняем данные из БД
+        document.getElementById('project-type').textContent = getProjectTypeText(projectData.project_type) || 'Не указан';
+        document.getElementById('project-area').textContent = projectData.area ? `${projectData.area} кв.м` : 'Не указана';
+        document.getElementById('project-location').textContent = projectData.location || 'Не указано';
+        document.getElementById('project-year').textContent = projectData.year_completed || 'Не указан';
+        document.getElementById('project-status').textContent = getStatusText(projectData.status) || 'Не указан';
+        
+        // Обновляем заголовок страницы
+        document.title = (projectData.title || 'Проект') + ' - Архитектурное Бюро';
+        
+        // Загружаем обложку проекта, если есть
+        if (projectData.path_to_file) {
+            const coverContainer = document.getElementById('project-cover');
+            coverContainer.innerHTML = '';
+            const coverImage = document.createElement('img');
+            coverImage.src = projectData.path_to_file;
+            coverImage.alt = projectData.title || 'Обложка проекта';
+            coverImage.className = 'w-full h-full object-cover rounded-lg';
+            coverImage.onerror = function() {
+                // Если изображение не загрузилось, показываем заглушку
+                this.style.display = 'none';
+                coverContainer.innerHTML = '<div class="w-full h-full bg-light-gray rounded-lg flex items-center justify-center"><span class="text-2xl font-montserrat text-dark-gray">Изображение недоступно</span></div>';
+            };
+            coverContainer.appendChild(coverImage);
+        }
+        
+        // Загружаем блоки контента
+        if (projectData.contentBlocks && projectData.contentBlocks.length > 0) {
+            loadContentBlocks(projectData.contentBlocks);
+        }
+    }
+    
+    // Функция для получения читаемого названия типа проекта
+    function getProjectTypeText(description) {
+        if (!description) return 'Не указан';
+        
+        const typeMap = {
+            'residential': 'Жилые интерьеры',
+            'country': 'Загородные дома',
+            'office': 'Офисные интерьеры',
+            'commercial': 'Коммерческая недвижимость'
+        };
+        
+        return typeMap[description] || description;
+    }
+    
+    // Функция для получения читаемого статуса
+    function getStatusText(status) {
+        if (!status) return 'Не указан';
+        
+        const statusMap = {
+            'published': 'Опубликован',
+            'draft': 'Черновик',
+            'completed': 'Реализован',
+            'in-progress': 'В процессе',
+            'concept': 'Концепция'
+        };
+        
+        return statusMap[status] || status;
+    }
+    
+    // Функция для загрузки блоков контента
+    function loadContentBlocks(blocks) {
+        const contentContainer = document.getElementById('project-content');
+        contentContainer.innerHTML = '';
+        
+        console.log('Загружаем блоки контента:', blocks);
+        
+        blocks.forEach(block => {
+            let blockElement;
+            switch (block.block_type) {
+                case 'text':
+                    blockElement = createTextBlock(block.content);
+                    break;
+                case 'image':
+                    blockElement = createImageBlock(block.image_path, block.caption || block.image_alt, 'full-width');
+                    break;
+                case 'two_images':
+                    blockElement = createTwoImagesBlock(
+                        block.image_path, 
+                        block.caption || block.image_alt, 
+                        block.image_path_2, 
+                        block.image_alt_2
+                    );
+                    break;
+                case 'image_text':
+                    blockElement = createImageTextBlock(
+                        block.image_path, 
+                        block.caption || block.image_alt, 
+                        block.content
+                    );
+                    break;
+                case 'text_image':
+                    blockElement = createTextImageBlock(
+                        block.image_path, 
+                        block.caption || block.image_alt, 
+                        block.content
+                    );
+                    break;
+                default:
+                    console.warn('Неизвестный тип блока:', block.block_type);
+                    return;
+            }
+            if (blockElement) {
+                contentContainer.appendChild(blockElement);
+            }
+        });
+        
+        // Если блоков нет, показываем сообщение
+        if (blocks.length === 0) {
+            contentContainer.innerHTML = '<div class="text-center text-gray py-8"><p>Содержимое проекта пока не добавлено</p></div>';
+        }
+    }
+    
+    // Создание текстового блока
+    function createTextBlock(content) {
+        const block = document.createElement('div');
+        block.className = 'text-block mb-10';
+        
+        const paragraph = document.createElement('p');
+        paragraph.className = 'text-lg text-left';
+        paragraph.textContent = content;
+        
+        block.appendChild(paragraph);
+        return block;
+    }
+    
+    // Создание блока с изображением
+    function createImageBlock(imageUrl, caption, size) {
+        if (!imageUrl) {
+            console.warn('Нет URL изображения для блока');
+            return null;
+        }
+        
+        const block = document.createElement('div');
+        block.className = 'image-block mb-10';
+        
+        // Определяем классы на основе размера
+        let imageContainerClass = 'w-full';
+        switch (size) {
+            case 'small':
+                imageContainerClass += ' max-w-md mx-auto';
+                break;
+            case 'medium':
+                imageContainerClass += ' max-w-2xl mx-auto';
+                break;
+            case 'large':
+                imageContainerClass += ' max-w-4xl mx-auto';
+                break;
+            case 'full-width':
+                imageContainerClass += ' max-w-5xl mx-auto';
+                break;
+            default:
+                imageContainerClass += ' max-w-2xl mx-auto';
+        }
+        
+        const imageContainer = document.createElement('div');
+        imageContainer.className = imageContainerClass;
+        
+        const image = document.createElement('img');
+        image.src = imageUrl;
+        image.alt = caption || 'Изображение проекта';
+        image.className = 'w-full h-auto rounded-lg';
+        
+        // Обработка ошибки загрузки изображения
+        image.onerror = function() {
+            this.style.display = 'none';
+            const placeholder = document.createElement('div');
+            placeholder.className = 'w-full h-64 bg-light-gray rounded-lg flex items-center justify-center';
+            placeholder.innerHTML = '<span class="text-gray">Изображение недоступно</span>';
+            imageContainer.appendChild(placeholder);
+        };
+        
+        imageContainer.appendChild(image);
+        block.appendChild(imageContainer);
+        
+        // Добавляем подпись, если она есть
+        if (caption) {
+            const captionElement = document.createElement('p');
+            captionElement.className = 'text-center text-gray mt-2';
+            captionElement.textContent = caption;
+            block.appendChild(captionElement);
+        }
+        
+        return block;
+    }
+    
+    // Создание блока с двумя изображениями
+    function createTwoImagesBlock(leftImageUrl, leftCaption, rightImageUrl, rightCaption) {
+        const block = document.createElement('div');
+        block.className = 'two-images-block mb-10';
+        
+        const grid = document.createElement('div');
+        grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-6';
+        
+        // Левое изображение
+        const leftContainer = document.createElement('div');
+        leftContainer.className = 'flex flex-col items-center';
+        
+        const leftImage = document.createElement('img');
+        leftImage.src = leftImageUrl;
+        leftImage.alt = leftCaption || 'Изображение проекта';
+        leftImage.className = 'w-full h-auto rounded-lg';
+        
+        leftContainer.appendChild(leftImage);
+        
+        // Добавляем подпись к левому изображению, если она есть
+        if (leftCaption) {
+            const leftCaptionElement = document.createElement('p');
+            leftCaptionElement.className = 'text-center text-gray mt-2';
+            leftCaptionElement.textContent = leftCaption;
+            leftContainer.appendChild(leftCaptionElement);
+        }
+        
+        // Правое изображение
+        const rightContainer = document.createElement('div');
+        rightContainer.className = 'flex flex-col items-center';
+        
+        const rightImage = document.createElement('img');
+        rightImage.src = rightImageUrl;
+        rightImage.alt = rightCaption || 'Изображение проекта';
+        rightImage.className = 'w-full h-auto rounded-lg';
+        
+        rightContainer.appendChild(rightImage);
+        
+        // Добавляем подпись к правому изображению, если она есть
+        if (rightCaption) {
+            const rightCaptionElement = document.createElement('p');
+            rightCaptionElement.className = 'text-center text-gray mt-2';
+            rightCaptionElement.textContent = rightCaption;
+            rightContainer.appendChild(rightCaptionElement);
+        }
+        
+        grid.appendChild(leftContainer);
+        grid.appendChild(rightContainer);
+        block.appendChild(grid);
+        
+        return block;
+    }
+    
+    // Создание блока изображение + текст
+    function createImageTextBlock(imageUrl, caption, text) {
+        const block = document.createElement('div');
+        block.className = 'image-text-block mb-10';
+        
+        const grid = document.createElement('div');
+        grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-6 items-center';
+        
+        // Изображение слева
+        const imageContainer = document.createElement('div');
+        imageContainer.className = 'flex flex-col';
+        
+        const image = document.createElement('img');
+        image.src = imageUrl;
+        image.alt = caption || 'Изображение проекта';
+        image.className = 'w-full h-auto rounded-lg';
+        
+        imageContainer.appendChild(image);
+        
+        // Добавляем подпись, если она есть
+        if (caption) {
+            const captionElement = document.createElement('p');
+            captionElement.className = 'text-center text-gray mt-2';
+            captionElement.textContent = caption;
+            imageContainer.appendChild(captionElement);
+        }
+        
+        // Текст справа
+        const textContainer = document.createElement('div');
+        const textElement = document.createElement('p');
+        textElement.className = 'text-lg text-left';
+        textElement.textContent = text;
+        textContainer.appendChild(textElement);
+        
+        grid.appendChild(imageContainer);
+        grid.appendChild(textContainer);
+        block.appendChild(grid);
+        
+        return block;
+    }
+    
+    // Создание блока текст + изображение
+    function createTextImageBlock(imageUrl, caption, text) {
+        const block = document.createElement('div');
+        block.className = 'text-image-block mb-10';
+        
+        const grid = document.createElement('div');
+        grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-6 items-center';
+        
+        // Текст слева
+        const textContainer = document.createElement('div');
+        const textElement = document.createElement('p');
+        textElement.className = 'text-lg text-left';
+        textElement.textContent = text;
+        textContainer.appendChild(textElement);
+        
+        // Изображение справа
+        const imageContainer = document.createElement('div');
+        imageContainer.className = 'flex flex-col';
+        
+        const image = document.createElement('img');
+        image.src = imageUrl;
+        image.alt = caption || 'Изображение проекта';
+        image.className = 'w-full h-auto rounded-lg';
+        
+        imageContainer.appendChild(image);
+        
+        // Добавляем подпись, если она есть
+        if (caption) {
+            const captionElement = document.createElement('p');
+            captionElement.className = 'text-center text-gray mt-2';
+            captionElement.textContent = caption;
+            imageContainer.appendChild(captionElement);
+        }
+        
+        grid.appendChild(textContainer);
+        grid.appendChild(imageContainer);
+        block.appendChild(grid);
+        
+        return block;
+    }
+    
+    // Загружаем данные при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        loadProjectData();
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Обработка мобильного меню
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+    });
+    </script>
+</body>
+</html> 
+</html> 

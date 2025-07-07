@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест GenAPI - Flux Kontext</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .btn {
+            @apply px-6 py-3 rounded-lg font-medium transition-all duration-300 cursor-pointer;
+        }
+        .bg-gold-1 { background-color: #D4AF37; }
+        .bg-gold-2 { background-color: #B8941F; }
+        .text-gold-1 { color: #D4AF37; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-3xl font-bold text-center mb-2 text-gray-800">
+                🧪 Тест GenAPI - Flux Kontext
+            </h1>
+            <p class="text-center text-gray-600 mb-8">
+                Проверка работы ИИ дизайна интерьера с сохранением архитектуры
+            </p>
+
+            <!-- Статус API -->
+            <div id="api-status" class="mb-8 p-4 rounded-lg border">
+                <h3 class="font-semibold mb-2">📊 Статус API:</h3>
+                <button onclick="checkAPIStatus()" class="btn bg-blue-500 text-white hover:bg-blue-600">
+                    Проверить статус
+                </button>
+                <div id="status-result" class="mt-4"></div>
+            </div>
+
+            <!-- Лог отладки -->
+            <div class="mb-8 p-4 rounded-lg border bg-gray-50">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="font-semibold">🔍 Лог отладки (последние 10 записей):</h3>
+                    <button onclick="clearLog()" class="btn bg-gray-500 text-white hover:bg-gray-600 text-sm px-3 py-1">
+                        Очистить
+                    </button>
+                </div>
+                <div id="debug-log" class="bg-white p-3 rounded border max-h-32 overflow-y-auto font-mono text-xs">
+                    <div class="text-gray-500">Логи появятся здесь...</div>
+                </div>
+                <div class="mt-2 text-xs text-gray-600">
+                    💡 Подсказка: Все действия логируются для контроля расходов. Проверяйте логи перед генерацией!
+                </div>
+            </div>
+
+            <!-- Форма загрузки -->
+            <form id="ai-form" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        📷 Загрузить изображение интерьера:
+                    </label>
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gold-1 transition-colors">
+                        <input type="file" id="photo-upload" accept="image/*" class="hidden" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                        <p class="text-gray-600 mb-2">Нажмите для выбора файла</p>
+                        <button type="button" onclick="document.getElementById('photo-upload').click()" class="btn bg-gold-1 text-black hover:bg-gold-2">
+                            Выбрать изображение
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">🎨 Выберите стиль:</label>
+                    <select id="style-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-1 focus:border-transparent">
+                        <option value="scandinavian">Скандинавский</option>
+                        <option value="minimalist">Минимализм</option>
+                        <option value="modern">Современный</option>
+                        <option value="loft">Лофт</option>
+                        <option value="classic">Классический</option>
+                        <option value="provence">Прованс</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">✏️ Описание изменений:</label>
+                    <textarea id="prompt-input" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-1 focus:border-transparent" 
+                              placeholder="Например: сделать комнату более светлой, добавить растения, поменять цвет дивана на синий"></textarea>
+                </div>
+
+                <!-- Предупреждение о стоимости -->
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-red-800">⚠️ ВНИМАНИЕ! ПЛАТНАЯ ГЕНЕРАЦИЯ</h3>
+                            <div class="mt-2 text-sm text-red-700">
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li><strong>Стоимость:</strong> ~20-30₽ за каждое изображение</li>
+                                    <li><strong>Время:</strong> 10-15 секунд генерации</li>
+                                    <li><strong>Качество:</strong> Высокое, сохраняет архитектуру</li>
+                                    <li><strong>Отмена:</strong> Невозможна после начала генерации</li>
+                                </ul>
+                            </div>
+                            <div class="mt-2 text-xs text-red-600">
+                                💡 Убедитесь что все параметры правильные перед нажатием кнопки!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" id="submit-btn" class="w-full btn bg-red-600 text-white hover:bg-red-700 font-semibold text-lg py-4 transition-colors">
+                    💸 ГЕНЕРИРОВАТЬ ЗА ДЕНЬГИ (Flux Kontext)
+                </button>
+            </form>
+
+            <!-- Результат -->
+            <div id="result-section" class="mt-8 hidden">
+                <h3 class="text-xl font-semibold mb-4">📸 Результат:</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-medium mb-2 text-center">Исходное изображение</h4>
+                        <div class="bg-gray-100 rounded-lg overflow-hidden">
+                            <img id="original-img" src="" alt="Исходное" class="w-full h-auto">
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-medium mb-2 text-center">Новый дизайн</h4>
+                        <div class="bg-gray-100 rounded-lg overflow-hidden">
+                            <img id="edited-img" src="" alt="Обработанное" class="w-full h-auto">
+                        </div>
+                    </div>
+                </div>
+                <div id="result-info" class="mt-4 p-4 bg-gray-50 rounded-lg"></div>
+            </div>
+
+            <!-- Индикатор загрузки -->
+            <div id="loading" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white p-8 rounded-lg max-w-md w-full mx-4">
+                    <div class="text-center">
+                        <div class="animate-spin h-12 w-12 text-gold-1 mx-auto mb-4">
+                            <svg fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Генерируем дизайн...</h3>
+                        <p class="text-gray-600 text-sm">Flux Kontext обрабатывает изображение</p>
+                        <p class="text-gray-500 text-xs mt-2">Обычно занимает 10-15 секунд</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Глобальная переменная для логирования
+        let logMessages = [];
+        
+        // Функция добавления лога
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}`;
+            logMessages.push(logEntry);
+            
+            console.log(`%c${logEntry}`, type === 'error' ? 'color: red' : type === 'warning' ? 'color: orange' : 'color: blue');
+            
+            // Обновляем лог на странице если есть
+            updateLogDisplay();
+        }
+        
+        // Функция обновления отображения логов
+        function updateLogDisplay() {
+            const logDiv = document.getElementById('debug-log');
+            if (logDiv) {
+                const recentLogs = logMessages.slice(-10);
+                logDiv.innerHTML = recentLogs.map(msg => {
+                    let className = 'text-gray-600';
+                    if (msg.includes('❌')) className = 'text-red-600';
+                    else if (msg.includes('⚠️')) className = 'text-orange-600';
+                    else if (msg.includes('✅')) className = 'text-green-600';
+                    else if (msg.includes('💰') || msg.includes('💸')) className = 'text-red-700 font-bold';
+                    
+                    return `<div class="text-xs ${className} mb-1">${msg}</div>`;
+                }).join('');
+                logDiv.scrollTop = logDiv.scrollHeight;
+            }
+        }
+        
+        // Функция очистки логов
+        function clearLog() {
+            logMessages = [];
+            const logDiv = document.getElementById('debug-log');
+            if (logDiv) {
+                logDiv.innerHTML = '<div class="text-gray-500">Логи очищены...</div>';
+            }
+            addLog('🧹 Логи очищены пользователем');
+        }
+        
+        // Проверка статуса API
+        async function checkAPIStatus() {
+            const resultDiv = document.getElementById('status-result');
+            resultDiv.innerHTML = '<div class="text-blue-600">Проверяем...</div>';
+            
+            addLog('🔍 Начинаем проверку статуса API...');
+            
+            try {
+                addLog('📡 Отправляем запрос к /api/health');
+                const response = await fetch('/api/health');
+                addLog(`📥 Получен ответ: ${response.status} ${response.statusText}`);
+                
+                const data = await response.json();
+                addLog('📄 JSON ответ распарсен успешно');
+                
+                const genapiStatus = data.genapi?.ready ? '✅' : '❌';
+                const genapiLength = data.genapi?.tokenLength || 0;
+                const genapiPresent = data.genapi?.tokenPresent || false;
+                
+                addLog(`🔑 GenAPI токен: ${genapiPresent ? 'НАЙДЕН' : 'НЕ НАЙДЕН'} (${genapiLength} символов)`);
+                
+                if (!genapiPresent || genapiLength === 0) {
+                    addLog('⚠️ ВНИМАНИЕ: GenAPI токен не загружен! Генерация будет в демо режиме.', 'warning');
+                } else {
+                    addLog('✅ GenAPI токен загружен и готов к использованию');
+                    addLog(`💰 Готов к платной генерации через ${data.apis?.genapi?.provider || 'GenAPI'}`);
+                }
+                
+                resultDiv.innerHTML = `
+                    <div class="space-y-2 text-sm">
+                        <div><strong>Сервер:</strong> ✅ Работает (v${data.version})</div>
+                        <div><strong>GenAPI:</strong> ${genapiStatus} ${data.apis?.genapi?.status || 'unknown'}</div>
+                        <div><strong>Провайдер:</strong> ${data.apis?.genapi?.provider || 'gen-api.ru'}</div>
+                        <div><strong>Модель:</strong> ${data.apis?.genapi?.model || 'flux-kontext'}</div>
+                        <div><strong>GenAPI токен:</strong> ${genapiPresent ? `Загружен (${genapiLength} символов)` : 'Не найден'}</div>
+                        <div class="text-xs text-gray-500 mt-2">Время: ${data.timestamp}</div>
+                        ${!genapiPresent ? '<div class="text-red-600 text-sm mt-2">⚠️ Токен не найден - будет демо режим</div>' : '<div class="text-green-600 text-sm mt-2">✅ Готов к платной генерации</div>'}
+                    </div>
+                `;
+                
+                addLog('✅ Проверка статуса завершена успешно');
+                
+            } catch (error) {
+                addLog(`❌ Ошибка проверки статуса: ${error.message}`, 'error');
+                resultDiv.innerHTML = `<div class="text-red-600">❌ Ошибка: ${error.message}</div>`;
+            }
+        }
+
+        // Обработка формы
+        document.getElementById('ai-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById('photo-upload');
+            const styleSelect = document.getElementById('style-select');
+            const promptInput = document.getElementById('prompt-input');
+            const submitBtn = document.getElementById('submit-btn');
+            const loading = document.getElementById('loading');
+            const resultSection = document.getElementById('result-section');
+            
+            addLog('🚀 === НАЧАЛО ГЕНЕРАЦИИ ИИ ДИЗАЙНА ===');
+            
+            // Валидация входных данных
+            if (!fileInput.files[0]) {
+                addLog('❌ Валидация не пройдена: файл не выбран', 'error');
+                alert('Пожалуйста, выберите изображение');
+                return;
+            }
+            
+            if (!promptInput.value.trim()) {
+                addLog('❌ Валидация не пройдена: промт пустой', 'error');
+                alert('Пожалуйста, опишите желаемые изменения');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const style = styleSelect.value;
+            const prompt = promptInput.value.trim();
+            
+            addLog(`✅ Валидация пройдена:`);
+            addLog(`   📁 Файл: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`);
+            addLog(`   🎨 Стиль: ${style}`);
+            addLog(`   ✏️ Промт: "${prompt.substring(0, 50)}${prompt.length > 50 ? '...' : ''}"`);
+            
+            // ВАЖНОЕ ПРЕДУПРЕЖДЕНИЕ О СТОИМОСТИ
+            const confirmGeneration = confirm(
+                `⚠️ ВНИМАНИЕ! ПЛАТНАЯ ГЕНЕРАЦИЯ ⚠️\n\n` +
+                `Стоимость: ~20-30₽ за изображение\n` +
+                `Файл: ${file.name}\n` +
+                `Стиль: ${style}\n` +
+                `Промт: ${prompt}\n\n` +
+                `Продолжить генерацию?`
+            );
+            
+            if (!confirmGeneration) {
+                addLog('🛑 Генерация отменена пользователем');
+                return;
+            }
+            
+            addLog('💰 Пользователь подтвердил платную генерацию');
+            
+            // Показываем загрузку
+            loading.classList.remove('hidden');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Обрабатываем...';
+            
+            const startTime = Date.now();
+            addLog(`⏱️ Генерация началась в ${new Date().toLocaleTimeString()}`);
+            
+            try {
+                // Подготовка данных
+                addLog('📦 Подготавливаем FormData...');
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('style', style);
+                formData.append('prompt', prompt);
+                addLog('✅ FormData подготовлена');
+                
+                // Отправка запроса
+                addLog('🌐 Отправляем POST запрос к /api/ai-design-genapi');
+                addLog(`📡 URL: ${window.location.origin}/api/ai-design-genapi`);
+                
+                const response = await fetch('/api/ai-design-genapi', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const responseTime = Date.now() - startTime;
+                addLog(`📥 Ответ получен за ${responseTime}мс`);
+                addLog(`📊 Статус: ${response.status} ${response.statusText}`);
+                addLog(`📄 Content-Type: ${response.headers.get('content-type')}`);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    addLog(`❌ HTTP ошибка: ${response.status}`, 'error');
+                    addLog(`❌ Текст ошибки: ${errorText}`, 'error');
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+                
+                addLog('📄 Парсим JSON ответ...');
+                const result = await response.json();
+                addLog('✅ JSON ответ получен и распарсен');
+                
+                // Детальное логирование результата
+                addLog(`📋 Результат генерации:`);
+                addLog(`   ✅ Успех: ${result.success}`);
+                addLog(`   🎨 Стиль: ${result.style}`);
+                addLog(`   🤖 Модель: ${result.model}`);
+                addLog(`   🏢 Провайдер: ${result.provider}`);
+                addLog(`   🧪 Демо режим: ${result.demo ? 'ДА' : 'НЕТ'}`);
+                
+                if (result.demo) {
+                    addLog('⚠️ ВНИМАНИЕ: Работа в демо режиме - деньги НЕ списаны', 'warning');
+                } else {
+                    addLog('💸 ВНИМАНИЕ: Реальная генерация - деньги СПИСАНЫ', 'warning');
+                }
+                
+                if (result.success) {
+                    const totalTime = Date.now() - startTime;
+                    addLog(`⏱️ Общее время генерации: ${totalTime}мс (${(totalTime/1000).toFixed(1)}с)`);
+                    
+                    // Проверяем размеры изображений
+                    if (result.originalImage) {
+                        addLog(`🖼️ Исходное изображение: ${result.originalImage.length} символов base64`);
+                    }
+                    if (result.editedImage) {
+                        addLog(`🖼️ Сгенерированное изображение: ${result.editedImage.length} символов base64`);
+                    }
+                    
+                    // Показываем результат
+                    document.getElementById('original-img').src = result.originalImage;
+                    document.getElementById('edited-img').src = result.editedImage;
+                    document.getElementById('result-info').innerHTML = `
+                        <div class="space-y-2 text-sm">
+                            <div><strong>Стиль:</strong> ${result.style}</div>
+                            <div><strong>Модель:</strong> ${result.model}</div>
+                            <div><strong>Провайдер:</strong> ${result.provider}</div>
+                            <div><strong>Время генерации:</strong> ${(totalTime/1000).toFixed(1)}с</div>
+                            ${result.demo ? '<div class="text-orange-600"><strong>Режим:</strong> Демо (деньги НЕ списаны)</div>' : '<div class="text-red-600"><strong>Режим:</strong> Платный (деньги СПИСАНЫ)</div>'}
+                            <div class="text-gray-600"><strong>Промт:</strong> ${result.prompt}</div>
+                            ${result.error ? `<div class="text-red-600"><strong>Ошибка:</strong> ${result.error}</div>` : ''}
+                        </div>
+                    `;
+                    resultSection.classList.remove('hidden');
+                    
+                    addLog('✅ Результат отображен на странице');
+                    addLog('🎉 === ГЕНЕРАЦИЯ ЗАВЕРШЕНА УСПЕШНО ===');
+                    
+                } else {
+                    addLog(`❌ Генерация не удалась: ${result.error}`, 'error');
+                    alert('Ошибка генерации: ' + result.error);
+                }
+                
+            } catch (error) {
+                const totalTime = Date.now() - startTime;
+                addLog(`❌ === КРИТИЧЕСКАЯ ОШИБКА ГЕНЕРАЦИИ ===`, 'error');
+                addLog(`❌ Время до ошибки: ${totalTime}мс`, 'error');
+                addLog(`❌ Тип ошибки: ${error.name}`, 'error');
+                addLog(`❌ Сообщение: ${error.message}`, 'error');
+                if (error.stack) {
+                    addLog(`❌ Stack: ${error.stack.split('\n')[0]}`, 'error');
+                }
+                
+                console.error('Полная ошибка:', error);
+                alert('Произошла ошибка: ' + error.message);
+                
+            } finally {
+                const totalTime = Date.now() - startTime;
+                addLog(`🏁 Завершение обработки через ${totalTime}мс`);
+                
+                loading.classList.add('hidden');
+                submitBtn.disabled = false;
+                submitBtn.textContent = '💸 ГЕНЕРИРОВАТЬ ЗА ДЕНЬГИ (Flux Kontext)';
+                
+                addLog('🔄 UI восстановлен в исходное состояние');
+            }
+        });
+
+        // Обработка выбора файла
+        document.getElementById('photo-upload').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const uploadArea = e.target.parentElement;
+                uploadArea.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500 mb-2 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <p class="text-center mb-2"><strong>Файл загружен:</strong></p>
+                    <p class="text-center text-sm text-gray-600 mb-3">${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</p>
+                    <button type="button" class="btn bg-gold-1 text-black hover:bg-gold-2" onclick="document.getElementById('photo-upload').click()">
+                        Выбрать другой файл
+                    </button>
+                    <input id="photo-upload" type="file" accept="image/*" class="hidden" />
+                `;
+                
+                // Переназначаем обработчик
+                document.getElementById('photo-upload').addEventListener('change', arguments.callee);
+            }
+        });
+
+        // Автоматическая проверка статуса при загрузке
+        window.addEventListener('load', checkAPIStatus);
+    </script>
+</body>
+</html> 

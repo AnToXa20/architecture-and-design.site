@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест блоков проекта</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-2xl font-bold mb-6">Тест создания проекта с блоками</h1>
+        
+        <form id="test-form" class="bg-white p-6 rounded-lg shadow">
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">Название проекта</label>
+                <input type="text" id="title" value="Тестовый проект блоков" class="w-full p-2 border rounded">
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">Тип проекта</label>
+                <select id="type" class="w-full p-2 border rounded">
+                    <option value="residential">Жилые интерьеры</option>
+                    <option value="country">Загородные дома</option>
+                    <option value="office">Офисные интерьеры</option>
+                </select>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">Описание</label>
+                <textarea id="description" rows="3" class="w-full p-2 border rounded">Тестовый проект для проверки работы блоков контента</textarea>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-4">Блоки контента</h3>
+                
+                <!-- Текстовый блок -->
+                <div class="mb-4 p-4 border rounded">
+                    <h4 class="font-medium mb-2">Текстовый блок</h4>
+                    <textarea id="text-content" rows="2" class="w-full p-2 border rounded">Это текстовый блок для тестирования.</textarea>
+                </div>
+                
+                <!-- Блок два изображения -->
+                <div class="mb-4 p-4 border rounded">
+                    <h4 class="font-medium mb-2">Два изображения</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm mb-1">Левое изображение</label>
+                            <input type="file" id="left-image" accept="image/*" class="w-full p-2 border rounded">
+                            <input type="text" id="left-caption" placeholder="Подпись к левому изображению" class="w-full p-2 border rounded mt-2">
+                        </div>
+                        <div>
+                            <label class="block text-sm mb-1">Правое изображение</label>
+                            <input type="file" id="right-image" accept="image/*" class="w-full p-2 border rounded">
+                            <input type="text" id="right-caption" placeholder="Подпись к правому изображению" class="w-full p-2 border rounded mt-2">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Блок изображение + текст -->
+                <div class="mb-4 p-4 border rounded">
+                    <h4 class="font-medium mb-2">Изображение + Текст</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm mb-1">Изображение</label>
+                            <input type="file" id="combo-image" accept="image/*" class="w-full p-2 border rounded">
+                            <input type="text" id="combo-caption" placeholder="Подпись к изображению" class="w-full p-2 border rounded mt-2">
+                        </div>
+                        <div>
+                            <label class="block text-sm mb-1">Текст</label>
+                            <textarea id="combo-text" rows="4" class="w-full p-2 border rounded">Текст рядом с изображением.</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
+                Создать тестовый проект
+            </button>
+        </form>
+        
+        <div id="result" class="mt-6 p-4 rounded hidden"></div>
+    </div>
+
+    <script>
+        document.getElementById('test-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            
+            // Основные данные
+            formData.append('title', document.getElementById('title').value);
+            formData.append('type', document.getElementById('type').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('area', '100');
+            formData.append('location', 'Тестовая локация');
+            formData.append('year', '2024');
+            formData.append('status', 'draft');
+            
+            // Создаем блоки контента
+            const contentBlocks = [];
+            
+            // Текстовый блок
+            const textContent = document.getElementById('text-content').value;
+            if (textContent.trim()) {
+                contentBlocks.push({
+                    type: 'text',
+                    content: textContent,
+                    order: 0
+                });
+            }
+            
+            // Блок два изображения
+            const leftImage = document.getElementById('left-image').files[0];
+            const rightImage = document.getElementById('right-image').files[0];
+            const leftCaption = document.getElementById('left-caption').value;
+            const rightCaption = document.getElementById('right-caption').value;
+            
+            if (leftImage || rightImage) {
+                const blockData = {
+                    type: 'two_images',
+                    order: 1
+                };
+                
+                if (leftImage) {
+                    formData.append('blockImage_10', leftImage);
+                    blockData.imageIndexLeft = '10';
+                    blockData.captionLeft = leftCaption;
+                }
+                
+                if (rightImage) {
+                    formData.append('blockImage_11', rightImage);
+                    blockData.imageIndexRight = '11';
+                    blockData.captionRight = rightCaption;
+                }
+                
+                contentBlocks.push(blockData);
+            }
+            
+            // Блок изображение + текст
+            const comboImage = document.getElementById('combo-image').files[0];
+            const comboCaption = document.getElementById('combo-caption').value;
+            const comboText = document.getElementById('combo-text').value;
+            
+            if (comboImage || comboText.trim()) {
+                const blockData = {
+                    type: 'image_text',
+                    content: comboText,
+                    order: 2
+                };
+                
+                if (comboImage) {
+                    formData.append('blockImage_12', comboImage);
+                    blockData.imageIndex = 12;
+                    blockData.caption = comboCaption;
+                }
+                
+                contentBlocks.push(blockData);
+            }
+            
+            formData.append('contentBlocks', JSON.stringify(contentBlocks));
+            
+            console.log('Отправляем блоки:', contentBlocks);
+            
+            try {
+                const response = await fetch('/api/db/projects', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                const resultDiv = document.getElementById('result');
+                
+                if (result.success) {
+                    resultDiv.className = 'mt-6 p-4 rounded bg-green-100 text-green-800';
+                    resultDiv.innerHTML = `
+                        <h3 class="font-bold">Успех!</h3>
+                        <p>Проект создан с ID: ${result.projectId}</p>
+                        <p>Папка: ${result.folderPath}</p>
+                    `;
+                } else {
+                    resultDiv.className = 'mt-6 p-4 rounded bg-red-100 text-red-800';
+                    resultDiv.innerHTML = `
+                        <h3 class="font-bold">Ошибка!</h3>
+                        <p>${result.error}</p>
+                    `;
+                }
+                
+                resultDiv.classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                const resultDiv = document.getElementById('result');
+                resultDiv.className = 'mt-6 p-4 rounded bg-red-100 text-red-800';
+                resultDiv.innerHTML = `
+                    <h3 class="font-bold">Ошибка сети!</h3>
+                    <p>${error.message}</p>
+                `;
+                resultDiv.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html> 

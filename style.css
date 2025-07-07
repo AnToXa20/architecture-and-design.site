@@ -1,0 +1,162 @@
+/* Основные стили */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.btn {
+    padding: 10px 25px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+/* Стили шапки */
+header {
+    height: 80px;
+}
+
+.logo-image {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    min-height: 60px;
+    object-fit: contain;
+}
+
+/* Равномерно распределяем ссылки в шапке */
+header nav.lg\:flex {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+}
+
+.header-link {
+    position: relative;
+    color: #000000;
+    text-decoration: none;
+    padding: 5px 0;
+    margin: 0;
+    transition: color 0.3s ease;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.header-link:hover {
+    color: #FFC107;
+}
+
+.header-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #FFC107;
+    transition: width 0.3s ease;
+}
+
+.header-link:hover::after {
+    width: 100%;
+}
+
+/* Мобильное меню */
+#mobile-menu-button {
+    z-index: 10;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#mobile-menu {
+    z-index: 5;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+#mobile-menu.hidden {
+    display: none;
+}
+
+#mobile-menu nav {
+    width: 100%;
+}
+
+#mobile-menu a {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    border-bottom: 1px solid #E6E6E6;
+}
+
+#mobile-menu a:last-child {
+    border-bottom: none;
+}
+
+/* Стили слайдера */
+.slide {
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+/* Стили для блока этапов работы */
+.stage-btn {
+    transition: all 0.3s ease;
+}
+
+/* Эффект увеличения при наведении удален */
+
+.stage-text {
+    display: none;
+}
+
+.stage-text.active {
+    display: block;
+}
+
+/* Медиа-запросы */
+@media (max-width: 1024px) {
+    header nav.lg\:flex {
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 768px) {
+    header nav.lg\:flex {
+        max-width: none;
+    }
+    
+    .header-link {
+        margin: 0;
+    }
+    
+    .btn {
+        padding: 8px 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 2rem !important;
+    }
+    
+    h2 {
+        font-size: 1.8rem !important;
+    }
+} 

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портфолио - Архитектурное Бюро</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'white': '#FFFFFF',
+                        'black': '#000000',
+                        'light-gray': '#E6E6E6',
+                        'gray': '#A6A6A6',
+                        'dark-gray': '#2F2F2F',
+                        'gold-1': '#FFC107',
+                        'gold-2': '#E8A317',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-roboto text-dark-gray bg-white">
+    <!-- Шапка сайта -->
+    <header class="bg-white fixed w-full top-0 shadow-md z-50">
+        <div class="container mx-auto py-4 px-4 flex justify-between items-center">
+            <!-- Логотип -->
+            <a href="index.html" class="flex items-center">
+                <img src="Logo_black.svg" alt="Логотип" class="logo-image">
+            </a>
+
+            <!-- Навигация для десктопа -->
+            <nav class="hidden lg:flex">
+                <a href="portfolio.html" class="header-link">Портфолио</a>
+                <a href="stages.html" class="header-link">Этапы работы</a>
+                <a href="articles.html" class="header-link">Статьи</a>
+                <a href="services.html" class="header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="header-link">ИИ дизайн</a>
+                <a href="about.html" class="header-link">О нас</a>
+                <a href="contacts.html" class="header-link">Контакты</a>
+            </nav>
+
+            <!-- Кнопка мобильного меню -->
+            <button id="mobile-menu-button" class="lg:hidden flex flex-col justify-center items-center">
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black"></span>
+            </button>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="lg:hidden hidden absolute top-full left-0 w-full bg-white shadow-md">
+            <nav class="flex flex-col p-4">
+                <a href="portfolio.html" class="py-2 header-link">Портфолио</a>
+                <a href="stages.html" class="py-2 header-link">Этапы работы</a>
+                <a href="articles.html" class="py-2 header-link">Статьи</a>
+                <a href="services.html" class="py-2 header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="py-2 header-link">ИИ дизайн</a>
+                <a href="about.html" class="py-2 header-link">О нас</a>
+                <a href="contacts.html" class="py-2 header-link">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main class="pt-32 pb-20">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-montserrat font-bold mb-4 text-center">
+                Портфолио
+            </h1>
+            <div class="w-20 h-1 bg-gold-1 mx-auto mb-8"></div>
+            
+            <!-- Фильтры проектов -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="filter-btn btn bg-gold-1 text-black" data-filter="all">
+                    Все проекты
+                </button>
+                <button class="filter-btn btn border border-dark-gray text-dark-gray hover:bg-gold-1 hover:border-gold-1 hover:text-black" data-filter="apartments">
+                    Жилые интерьеры
+                </button>
+                <button class="filter-btn btn border border-dark-gray text-dark-gray hover:bg-gold-1 hover:border-gold-1 hover:text-black" data-filter="houses">
+                    Загородные дома
+                </button>
+                <button class="filter-btn btn border border-dark-gray text-dark-gray hover:bg-gold-1 hover:border-gold-1 hover:text-black" data-filter="offices">
+                    Офисные интерьеры
+                </button>
+            </div>
+
+            <!-- Индикатор загрузки -->
+            <div id="loading" class="text-center py-12">
+                <div class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-gold-1">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Загрузка портфолио...
+                </div>
+            </div>
+
+            <!-- Сообщение об ошибке -->
+            <div id="error" class="hidden text-center py-12">
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                    <p class="font-bold">Ошибка загрузки</p>
+                    <p id="error-message">Не удалось загрузить данные портфолио</p>
+                </div>
+            </div>
+            
+            <!-- Сетка проектов -->
+            <div id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 hidden">
+                <!-- Проекты будут загружены динамически -->
+            </div>
+
+            <!-- Сообщение о пустом фильтре -->
+            <div id="empty-filter" class="hidden text-center py-12">
+                <div class="text-gray-500">
+                    <p class="text-xl mb-2">Проекты не найдены</p>
+                    <p>В выбранной категории пока нет проектов</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer class="bg-dark-gray text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Контакты</h3>
+                    <ul class="space-y-2">
+                        <li>Телефон: +7 XXX XXX XX XX</li>
+                        <li>Email: info@architecture-bureau.com</li>
+                        <li>Адрес: г. Москва, Новинский бульвар 25 к.10 оф.18</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Наши услуги</h3>
+                    <ul class="space-y-2">
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Архитектурное проектирование</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Дизайн интерьера</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Ландшафтный дизайн</a></li>
+                        <li><a href="ai-design.html" class="text-white hover:text-gold-1 transition-colors">ИИ дизайн</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Информация</h3>
+                    <ul class="space-y-2">
+                        <li><a href="stages.html" class="text-white hover:text-gold-1 transition-colors">Этапы работы</a></li>
+                        <li><a href="portfolio.html" class="text-white hover:text-gold-1 transition-colors">Портфолио</a></li>
+                        <li><a href="about.html" class="text-white hover:text-gold-1 transition-colors">О нас</a></li>
+                        <li><a href="articles.html" class="text-white hover:text-gold-1 transition-colors">Статьи</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-center mt-8 pt-8 border-t border-gray">
+                <img src="Logo.svg" alt="Логотип" class="w-32 h-32 mb-4">
+                <p class="text-center text-sm">© <span id="current-year"></span> Архитектурное Бюро. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Глобальные переменные
+    let portfolioData = null;
+    let currentFilter = 'all';
+    const API_BASE_URL = 'http://localhost:3001/api';
+
+    // Функция загрузки данных портфолио
+    async function loadPortfolioData() {
+        try {
+            console.log('Загрузка данных портфолио...');
+            
+            const response = await fetch(`${API_BASE_URL}/portfolio`);
+            const result = await response.json();
+            
+            if (!result.success) {
+                throw new Error(result.error || 'Ошибка загрузки данных');
+            }
+            
+            // Используем данные напрямую из API (фильтрация уже выполнена)
+            portfolioData = result.data;
+            
+            console.log('Данные загружены:', {
+                total: portfolioData.all.length,
+                apartments: portfolioData.apartments.length,
+                houses: portfolioData.houses.length,
+                offices: portfolioData.offices.length
+            });
+            
+            // Отображаем проекты
+            displayProjects(currentFilter);
+            
+            // Скрываем индикатор загрузки
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('portfolio-grid').classList.remove('hidden');
+            
+        } catch (error) {
+            console.error('Ошибка загрузки портфолио:', error);
+            showError('Не удалось загрузить данные портфолио: ' + error.message);
+        }
+    }
+
+    // Функция отображения проектов с анимацией
+    function displayProjects(filter) {
+        const grid = document.getElementById('portfolio-grid');
+        const emptyFilter = document.getElementById('empty-filter');
+        
+        if (!portfolioData || !portfolioData[filter]) {
+            emptyFilter.classList.remove('hidden');
+            grid.classList.add('hidden');
+            return;
+        }
+        
+        const projects = portfolioData[filter];
+        
+        if (projects.length === 0) {
+            emptyFilter.classList.remove('hidden');
+            grid.classList.add('hidden');
+            return;
+        }
+        
+        emptyFilter.classList.add('hidden');
+        grid.classList.remove('hidden');
+        
+        // Добавляем анимацию исчезновения
+        grid.style.opacity = '0';
+        grid.style.transform = 'translateY(20px)';
+        
+        // Через небольшую задержку обновляем содержимое и показываем с анимацией
+        setTimeout(() => {
+            // Генерируем HTML для проектов
+            grid.innerHTML = projects.map((project, index) => createProjectCard(project, index)).join('');
+            
+            // Анимация появления
+            grid.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            grid.style.opacity = '1';
+            grid.style.transform = 'translateY(0)';
+            
+            // Поочередная анимация появления карточек
+            const cards = grid.querySelectorAll('.project-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `opacity 0.4s ease ${index * 0.1}s, transform 0.4s ease ${index * 0.1}s`;
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 + index * 100);
+            });
+        }, 200);
+    }
+
+    // Функция создания карточки проекта
+    function createProjectCard(project, index) {
+        // Определяем CSS классы для типов проектов
+        const typeClasses = {
+            'apartments': 'project-card-apartments',
+            'houses': 'project-card-houses', 
+            'offices': 'project-card-offices'
+        };
+        
+        const typeClass = typeClasses[project.entity_type] || '';
+        
+        return `
+            <div class="project-card ${typeClass} group relative h-64 bg-dark-gray overflow-hidden rounded-lg shadow-lg transition-all duration-300" data-type="${project.entity_type}">
+                <img 
+                    src="${project.url}" 
+                    alt="${project.alt_text}"
+                    class="w-full h-full object-cover transition-opacity duration-300"
+                    onload="this.classList.add('loaded')"
+                    onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='; this.classList.add('error')"
+                >
+                
+                <!-- Overlay с названием -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                    <div class="p-4 w-full">
+                        <h3 class="text-white text-lg font-montserrat font-semibold line-clamp-2">
+                            ${project.title}
+                        </h3>
+                    </div>
+                </div>
+                
+                <!-- Индикатор загрузки изображения -->
+                <div class="absolute inset-0 bg-gray-200 flex items-center justify-center image-loading">
+                    <div class="animate-pulse flex space-x-1">
+                        <div class="h-2 w-2 bg-gray-400 rounded-full animate-bounce"></div>
+                        <div class="h-2 w-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                        <div class="h-2 w-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Функция отображения ошибки
+    function showError(message) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error-message').textContent = message;
+        document.getElementById('error').classList.remove('hidden');
+    }
+
+    // Установка текущего года в футере
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    });
+    
+    // Обработка мобильного меню
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+    });
+    
+    // Фильтрация проектов
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
+                
+                // Визуальное выделение активной кнопки
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-gold-1', 'text-black');
+                    btn.classList.add('border', 'border-dark-gray', 'text-dark-gray');
+                });
+                
+                this.classList.add('bg-gold-1', 'text-black');
+                this.classList.remove('border', 'border-dark-gray', 'text-dark-gray');
+                
+                // Обновляем текущий фильтр и отображаем проекты
+                currentFilter = filter;
+                displayProjects(filter);
+            });
+        });
+    });
+
+    // Загрузка данных при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        loadPortfolioData();
+    });
+    </script>
+
+    <style>
+    /* Стили для загрузки изображений */
+    .project-card img {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .project-card img.loaded {
+        opacity: 1;
+    }
+    
+    .project-card img.error {
+        opacity: 0.5;
+    }
+    
+    .project-card .image-loading {
+        transition: opacity 0.3s ease;
+    }
+    
+    .project-card img.loaded + .image-loading,
+    .project-card img.error + .image-loading {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    /* Стили для текста */
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    /* Стили для разных типов проектов */
+    .project-card-apartments {
+        border-bottom: 3px solid #4F46E5;
+    }
+    
+    .project-card-houses {
+        border-bottom: 3px solid #059669;
+    }
+    
+    .project-card-offices {
+        border-bottom: 3px solid #DC2626;
+    }
+
+    /* Плавная анимация для сетки */
+    #portfolio-grid {
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    </style>
+</body>
+</html> 

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестирование Interior Design AI</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        .form-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .file-upload {
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .file-upload:hover {
+            border-color: #667eea;
+        }
+        .file-upload input {
+            display: none;
+        }
+        .image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .generate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .generate-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .result-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        .result-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .result-image {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .error {
+            background: #fed7d7;
+            color: #742a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏠 Interior Design AI Test</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 40px;">
+            Модель: adirik/interior-design | Стоимость: ~$0.0075 за изображение
+        </p>
+
+        <form id="designForm" enctype="multipart/form-data">
+            <div class="form-section">
+                <div>
+                    <div class="form-group">
+                        <label>Загрузите изображение интерьера</label>
+                        <div class="file-upload" onclick="document.getElementById('imageFile').click()">
+                            <input type="file" id="imageFile" accept="image/*" required>
+                            <div>📷 Нажмите для выбора изображения</div>
+                        </div>
+                        <img id="imagePreview" class="image-preview hidden" alt="Предварительный просмотр">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="styleSelect">Выберите стиль интерьера</label>
+                        <select id="styleSelect" required>
+                            <option value="">Выберите стиль...</option>
+                            <option value="minimalist">Минимализм</option>
+                            <option value="scandinavian">Скандинавский</option>
+                            <option value="industrial">Индустриальный</option>
+                            <option value="loft">Лофт</option>
+                            <option value="modern">Современный</option>
+                            <option value="classic">Классический</option>
+                            <option value="provence">Прованс</option>
+                            <option value="japanese">Японский</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        <label for="promptInput">Опишите желаемые изменения</label>
+                        <textarea 
+                            id="promptInput" 
+                            rows="4"
+                            placeholder="Например: добавить зеленые растения, поменять цвет дивана на синий, сделать комнату светлее..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="negativePrompt">Что исключить (необязательно)</label>
+                        <textarea 
+                            id="negativePrompt" 
+                            rows="3"
+                            placeholder="Например: темные цвета, старая мебель, беспорядок..."
+                        ></textarea>
+                    </div>
+
+                    <button type="submit" class="generate-btn" id="generateBtn">
+                        🚀 Создать дизайн интерьера
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Генерируем новый дизайн интерьера...</p>
+            <p style="font-size: 14px; color: #666;">Это может занять 8-15 секунд</p>
+        </div>
+
+        <div class="error" id="errorContainer">
+            <h4>❌ Ошибка</h4>
+            <p id="errorMessage"></p>
+        </div>
+
+        <div class="result-section hidden" id="resultSection">
+            <h3>📊 Результат генерации</h3>
+            <div id="resultInfo"></div>
+            <div class="result-images" id="resultImages"></div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('designForm');
+        const imageFile = document.getElementById('imageFile');
+        const imagePreview = document.getElementById('imagePreview');
+        const loading = document.getElementById('loading');
+        const errorContainer = document.getElementById('errorContainer');
+        const resultSection = document.getElementById('resultSection');
+        const generateBtn = document.getElementById('generateBtn');
+
+        // Предварительный просмотр изображения
+        imageFile.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Отправка формы
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('image', imageFile.files[0]);
+            formData.append('style', document.getElementById('styleSelect').value);
+            formData.append('prompt', document.getElementById('promptInput').value);
+            formData.append('negative_prompt', document.getElementById('negativePrompt').value);
+
+            showLoading();
+            hideError();
+            hideResult();
+
+            const startTime = Date.now();
+
+            try {
+                const response = await fetch('/api/interior-design-replicate', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                const endTime = Date.now();
+                const generationTime = ((endTime - startTime) / 1000).toFixed(1);
+
+                if (result.success) {
+                    showResult(result, generationTime);
+                } else {
+                    showError(result.error || 'Неизвестная ошибка');
+                }
+
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showError('Ошибка соединения: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        });
+
+        function showLoading() {
+            loading.style.display = 'block';
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'Генерируем...';
+        }
+
+        function hideLoading() {
+            loading.style.display = 'none';
+            generateBtn.disabled = false;
+            generateBtn.textContent = '🚀 Создать дизайн интерьера';
+        }
+
+        function showResult(result, generationTime) {
+            document.getElementById('resultInfo').innerHTML = `
+                <p><strong>Стиль:</strong> ${result.style}</p>
+                <p><strong>Время генерации:</strong> ${generationTime} сек</p>
+                <p><strong>Модель:</strong> adirik/interior-design</p>
+            `;
+            
+            document.getElementById('resultImages').innerHTML = `
+                <div>
+                    <h4>Исходное изображение</h4>
+                    <img src="${result.originalImage}" class="result-image" alt="Исходное">
+                </div>
+                <div>
+                    <h4>Новый дизайн</h4>
+                    <img src="${result.editedImage}" class="result-image" alt="Новый дизайн">
+                </div>
+            `;
+
+            resultSection.classList.remove('hidden');
+        }
+
+        function hideResult() {
+            resultSection.classList.add('hidden');
+        }
+
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            errorContainer.style.display = 'block';
+        }
+
+        function hideError() {
+            errorContainer.style.display = 'none';
+        }
+    </script>
+</body>
+</html> 

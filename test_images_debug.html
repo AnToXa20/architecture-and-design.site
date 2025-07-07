@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отладка изображений статей</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .article { border: 1px solid #ccc; margin: 20px 0; padding: 20px; }
+        .image-container { margin: 10px 0; }
+        .image-test { max-width: 300px; border: 1px solid #ddd; }
+        .error { color: red; }
+        .success { color: green; }
+        .loading { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>🐛 Отладка изображений статей</h1>
+    <p>Эта страница проверяет, почему не отображаются изображения в статьях.</p>
+    
+    <div id="status" class="loading">⏳ Загрузка данных...</div>
+    <div id="results"></div>
+
+    <script>
+        async function debugImages() {
+            const statusDiv = document.getElementById('status');
+            const resultsDiv = document.getElementById('results');
+            
+            try {
+                statusDiv.innerHTML = '⏳ Запрашиваю данные API...';
+                
+                // Получаем статьи
+                const response = await fetch('/api/db/articles');
+                const data = await response.json();
+                
+                if (!data.success || !data.articles) {
+                    statusDiv.innerHTML = '<span class="error">❌ Ошибка получения статей</span>';
+                    return;
+                }
+                
+                statusDiv.innerHTML = `<span class="success">✅ Загружено статей: ${data.articles.length}</span>`;
+                
+                // Тестируем каждую статью
+                for (const article of data.articles) {
+                    await testArticle(article, resultsDiv);
+                }
+                
+            } catch (error) {
+                statusDiv.innerHTML = `<span class="error">❌ Ошибка: ${error.message}</span>`;
+                console.error('Ошибка отладки:', error);
+            }
+        }
+        
+        async function testArticle(article, container) {
+            const articleDiv = document.createElement('div');
+            articleDiv.className = 'article';
+            
+            articleDiv.innerHTML = `
+                <h3>📄 ${article.title}</h3>
+                <p><strong>ID:</strong> ${article.id}</p>
+                <p><strong>Главное изображение:</strong> ${article.main_image_url ? 'есть' : 'нет'}</p>
+            `;
+            
+            // Тестируем главное изображение
+            if (article.main_image_url) {
+                const imageTest = await testImageUrl(article.main_image_url, 'Главное изображение');
+                articleDiv.appendChild(imageTest);
+            }
+            
+            // Получаем детали статьи для блоков контента
+            try {
+                const detailResponse = await fetch(`/api/db/articles/${article.id}`);
+                const detailData = await detailResponse.json();
+                
+                if (detailData.success && detailData.article.contentBlocks) {
+                    const imageBlocks = detailData.article.contentBlocks.filter(block => block.block_type === 'image');
+                    
+                    if (imageBlocks.length > 0) {
+                        const blocksList = document.createElement('div');
+                        blocksList.innerHTML = `<p><strong>Блоков с изображениями:</strong> ${imageBlocks.length}</p>`;
+                        
+                        for (let i = 0; i < imageBlocks.length; i++) {
+                            const block = imageBlocks[i];
+                            if (block.image_url) {
+                                const imageTest = await testImageUrl(block.image_url, `Блок ${i + 1}`);
+                                blocksList.appendChild(imageTest);
+                            }
+                        }
+                        
+                        articleDiv.appendChild(blocksList);
+                    }
+                }
+            } catch (error) {
+                console.error('Ошибка получения деталей статьи:', error);
+            }
+            
+            container.appendChild(articleDiv);
+        }
+        
+        function testImageUrl(imageUrl, label) {
+            return new Promise((resolve) => {
+                const container = document.createElement('div');
+                container.className = 'image-container';
+                
+                const labelDiv = document.createElement('div');
+                labelDiv.innerHTML = `<strong>${label}:</strong>`;
+                container.appendChild(labelDiv);
+                
+                const urlDiv = document.createElement('div');
+                urlDiv.innerHTML = `<small>${imageUrl.substring(0, 100)}${imageUrl.length > 100 ? '...' : ''}</small>`;
+                container.appendChild(urlDiv);
+                
+                const statusDiv = document.createElement('div');
+                statusDiv.innerHTML = '⏳ Проверяю доступность...';
+                container.appendChild(statusDiv);
+                
+                const img = document.createElement('img');
+                img.className = 'image-test';
+                img.src = imageUrl;
+                
+                let resolved = false;
+                
+                img.onload = function() {
+                    if (!resolved) {
+                        statusDiv.innerHTML = '<span class="success">✅ Изображение загружено успешно</span>';
+                        container.appendChild(img);
+                        resolved = true;
+                        resolve(container);
+                    }
+                };
+                
+                img.onerror = function() {
+                    if (!resolved) {
+                        statusDiv.innerHTML = '<span class="error">❌ Ошибка загрузки изображения</span>';
+                        resolved = true;
+                        resolve(container);
+                    }
+                };
+                
+                // Таймаут на случай, если изображение грузится очень долго
+                setTimeout(() => {
+                    if (!resolved) {
+                        statusDiv.innerHTML = '<span class="error">⏰ Превышен таймаут загрузки</span>';
+                        resolved = true;
+                        resolve(container);
+                    }
+                }, 10000); // 10 секунд
+            });
+        }
+        
+        // Запускаем отладку при загрузке страницы
+        document.addEventListener('DOMContentLoaded', debugImages);
+    </script>
+</body>
+</html> 

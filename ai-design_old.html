@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИИ дизайн - Архитектурное Бюро</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'white': '#FFFFFF',
+                        'black': '#000000',
+                        'light-gray': '#E6E6E6',
+                        'gray': '#A6A6A6',
+                        'dark-gray': '#2F2F2F',
+                        'gold-1': '#FFC107',
+                        'gold-2': '#E8A317',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-roboto text-dark-gray bg-white">
+    <!-- Шапка сайта -->
+    <header class="bg-white fixed w-full top-0 shadow-md z-50">
+        <div class="container mx-auto py-4 px-4 flex justify-between items-center">
+            <!-- Логотип -->
+            <a href="index.html" class="flex items-center">
+                <img src="Logo_black.svg" alt="Логотип" class="logo-image">
+            </a>
+
+            <!-- Навигация для десктопа -->
+            <nav class="hidden lg:flex">
+                <a href="portfolio.html" class="header-link">Портфолио</a>
+                <a href="stages.html" class="header-link">Этапы работы</a>
+                <a href="articles.html" class="header-link">Статьи</a>
+                <a href="services.html" class="header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="header-link">ИИ дизайн</a>
+                <a href="about.html" class="header-link">О нас</a>
+                <a href="contacts.html" class="header-link">Контакты</a>
+            </nav>
+
+            <!-- Кнопка мобильного меню -->
+            <button id="mobile-menu-button" class="lg:hidden flex flex-col justify-center items-center">
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black"></span>
+            </button>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="lg:hidden hidden absolute top-full left-0 w-full bg-white shadow-md">
+            <nav class="flex flex-col p-4">
+                <a href="portfolio.html" class="py-2 header-link">Портфолио</a>
+                <a href="stages.html" class="py-2 header-link">Этапы работы</a>
+                <a href="articles.html" class="py-2 header-link">Статьи</a>
+                <a href="services.html" class="py-2 header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="py-2 header-link">ИИ дизайн</a>
+                <a href="about.html" class="py-2 header-link">О нас</a>
+                <a href="contacts.html" class="py-2 header-link">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main class="pt-32 pb-20">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <h1 class="text-4xl md:text-5xl font-montserrat font-bold mb-4 text-center">
+                ИИ дизайн
+            </h1>
+            <div class="w-20 h-1 bg-gold-1 mx-auto mb-8"></div>
+            
+            <!-- Описание сервиса -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-montserrat font-semibold mb-4 text-center">
+                    Представьте свой интерьер в новом стиле
+                </h2>
+                <p class="text-lg mb-6 text-center max-w-3xl mx-auto">
+                    Загрузите фотографию вашего интерьера, выберите желаемый стиль и опишите какие изменения 
+                    вы хотите увидеть. Наш ИИ создаст для вас визуализацию нового дизайна.
+                </p>
+            </section>
+            
+            <!-- Дисклеймер -->
+            <section class="mb-12 bg-light-gray p-6 rounded-lg">
+                <h3 class="text-xl font-montserrat font-semibold mb-3">Важная информация</h3>
+                <p class="mb-3">
+                    Генерация ИИ-дизайна является демонстрационным инструментом и не заменяет профессиональный 
+                    дизайн-проект. Результаты могут отличаться от реалистичных интерьеров по следующим причинам:
+                </p>
+                <ul class="list-disc pl-6 mb-3 space-y-2">
+                    <li>ИИ имеет ограниченное понимание физических свойств материалов и освещения</li>
+                    <li>Пропорции и перспектива могут быть искажены в сгенерированных изображениях</li>
+                    <li>Некоторые детали могут быть интерпретированы ИИ нестандартным образом</li>
+                    <li>Качество результата зависит от качества исходного изображения</li>
+                </ul>
+                <p>
+                    Для создания реального дизайн-проекта рекомендуем обратиться к нашим дизайнерам интерьера, 
+                    которые учтут все технические особенности вашего пространства.
+                </p>
+            </section>
+            
+            <!-- Форма для ИИ-дизайна -->
+            <section class="border border-gray p-8 rounded-lg">
+                <h3 class="text-2xl font-montserrat font-semibold mb-6 text-center">
+                    Создать ИИ-дизайн интерьера
+                </h3>
+                
+                <form class="space-y-6">
+                    <!-- Загрузка фото -->
+                    <div>
+                        <label for="photo-upload" class="block text-lg font-montserrat font-medium mb-2">
+                            1. Загрузите фотографию вашего интерьера
+                        </label>
+                        <div class="border-2 border-dashed border-gray p-8 rounded-lg flex flex-col items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <p class="text-center mb-3">Перетащите изображение сюда или нажмите для выбора файла</p>
+                            <button type="button" class="btn bg-gold-1 text-black hover:bg-gold-2 transition-colors">
+                                Выбрать файл
+                            </button>
+                            <input id="photo-upload" type="file" accept="image/*" class="hidden" />
+                        </div>
+                        <p class="text-gray text-sm mt-2">Поддерживаемые форматы: JPG, PNG. Максимальный размер: 5MB</p>
+                    </div>
+                    
+                    <!-- Выбор стиля -->
+                    <div>
+                        <label for="style-select" class="block text-lg font-montserrat font-medium mb-2">
+                            2. Выберите стиль интерьера
+                        </label>
+                        <select id="style-select" class="w-full p-3 border border-gray rounded-md focus:outline-none focus:ring-2 focus:ring-gold-1">
+                            <option value="" selected disabled>Выберите стиль из списка</option>
+                            <option value="minimalist">Минимализм</option>
+                            <option value="scandinavian">Скандинавский</option>
+                            <option value="industrial">Индустриальный</option>
+                            <option value="loft">Лофт</option>
+                            <option value="modern">Современный</option>
+                            <option value="contemporary">Контемпорари</option>
+                            <option value="classic">Классический</option>
+                            <option value="neoclassic">Неоклассика</option>
+                            <option value="provence">Прованс</option>
+                            <option value="art-deco">Арт-деко</option>
+                            <option value="vintage">Винтаж</option>
+                            <option value="japanese">Японский</option>
+                            <option value="high-tech">Хай-тек</option>
+                            <option value="rustic">Кантри</option>
+                            <option value="mediterranean">Средиземноморский</option>
+                            <option value="boho">Бохо</option>
+                            <option value="eclectic">Эклектика</option>
+                            <option value="tropical">Тропический</option>
+                            <option value="coastal">Прибрежный</option>
+                            <option value="mid-century">Мид-сенчури</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Ввод промта -->
+                    <div>
+                        <label for="prompt-input" class="block text-lg font-montserrat font-medium mb-2">
+                            3. Опишите желаемые изменения
+                        </label>
+                        <textarea id="prompt-input" rows="4" placeholder="Например: Светлая гостиная с большим диваном, яркие акценты в виде подушек, природные материалы, много естественного света..."
+                            class="w-full p-3 border border-gray rounded-md focus:outline-none focus:ring-2 focus:ring-gold-1"></textarea>
+                        <p class="text-gray text-sm mt-2">Чем подробнее описание, тем точнее будет результат</p>
+                    </div>
+                    
+                    <!-- Негативный промт -->
+                    <div>
+                        <label for="negative-prompt-input" class="block text-lg font-montserrat font-medium mb-2">
+                            4. Что исключить из дизайна (необязательно)
+                        </label>
+                        <textarea id="negative-prompt-input" rows="3" placeholder="Например: темные цвета, старая мебель, беспорядок, плохое освещение..."
+                            class="w-full p-3 border border-gray rounded-md focus:outline-none focus:ring-2 focus:ring-gold-1"></textarea>
+                        <p class="text-gray text-sm mt-2">Укажите элементы, которых не должно быть в результате</p>
+                    </div>
+                    
+                    <!-- Кнопка отправки -->
+                    <div class="text-center">
+                        <button type="submit" id="create-design-btn" class="btn bg-dark-gray text-white hover:bg-gold-1 hover:text-black transition-colors px-10 py-3">
+                            Создать дизайн
+                        </button>
+                        <p class="text-gray text-sm mt-4">
+                            Обработка изображения занимает от 8 до 15 секунд
+                        </p>
+                    </div>
+                </form>
+            </section>
+            
+            <!-- Прогресс загрузки -->
+            <div id="progress-container" class="mt-8 hidden">
+                <div class="bg-light-gray p-6 rounded-lg border-2 border-gold-1">
+                    <h3 class="text-xl font-montserrat font-semibold mb-4 text-center">
+                        Создаем ваш дизайн...
+                    </h3>
+                    <div class="flex justify-center mb-4">
+                        <div class="animate-spin rounded-full h-16 w-16 border-4 border-gray-300 border-t-gold-1"></div>
+                    </div>
+                    <p id="progress-text" class="text-center text-gray">Ожидайте, это займет 8-15 секунд...</p>
+                </div>
+            </div>
+            
+            <!-- Ошибки -->
+            <div id="error-container" class="mt-8 hidden">
+                <div class="bg-red-100 border-2 border-red-300 p-6 rounded-lg">
+                    <h3 class="text-xl font-montserrat font-semibold mb-4 text-center text-red-700">
+                        ❌ Произошла ошибка
+                    </h3>
+                    <p id="error-message" class="text-center text-red-600"></p>
+                    <div class="text-center mt-4">
+                        <button onclick="hideError()" class="bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600 transition-colors">
+                            Закрыть
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Результат ИИ дизайна -->
+            <div id="result-container" class="mt-8 hidden">
+                <div class="border-2 border-gold-1 p-8 rounded-lg bg-gradient-to-br from-gold-1/5 to-transparent">
+                    <h3 class="text-2xl font-montserrat font-semibold mb-6 text-center">
+                        Ваш новый дизайн готов!
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
+                        <!-- Исходное изображение -->
+                        <div class="space-y-3">
+                            <h4 class="text-lg font-montserrat font-medium text-center">
+                                Исходное изображение
+                            </h4>
+                            <div class="border-2 border-gray rounded-lg overflow-hidden bg-white">
+                                <img id="original-image" class="w-full h-auto max-h-80 object-contain" alt="Исходное изображение">
+                            </div>
+                        </div>
+                        
+                        <!-- Новый дизайн -->
+                        <div class="space-y-3">
+                            <h4 class="text-lg font-montserrat font-medium text-center">
+                                Новый дизайн
+                            </h4>
+                            <div class="border-2 border-gold-1 rounded-lg overflow-hidden bg-white">
+                                <img id="generated-image" class="w-full h-auto max-h-80 object-contain" alt="Сгенерированный дизайн">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Информация о результате -->
+                    <div id="result-info" class="bg-white p-4 rounded-lg border mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div><strong>Выбранный стиль:</strong> <span id="result-style">-</span></div>
+                            <div><strong>Время создания:</strong> <span id="result-time">-</span></div>
+                            <div class="col-span-full"><strong>Описание:</strong> <span id="result-prompt">-</span></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Действия с результатом -->
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <a id="download-btn" href="#" download="ai-design-result.png" 
+                           class="bg-gold-1 text-black px-6 py-3 rounded-md hover:bg-gold-2 transition-colors font-medium">
+                            Скачать результат
+                        </a>
+                        <button onclick="shareResult()" 
+                                class="bg-dark-gray text-white px-6 py-3 rounded-md hover:bg-gray-600 transition-colors font-medium">
+                            Поделиться
+                        </button>
+                        <button onclick="createNewDesign()" 
+                                class="bg-white text-dark-gray border-2 border-dark-gray px-6 py-3 rounded-md hover:bg-dark-gray hover:text-white transition-colors font-medium">
+                            Создать новый дизайн
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            
+            <!-- Примеры работ -->
+            <section class="mt-16">
+                <h3 class="text-2xl font-montserrat font-semibold mb-6 text-center">
+                    Примеры работ ИИ-дизайна
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <div class="bg-dark-gray h-64 rounded-lg mb-3 flex items-center justify-center overflow-hidden">
+                            <img src="pics/старый интерьер.jpg" alt="Исходный интерьер до преобразования" class="w-full h-full object-cover">
+                        </div>
+                        <p class="text-center">Исходный интерьер</p>
+                    </div>
+                    <div>
+                        <div class="bg-dark-gray h-64 rounded-lg mb-3 flex items-center justify-center overflow-hidden">
+                            <img src="pics/Новый интерьер.png" alt="Интерьер после преобразования в стиле лофт" class="w-full h-full object-cover">
+                        </div>
+                        <p class="text-center">Стиль лофт</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer class="bg-dark-gray text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Контакты</h3>
+                    <ul class="space-y-2">
+                        <li>Телефон: +7 (XXX) XXX-XX-XX</li>
+                        <li>Email: info@architecture-bureau.com</li>
+                        <li>Адрес: г. Москва, ул. Примерная, д. 123</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Наши услуги</h3>
+                    <ul class="space-y-2">
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Архитектурное проектирование</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Дизайн интерьера</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Ландшафтный дизайн</a></li>
+                        <li><a href="ai-design.html" class="text-white hover:text-gold-1 transition-colors">ИИ дизайн</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Информация</h3>
+                    <ul class="space-y-2">
+                        <li><a href="stages.html" class="text-white hover:text-gold-1 transition-colors">Этапы работы</a></li>
+                        <li><a href="portfolio.html" class="text-white hover:text-gold-1 transition-colors">Портфолио</a></li>
+                        <li><a href="about.html" class="text-white hover:text-gold-1 transition-colors">О нас</a></li>
+                        <li><a href="articles.html" class="text-white hover:text-gold-1 transition-colors">Статьи</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-center mt-8 pt-8 border-t border-gray">
+                <img src="Logo.svg" alt="Логотип" class="logo-image mb-4">
+                <p class="text-center text-sm">© <span id="current-year"></span> Архитектурное Бюро. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    
+    <script>
+        // ИИ дизайн функционал
+        let currentResult = null;
+        let uploadedFile = null;
+        
+                 document.addEventListener('DOMContentLoaded', function() {
+             setupFileUpload();
+             
+             // Обработка формы
+             const form = document.querySelector('form');
+             form.addEventListener('submit', handleFormSubmit);
+         });
+         
+         function setupFileUpload() {
+             // Обработка загрузки файла
+             const photoUpload = document.getElementById('photo-upload');
+             const fileButton = document.querySelector('button[type="button"]');
+             const dropZone = fileButton ? fileButton.parentElement : document.querySelector('.border-dashed').parentElement;
+             
+             if (!photoUpload || !dropZone) return;
+             
+             // Клик по кнопке
+             if (fileButton) {
+                 fileButton.addEventListener('click', (e) => {
+                     e.preventDefault();
+                     e.stopPropagation();
+                     photoUpload.click();
+                 });
+             }
+             
+             // Клик по зоне загрузки (но не по форме)
+             dropZone.addEventListener('click', (e) => {
+                 if (e.target === dropZone || e.target.closest('svg') || e.target.textContent.includes('Перетащите') || e.target.textContent.includes('Выбрать файл')) {
+                     e.preventDefault();
+                     e.stopPropagation();
+                     photoUpload.click();
+                 }
+             });
+             
+             // Обработка выбора файла
+             photoUpload.addEventListener('change', handleFileSelect);
+             
+             // Drag and Drop
+             dropZone.addEventListener('dragover', (e) => {
+                 e.preventDefault();
+                 dropZone.classList.add('border-gold-1', 'bg-gold-1/10');
+             });
+             
+             dropZone.addEventListener('dragleave', (e) => {
+                 e.preventDefault();
+                 dropZone.classList.remove('border-gold-1', 'bg-gold-1/10');
+             });
+             
+             dropZone.addEventListener('drop', (e) => {
+                 e.preventDefault();
+                 dropZone.classList.remove('border-gold-1', 'bg-gold-1/10');
+                 const files = e.dataTransfer.files;
+                 if (files.length > 0) {
+                     photoUpload.files = files;
+                     handleFileSelect({ target: { files: files } });
+                 }
+             });
+         }
+        
+                 function handleFileSelect(e) {
+             const file = e.target.files[0];
+             if (!file) return;
+             
+             // Валидация файла
+             if (!file.type.startsWith('image/')) {
+                 alert('Пожалуйста, выберите файл изображения');
+                 return;
+             }
+             
+             if (file.size > 5 * 1024 * 1024) {
+                 alert('Размер файла не должен превышать 5MB');
+                 return;
+             }
+             
+             uploadedFile = file;
+             
+             // Создаем превью изображения
+             const reader = new FileReader();
+             reader.onload = function(e) {
+                 const imagePreview = e.target.result;
+                 
+                 // Обновляем интерфейс с превью
+                 const dropZone = document.querySelector('.border-dashed');
+                 dropZone.innerHTML = `
+                     <div class="p-4">
+                         <div class="text-center mb-4">
+                             <img src="${imagePreview}" alt="Превью изображения" class="mx-auto max-h-40 rounded-lg shadow-md">
+                         </div>
+                         <div class="text-center">
+                             <svg class="mx-auto h-8 w-8 text-green-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                             </svg>
+                             <p class="font-medium text-green-700">Файл загружен: ${file.name}</p>
+                             <p class="text-sm text-gray-500">${(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                             <button type="button" class="mt-2 text-sm text-gold-1 hover:text-gold-2 underline" onclick="resetFileUpload()">
+                                 Выбрать другой файл
+                             </button>
+                         </div>
+                     </div>
+                     <input id="photo-upload" type="file" accept="image/*" class="hidden" />
+                 `;
+                 
+                 // Переназначаем обработчики для нового input
+                 setupFileUpload();
+             };
+             reader.readAsDataURL(file);
+         }
+        
+                 function resetFileUpload() {
+             uploadedFile = null;
+             const photoUpload = document.getElementById('photo-upload');
+             photoUpload.value = ''; // Очищаем input
+             
+             // Находим контейнер для файла
+             const dropZone = document.querySelector('.border-dashed');
+             
+             // Восстанавливаем исходный HTML
+             dropZone.innerHTML = `
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                 </svg>
+                 <p class="text-center mb-3">Перетащите изображение сюда или нажмите для выбора файла</p>
+                 <button type="button" class="btn bg-gold-1 text-black hover:bg-gold-2 transition-colors">
+                     Выбрать файл
+                 </button>
+                 <input id="photo-upload" type="file" accept="image/*" class="hidden" />
+             `;
+             
+             // Переназначаем обработчики
+             setupFileUpload();
+         }
+        
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const style = document.getElementById('style-select').value;
+            const prompt = document.getElementById('prompt-input').value;
+            const negativePrompt = document.getElementById('negative-prompt-input').value;
+            
+            // Валидация
+            if (!uploadedFile) {
+                alert('Пожалуйста, загрузите изображение');
+                return;
+            }
+            
+            if (!style) {
+                alert('Пожалуйста, выберите стиль интерьера');
+                return;
+            }
+            
+            if (!prompt.trim()) {
+                alert('Пожалуйста, опишите желаемые изменения');
+                return;
+            }
+            
+                         // Показываем прогресс
+             showProgress();
+             hideResult();
+             hideError();
+            
+            const startTime = Date.now();
+            
+            try {
+                // Создаем FormData
+                const formData = new FormData();
+                formData.append('image', uploadedFile);
+                formData.append('style', style);
+                formData.append('prompt', prompt);
+                formData.append('negative_prompt', negativePrompt);
+                
+                // Отправляем запрос
+                const response = await fetch('/api/interior-design-replicate', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                const endTime = Date.now();
+                const generationTime = ((endTime - startTime) / 1000).toFixed(1);
+                
+                if (result.success) {
+                    hideProgress();
+                    showResult(result, generationTime);
+                } else {
+                    throw new Error(result.error || 'Неизвестная ошибка');
+                }
+                
+                         } catch (error) {
+                 hideProgress();
+                 showError('Ошибка при создании дизайна: ' + error.message);
+                 console.error('Ошибка:', error);
+             }
+        }
+        
+                 function showProgress() {
+             document.getElementById('progress-container').classList.remove('hidden');
+             document.getElementById('create-design-btn').disabled = true;
+             document.getElementById('create-design-btn').textContent = 'Создаем дизайн...';
+         }
+        
+                 function hideProgress() {
+             document.getElementById('progress-container').classList.add('hidden');
+             document.getElementById('create-design-btn').disabled = false;
+             document.getElementById('create-design-btn').textContent = 'Создать дизайн';
+         }
+        
+        function showResult(result, generationTime) {
+            currentResult = result;
+            
+            // Заполняем информацию
+            document.getElementById('result-style').textContent = getStyleName(result.style);
+            document.getElementById('result-time').textContent = generationTime + ' сек';
+            document.getElementById('result-prompt').textContent = result.originalPrompt || result.prompt;
+            
+            // Показываем изображения
+            document.getElementById('original-image').src = result.originalImage;
+            document.getElementById('generated-image').src = result.editedImage;
+            
+            // Настраиваем кнопку скачивания
+            const downloadBtn = document.getElementById('download-btn');
+            downloadBtn.href = result.editedImage;
+            downloadBtn.download = `ai-design-${Date.now()}.png`;
+            
+            // Показываем результат
+            document.getElementById('result-container').classList.remove('hidden');
+        }
+        
+                 function hideResult() {
+             document.getElementById('result-container').classList.add('hidden');
+         }
+         
+         function showError(message) {
+             document.getElementById('error-message').textContent = message;
+             document.getElementById('error-container').classList.remove('hidden');
+         }
+         
+         function hideError() {
+             document.getElementById('error-container').classList.add('hidden');
+         }
+        
+        function getStyleName(style) {
+            const styleNames = {
+                'minimalist': 'Минимализм',
+                'scandinavian': 'Скандинавский',
+                'industrial': 'Индустриальный',
+                'loft': 'Лофт',
+                'modern': 'Современный',
+                'contemporary': 'Контемпорари',
+                'classic': 'Классический',
+                'neoclassic': 'Неоклассика',
+                'provence': 'Прованс',
+                'art-deco': 'Арт-деко',
+                'vintage': 'Винтаж',
+                'japanese': 'Японский',
+                'high-tech': 'Хай-тек',
+                'rustic': 'Кантри',
+                'mediterranean': 'Средиземноморский',
+                'boho': 'Бохо',
+                'eclectic': 'Эклектика',
+                'tropical': 'Тропический',
+                'coastal': 'Прибрежный',
+                'mid-century': 'Мид-сенчури'
+            };
+            return styleNames[style] || style;
+        }
+        
+        function shareResult() {
+            if (!currentResult) return;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Мой ИИ-дизайн интерьера',
+                    text: `Посмотрите на мой новый дизайн в стиле ${getStyleName(currentResult.style)}!`,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback - копируем URL в буфер обмена
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Ссылка скопирована в буфер обмена!');
+                });
+            }
+        }
+        
+        function createNewDesign() {
+            hideResult();
+            resetFileUpload();
+            document.getElementById('style-select').value = '';
+            document.getElementById('prompt-input').value = '';
+            document.getElementById('negative-prompt-input').value = '';
+            window.scrollTo(0, 0);
+        }
+        
+    </script>
+</body>
+</html> 

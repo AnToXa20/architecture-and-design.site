@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О нас - Архитектурное Бюро</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'white': '#FFFFFF',
+                        'black': '#000000',
+                        'light-gray': '#E6E6E6',
+                        'gray': '#A6A6A6',
+                        'dark-gray': '#2F2F2F',
+                        'gold-1': '#FFC107',
+                        'gold-2': '#E8A317',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-roboto text-dark-gray bg-white">
+    <!-- Шапка сайта -->
+    <header class="bg-white fixed w-full top-0 shadow-md z-50">
+        <div class="container mx-auto py-4 px-4 flex justify-between items-center">
+            <!-- Логотип -->
+            <a href="index.html" class="flex items-center">
+                <img src="Logo_black.svg" alt="Логотип" class="logo-image">
+            </a>
+
+            <!-- Навигация для десктопа -->
+            <nav class="hidden lg:flex">
+                <a href="portfolio.html" class="header-link">Портфолио</a>
+                <a href="stages.html" class="header-link">Этапы работы</a>
+                <a href="articles.html" class="header-link">Статьи</a>
+                <a href="services.html" class="header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="header-link">ИИ дизайн</a>
+                <a href="about.html" class="header-link">О нас</a>
+                <a href="contacts.html" class="header-link">Контакты</a>
+            </nav>
+
+            <!-- Кнопка мобильного меню -->
+            <button id="mobile-menu-button" class="lg:hidden flex flex-col justify-center items-center">
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+                <span class="block w-6 h-0.5 bg-black"></span>
+            </button>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="lg:hidden hidden absolute top-full left-0 w-full bg-white shadow-md">
+            <nav class="flex flex-col p-4">
+                <a href="portfolio.html" class="py-2 header-link">Портфолио</a>
+                <a href="stages.html" class="py-2 header-link">Этапы работы</a>
+                <a href="articles.html" class="py-2 header-link">Статьи</a>
+                <a href="services.html" class="py-2 header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="py-2 header-link">ИИ дизайн</a>
+                <a href="about.html" class="py-2 header-link">О нас</a>
+                <a href="contacts.html" class="py-2 header-link">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main class="pt-32 pb-20">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <h1 class="text-4xl md:text-5xl font-montserrat font-bold mb-4 text-center">
+                О нас
+            </h1>
+            <div class="w-20 h-1 bg-gold-1 mx-auto mb-8"></div>
+            
+            <!-- Секция: О компании -->
+            <section class="mb-16">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl font-montserrat font-bold mb-6">Архитектурное бюро с 2010 года</h2>
+                        <p class="mb-4">
+                            Наше архитектурное бюро основано в 2010 году группой опытных специалистов, объединенных любовью к 
+                            современной архитектуре и желанием создавать уникальные пространства для жизни и работы. За более 
+                            чем десятилетний период работы мы реализовали свыше 200 проектов различной сложности: от частных 
+                            домов до общественных зданий.
+                        </p>
+                        <p class="mb-4">
+                            Мы гордимся индивидуальным подходом к каждому заказчику и проекту. В нашей работе мы сочетаем 
+                            инновационные решения и классические принципы архитектуры, уделяя особое внимание функциональности, 
+                            экологичности и эстетике создаваемых объектов. Наша команда постоянно развивается, изучая передовые 
+                            технологии проектирования и строительства.
+                        </p>
+                        <p>
+                            Мы активно внедряем современные методы проектирования, включая BIM-технологии и параметрическое 
+                            моделирование. С 2020 года наше бюро также развивает направление ИИ-дизайна, позволяющее ускорить 
+                            процесс создания концептуальных решений и визуализаций при сохранении высокого качества итогового продукта.
+                        </p>
+                    </div>
+                    <div class="bg-dark-gray h-96 flex items-center justify-center overflow-hidden rounded-lg">
+                        <img src="pics/Общее фото.png" alt="Общая фотография команды архитектурного бюро" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Секция: Наша миссия -->
+            <section class="mb-16 bg-light-gray p-8 rounded-lg">
+                <h2 class="text-3xl font-montserrat font-bold mb-6 text-center">Наша миссия</h2>
+                <p class="text-center max-w-3xl mx-auto">
+                    Наша миссия — создавать гармоничные, функциональные и эстетически привлекательные пространства, 
+                    которые вдохновляют людей и улучшают качество их жизни. Мы стремимся к балансу между красотой, 
+                    практичностью и экологичностью в каждом нашем проекте. Работая на стыке архитектуры, дизайна и 
+                    инженерного искусства, мы преобразуем идеи и мечты наших клиентов в реальность, создавая не просто 
+                    здания, а уникальные архитектурные решения, которые будут актуальны и через десятилетия. Мы верим, 
+                    что качественная архитектура способна менять мир к лучшему, формируя среду, в которой люди чувствуют 
+                    себя счастливыми и вдохновленными.
+                </p>
+            </section>
+            
+            <!-- Секция: Наша команда -->
+            <section>
+                <h2 class="text-3xl font-montserrat font-bold mb-6 text-center">Наша команда</h2>
+                <p class="text-center max-w-3xl mx-auto mb-12">
+                    Профессионалы своего дела с опытом работы более 10 лет в сфере архитектуры, 
+                    дизайна интерьеров и ландшафтного проектирования.
+                </p>
+                
+                <!-- Сотрудник 1 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 items-center">
+                    <div class="h-96 bg-dark-gray flex items-center justify-center overflow-hidden rounded-lg">
+                        <img id="architect-photo-1" class="w-full h-full object-cover hidden" alt="Иванов Иван">
+                        <span id="architect-placeholder-1" class="text-white text-xl">Фото сотрудника 1</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-montserrat font-semibold mb-2">Иванов Иван</h3>
+                        <p class="text-gold-1 font-medium mb-4">Главный архитектор</p>
+                        <p class="text-gray mb-4">
+                            Опыт работы 15 лет. Образование: Московский архитектурный институт, 
+                            специальность "Архитектура жилых и общественных зданий". Стажировался
+                            в ведущих архитектурных бюро Европы.
+                        </p>
+                        <p class="text-gray mb-4">
+                            Специализация: проектирование жилых и общественных зданий, авторский надзор, 
+                            разработка генеральных планов, концептуальное проектирование. Руководил более
+                            чем 50 проектами различной сложности.
+                        </p>
+                        <p class="text-gray">
+                            Лауреат профессиональных премий в области архитектуры. 
+                            Автор публикаций в специализированных изданиях по архитектуре и градостроительству.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Сотрудник 2 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 items-center">
+                    <div class="md:order-2">
+                        <div class="h-96 bg-dark-gray flex items-center justify-center overflow-hidden rounded-lg">
+                            <img id="architect-photo-2" class="w-full h-full object-cover hidden" alt="Петрова Елена">
+                            <span id="architect-placeholder-2" class="text-white text-xl">Фото сотрудника 2</span>
+                        </div>
+                    </div>
+                    <div class="md:order-1">
+                        <h3 class="text-2xl font-montserrat font-semibold mb-2">Петрова Елена</h3>
+                        <p class="text-gold-1 font-medium mb-4">Дизайнер интерьеров</p>
+                        <p class="text-gray mb-4">
+                            Опыт работы 12 лет. Образование: Британская высшая школа дизайна, 
+                            специальность "Дизайн интерьера". Дополнительное образование по цветовой 
+                            психологии и эргономике пространства.
+                        </p>
+                        <p class="text-gray mb-4">
+                            Специализация: жилые и коммерческие интерьеры, эргономика пространства, 
+                            подбор отделочных материалов, разработка индивидуальной мебели, световые решения.
+                            Реализовала более 80 интерьерных проектов.
+                        </p>
+                        <p class="text-gray">
+                            Участница международных выставок дизайна. Ведет авторский курс по дизайну 
+                            интерьеров в онлайн-школе.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Сотрудник 3 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 items-center">
+                    <div>
+                        <div class="h-96 bg-dark-gray flex items-center justify-center overflow-hidden rounded-lg">
+                            <img id="architect-photo-3" class="w-full h-full object-cover hidden" alt="Сидоров Алексей">
+                            <span id="architect-placeholder-3" class="text-white text-xl">Фото сотрудника 3</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-montserrat font-semibold mb-2">Сидоров Алексей</h3>
+                        <p class="text-gold-1 font-medium mb-4">Архитектор</p>
+                        <p class="text-gray mb-4">
+                            Опыт работы 7 лет. Образование: Санкт-Петербургский государственный 
+                            архитектурно-строительный университет, магистр архитектуры. Прошел дополнительное 
+                            обучение по BIM-проектированию.
+                        </p>
+                        <p class="text-gray mb-4">
+                            Специализация: проектирование жилых зданий, разработка технической документации, 
+                            авторский надзор, параметрическое проектирование. Владеет технологиями компьютерного 
+                            моделирования и расчета конструкций.
+                        </p>
+                        <p class="text-gray">
+                            Призер всероссийских архитектурных конкурсов. Постоянно совершенствует 
+                            навыки в области устойчивой архитектуры и энергоэффективного строительства.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Сотрудник 4 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="md:order-2">
+                        <div class="h-96 bg-dark-gray flex items-center justify-center overflow-hidden rounded-lg">
+                            <img id="architect-photo-4" class="w-full h-full object-cover hidden" alt="Козлова Мария">
+                            <span id="architect-placeholder-4" class="text-white text-xl">Фото сотрудника 4</span>
+                        </div>
+                    </div>
+                    <div class="md:order-1">
+                        <h3 class="text-2xl font-montserrat font-semibold mb-2">Козлова Мария</h3>
+                        <p class="text-gold-1 font-medium mb-4">Младший архитектор</p>
+                        <p class="text-gray mb-4">
+                            Опыт работы 4 года. Образование: Московский архитектурный институт, бакалавр 
+                            архитектуры. Дополнительное образование в области цифровой визуализации и 
+                            графического дизайна.
+                        </p>
+                        <p class="text-gray mb-4">
+                            Специализация: проектирование малых архитектурных форм, создание 3D-визуализаций, 
+                            разработка рабочей документации. Активно применяет инновационные подходы в 
+                            архитектурном проектировании.
+                        </p>
+                        <p class="text-gray">
+                            Участница международных воркшопов по современной архитектуре. Курирует 
+                            студенческие проекты в рамках сотрудничества бюро с архитектурными вузами.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Секция: Достижения -->
+            <section class="mt-16">
+                <h2 class="text-3xl font-montserrat font-bold mb-6 text-center">Наши достижения</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div>
+                        <div class="text-5xl font-montserrat font-bold text-gold-1 mb-2">200+</div>
+                        <p class="text-xl">Реализованных проектов</p>
+                    </div>
+                    <div>
+                        <div class="text-5xl font-montserrat font-bold text-gold-1 mb-2">15</div>
+                        <p class="text-xl">Лет на рынке</p>
+                    </div>
+                    <div>
+                        <div class="text-5xl font-montserrat font-bold text-gold-1 mb-2">50+</div>
+                        <p class="text-xl">Довольных клиентов</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer class="bg-dark-gray text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Контакты</h3>
+                    <ul class="space-y-2">
+                        <li>Телефон: +7 (XXX) XXX-XX-XX</li>
+                        <li>Email: info@architecture-bureau.com</li>
+                        <li>Адрес: г. Москва, ул. Примерная, д. 123</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Наши услуги</h3>
+                    <ul class="space-y-2">
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Архитектурное проектирование</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Дизайн интерьера</a></li>
+                        <li><a href="services.html" class="text-white hover:text-gold-1 transition-colors">Ландшафтный дизайн</a></li>
+                        <li><a href="ai-design.html" class="text-white hover:text-gold-1 transition-colors">ИИ дизайн</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-montserrat text-xl mb-4">Информация</h3>
+                    <ul class="space-y-2">
+                        <li><a href="stages.html" class="text-white hover:text-gold-1 transition-colors">Этапы работы</a></li>
+                        <li><a href="portfolio.html" class="text-white hover:text-gold-1 transition-colors">Портфолио</a></li>
+                        <li><a href="about.html" class="text-white hover:text-gold-1 transition-colors">О нас</a></li>
+                        <li><a href="articles.html" class="text-white hover:text-gold-1 transition-colors">Статьи</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-center mt-8 pt-8 border-t border-gray">
+                <img src="Logo.svg" alt="Логотип" class="logo-image mb-4">
+                <p class="text-center text-sm">© <span id="current-year"></span> Архитектурное Бюро. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Функция для загрузки фотографий архитекторов
+        async function loadArchitectPhotos() {
+            try {
+                const response = await fetch('/api/db/architects');
+                const data = await response.json();
+                
+                if (data.success && data.architects) {
+                    // Сопоставление архитекторов с элементами на странице
+                    const architectMapping = {
+                        'Иванов Иван': 1,
+                        'Петрова Елена': 2,
+                        'Сидоров Алексей': 3,
+                        'Козлова Мария': 4
+                    };
+                    
+                    data.architects.forEach(architect => {
+                        const elementIndex = architectMapping[architect.full_name];
+                        if (elementIndex && architect.photo_url) {
+                            const photoElement = document.getElementById(`architect-photo-${elementIndex}`);
+                            const placeholderElement = document.getElementById(`architect-placeholder-${elementIndex}`);
+                            
+                            if (photoElement && placeholderElement) {
+                                // Создаем новое изображение для предзагрузки
+                                const img = new Image();
+                                img.onload = function() {
+                                    photoElement.src = architect.photo_url;
+                                    photoElement.classList.remove('hidden');
+                                    placeholderElement.classList.add('hidden');
+                                };
+                                img.onerror = function() {
+                                    console.error(`Ошибка загрузки фотографии для ${architect.full_name}`);
+                                };
+                                img.src = architect.photo_url;
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки фотографий архитекторов:', error);
+            }
+        }
+
+        // Загружаем фотографии после загрузки страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            loadArchitectPhotos();
+        });
+    </script>
+</body>
+</html> 
