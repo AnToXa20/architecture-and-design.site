@@ -653,31 +653,61 @@
         }
         // Функция для загрузки изображений кейсов
         async function loadCasesImages() {
+            console.log('🖼️ Загрузка изображений кейсов...');
             try {
                 const response = await fetch('/api/db/cases');
                 const data = await response.json();
-                if (data.success && data.cases) {
-                    data.cases.forEach(caseItem => {
-                        const imageElement = document.getElementById(`case-image-${caseItem.entity_id}`);
-                        const placeholderElement = document.getElementById(`case-placeholder-${caseItem.entity_id}`);
-                        if (imageElement && placeholderElement && caseItem.url) {
-                            // Создаем новое изображение для предзагрузки
-                            const img = new Image();
-                            img.onload = function() {
-                                imageElement.src = caseItem.url;
-                                imageElement.alt = caseItem.alt_text || caseItem.title;
-                                imageElement.classList.remove('hidden');
-                                placeholderElement.classList.add('hidden');
-                            };
-                            img.onerror = function() {
-                                console.error(`Ошибка загрузки изображения кейса ${caseItem.title}`);
-                            };
-                            img.src = caseItem.url;
+                
+                console.log('📋 Ответ API кейсов:', data);
+                
+                if (data.success && data.cases && data.cases.length > 0) {
+                    console.log(`✅ Найдено ${data.cases.length} кейсов`);
+                    
+                    // Обрабатываем каждый кейс
+                    data.cases.forEach((caseItem, index) => {
+                        const caseId = caseItem.entity_id || (index + 1);
+                        const imageElement = document.getElementById(`case-image-${caseId}`);
+                        const placeholderElement = document.getElementById(`case-placeholder-${caseId}`);
+                        
+                        console.log(`🔍 Обработка кейса ${caseId}:`, {
+                            title: caseItem.title,
+                            url: caseItem.url,
+                            imageElement: !!imageElement,
+                            placeholderElement: !!placeholderElement
+                        });
+                        
+                        if (imageElement && placeholderElement) {
+                            if (caseItem.url) {
+                                // Создаем новое изображение для предзагрузки
+                                const img = new Image();
+                                img.onload = function() {
+                                    console.log(`✅ Изображение кейса ${caseId} загружено успешно`);
+                                    imageElement.src = caseItem.url;
+                                    imageElement.alt = caseItem.alt_text || caseItem.title || `Кейс ${caseId}`;
+                                    imageElement.classList.remove('hidden');
+                                    placeholderElement.classList.add('hidden');
+                                };
+                                img.onerror = function() {
+                                    console.error(`❌ Ошибка загрузки изображения кейса ${caseId} (${caseItem.title})`);
+                                    // Оставляем placeholder видимым при ошибке
+                                };
+                                img.src = caseItem.url;
+                            } else {
+                                console.log(`⚠️ Нет URL для кейса ${caseId}, оставляем placeholder`);
+                                // Обновляем текст placeholder если есть title
+                                if (caseItem.title) {
+                                    placeholderElement.textContent = caseItem.title;
+                                }
+                            }
+                        } else {
+                            console.error(`❌ Не найдены элементы для кейса ${caseId}`);
                         }
                     });
+                } else {
+                    console.error('❌ Не получены данные кейсов от API');
                 }
             } catch (error) {
-                console.error('Ошибка загрузки изображений кейсов:', error);
+                console.error('❌ Критическая ошибка загрузки изображений кейсов:', error);
             }
         }
         // Инициализируем слайдер после загрузки страницы

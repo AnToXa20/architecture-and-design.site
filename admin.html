@@ -29,6 +29,18 @@
         }
     </script>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Выравниваем статус статей под стиль проектов */
+        #articles-tbody .bg-green-100.text-green-800,
+        #articles-content-tbody .bg-green-100.text-green-800,
+        #articles-tbody .bg-yellow-100.text-yellow-800,
+        #articles-content-tbody .bg-yellow-100.text-yellow-800 {
+            background-color: transparent !important;
+            padding: 0 !important;
+            font-size: 1rem !important;
+            border-radius: 0 !important;
+        }
+    </style>
 </head>
 <body class="font-roboto text-dark-gray bg-light-gray min-h-screen">
     <!-- Шапка админки -->
@@ -79,8 +91,8 @@
             </div>
         </div>
         
-        <!-- Управление статьями URL -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <!-- Управление статьями URL скрыто через класс hidden -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8 hidden">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-montserrat font-bold">Управление статьями URL</h2>
                 <button id="add-article-btn" class="bg-gold-1 hover:bg-gold-2 text-black py-2 px-4 rounded transition-colors flex items-center">
@@ -101,6 +113,7 @@
                             <th class="py-3 px-4 text-left">Категория</th>
                             <th class="py-3 px-4 text-left">Дата</th>
                             <th class="py-3 px-4 text-left">Автор</th>
+                            <th class="py-3 px-4 text-left">Статус</th>
                             <th class="py-3 px-4 text-left">Действия</th>
                         </tr>
                     </thead>
@@ -133,6 +146,7 @@
                             <th class="py-3 px-4 text-left">Категория</th>
                             <th class="py-3 px-4 text-left">Дата</th>
                             <th class="py-3 px-4 text-left">Автор</th>
+                            <th class="py-3 px-4 text-left">Статус</th>
                             <th class="py-3 px-4 text-left">Действия</th>
                         </tr>
                     </thead>
@@ -405,6 +419,13 @@
                             <label for="article-content-author" class="block text-sm font-medium mb-1">Автор</label>
                             <select id="article-content-author" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
                                 <option value="">Выберите автора</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="article-content-status" class="block text-sm font-medium mb-1">Статус</label>
+                            <select id="article-content-status" class="w-full p-2 border border-gray rounded focus:outline-none focus:ring-2 focus:ring-gold-1">
+                                <option value="published">Опубликовано</option>
+                                <option value="draft">Черновик</option>
                             </select>
                         </div>
                     </div>
@@ -813,6 +834,7 @@
     let isEditMode = false;
     let editingProjectId = null;
     let projectImageIndex = 0;
+    let articleImageIndex = 0; // глобальный счетчик изображений статей
     
     // Глобальная функция для открытия модального окна проекта
     function openProjectModal(project = null) {
@@ -1609,6 +1631,7 @@
                         <td class="py-3 px-4">${article.category || 'Не указана'}</td>
                         <td class="py-3 px-4">${date}</td>
                         <td class="py-3 px-4">${authorName}</td>
+                        <td class="py-3 px-4 ${article.status === 'published' ? 'text-green-600' : 'text-yellow-600'}">${article.status === 'published' ? 'Опубликовано' : 'Черновик'}</td>
                         <td class="py-3 px-4">
                             <div class="flex space-x-2">
                                 <button class="text-blue-600 hover:text-blue-800" title="Редактировать" onclick="editArticle(${article.id})">
@@ -1645,7 +1668,7 @@
         
         // Функция для редактирования статьи (глобальная версия)
         function editArticle(articleId) {
-            showNotification(`Редактирование статьи ID: ${articleId} (функция в разработке)`, 'info');
+            return; // отключено, функция больше не используется
         }
         
         // Функция для удаления статьи (глобальная версия)
@@ -2094,6 +2117,9 @@
         
         // Переменная для отслеживания индекса изображений
         let articleImageIndex = 0;
+        // --- Новые переменные для режима редактирования статей (контент) ---
+        let isArticleContentEditMode = false;
+        let editingArticleContentId = null;
         
         // Добавление текстового блока в статью
         const addArticleTextBlock = document.getElementById('add-article-text-block');
@@ -2415,7 +2441,7 @@
         if (!articles || articles.length === 0) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="6" class="py-8 px-4 text-center text-gray">
+                    <td colspan="7" class="py-8 px-4 text-center text-gray">
                         Статьи не найдены. <a href="#" onclick="loadArticles()" class="text-gold-1 hover:text-gold-2">Обновить</a>
                     </td>
                 </tr>
@@ -2446,6 +2472,7 @@
                     <td class="py-3 px-4">${article.category || 'Не указана'}</td>
                     <td class="py-3 px-4">${date}</td>
                     <td class="py-3 px-4">${authorName}</td>
+                    <td class="py-3 px-4 ${article.status === 'published' ? 'text-green-600' : 'text-yellow-600'}">${article.status === 'published' ? 'Опубликовано' : 'Черновик'}</td>
                     <td class="py-3 px-4">
                         <div class="flex space-x-2">
                             <button class="text-blue-600 hover:text-blue-800" title="Редактировать" onclick="editArticle(${article.id})">
@@ -2470,7 +2497,7 @@
         const tbody = document.getElementById('articles-tbody');
         tbody.innerHTML = `
             <tr>
-                <td colspan="6" class="py-8 px-4 text-center">
+                <td colspan="7" class="py-8 px-4 text-center">
                     <div class="text-red-500 mb-2">⚠️ ${message}</div>
                     <button onclick="loadArticles()" class="bg-gold-1 text-black px-4 py-2 rounded hover:bg-gold-2 transition-colors">
                         Попробовать снова
@@ -2482,7 +2509,7 @@
     
     // Функция для редактирования статьи (глобальная версия)
     function editArticle(articleId) {
-        showNotification(`Редактирование статьи ID: ${articleId} (функция в разработке)`, 'info');
+        return; // отключено, функция больше не используется
     }
     
     // Функция для удаления статьи (глобальная версия)
@@ -2772,6 +2799,9 @@
     // Закрытие модального окна
     const closeArticleContentModalHandler = () => {
         articleContentModal.classList.add('hidden');
+        // Сбрасываем режим редактирования, если был активен
+        isArticleContentEditMode = false;
+        editingArticleContentId = null;
     };
 
     closeArticleContentModal.addEventListener('click', closeArticleContentModalHandler);
@@ -2901,22 +2931,27 @@
 
         // Функция настройки кнопок перемещения
         function setupMoveButtons(block) {
-            const upBtn = block.querySelector('.move-up-btn');
-            const downBtn = block.querySelector('.move-down-btn');
+            // Поддерживаем оба варианта классов
+            const upBtn = block.querySelector('.move-up-btn, .move-block-up');
+            const downBtn = block.querySelector('.move-down-btn, .move-block-down');
 
-            upBtn.addEventListener('click', () => {
-                const prevBlock = block.previousElementSibling;
-                if (prevBlock) {
-                    contentBlocksContainer.insertBefore(block, prevBlock);
-                }
-            });
+            if (upBtn) {
+                upBtn.addEventListener('click', () => {
+                    const prevBlock = block.previousElementSibling;
+                    if (prevBlock) {
+                        contentBlocksContainer.insertBefore(block, prevBlock);
+                    }
+                });
+            }
 
-            downBtn.addEventListener('click', () => {
-                const nextBlock = block.nextElementSibling;
-                if (nextBlock) {
-                    contentBlocksContainer.insertBefore(nextBlock, block);
-                }
-            });
+            if (downBtn) {
+                downBtn.addEventListener('click', () => {
+                    const nextBlock = block.nextElementSibling;
+                    if (nextBlock) {
+                        contentBlocksContainer.insertBefore(nextBlock, block);
+                    }
+                });
+            }
         }
 
         // Функция удаления блока
@@ -3078,6 +3113,342 @@
                 mainImageInput.dispatchEvent(event);
             }
         });
+
+        // Обработчик отправки формы статьи с контентом
+        const articleContentForm = document.querySelector('#article-content-modal form');
+        if (articleContentForm) {
+            articleContentForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    const formData = new FormData();
+                    
+                    // Собираем основные данные формы
+                            formData.append('title', document.getElementById('article-content-title').value);
+        formData.append('category', document.getElementById('article-content-category').value);
+        formData.append('publicationDate', document.getElementById('article-content-date').value);
+        formData.append('authorId', document.getElementById('article-content-author').value);
+        formData.append('shortDescription', document.getElementById('article-content-short').value);
+        formData.append('status', document.getElementById('article-content-status').value);
+                    
+                    // Добавляем главное изображение
+                    if (mainImageInput.files[0]) {
+                        formData.append('mainImage', mainImageInput.files[0]);
+                    }
+                    
+                    // Собираем блоки контента
+                    const contentBlocks = [];
+                    let imageIndex = 0;
+                    const blocks = contentBlocksContainer.children;
+                    
+                    for (let i = 0; i < blocks.length; i++) {
+                        const block = blocks[i];
+                        
+                        // Пропускаем placeholder блоки
+                        if (block.classList.contains('text-gray') && block.classList.contains('text-center')) {
+                            continue;
+                        }
+                        
+                        const textArea = block.querySelector('textarea');
+                        const imageInput = block.querySelector('.image-upload');
+                        
+                        if (textArea) {
+                            // Текстовый блок
+                            const textContent = textArea.value.trim();
+                            if (textContent) {
+                                contentBlocks.push({
+                                    type: 'text',
+                                    content: textContent,
+                                    order: i
+                                });
+                            }
+                        } else if (imageInput) {
+                            // Блок изображения
+                            if (imageInput.files[0]) {
+                                formData.append(`blockImage_${imageIndex}`, imageInput.files[0]);
+                                
+                                const captionInput = block.querySelector('input[type="text"]');
+                                const caption = captionInput ? captionInput.value : '';
+                                
+                                contentBlocks.push({
+                                    type: 'image',
+                                    caption: caption,
+                                    imageIndex: imageIndex,
+                                    order: i
+                                });
+                                
+                                imageIndex++;
+                            } else {
+                                // Используем существующее изображение
+                                const existingPath = imageInput.getAttribute('data-existing-path');
+                                const captionInput = block.querySelector('input[type="text"]');
+                                const caption = captionInput ? captionInput.value : '';
+                                contentBlocks.push({
+                                    type: 'image',
+                                    caption: caption,
+                                    existingImagePath: existingPath,
+                                    order: i
+                                });
+                            }
+                        }
+                    }
+                    
+                    // Добавляем блоки контента в formData
+                    formData.append('contentBlocks', JSON.stringify(contentBlocks));
+                    
+                    console.log('Отправляю данные статьи:', {
+                        title: document.getElementById('article-content-title').value,
+                        category: document.getElementById('article-content-category').value,
+                        contentBlocks: contentBlocks
+                    });
+                    
+                    // Отправляем запрос на новый API
+                    const urlToSave = isArticleContentEditMode ? `/api/db/articles-local/${editingArticleContentId}` : '/api/db/articles-local';
+                    const methodToSave = isArticleContentEditMode ? 'PUT' : 'POST';
+                    const response = await fetch(urlToSave, {
+                        method: methodToSave,
+                        body: formData
+                    });
+                    
+                    const contentType = response.headers.get('content-type') || '';
+                    let result;
+                    if (contentType.includes('application/json')) {
+                        result = await response.json();
+                    } else {
+                        const text = await response.text();
+                        throw new Error(text.substring(0, 200));
+                    }
+                    
+                    if (result && result.success) {
+                        const successMsg = isArticleContentEditMode ? 'Статья успешно обновлена!' : 'Статья успешно создана с локальными изображениями!';
+                        showNotification(successMsg, 'success');
+                        closeArticleContentModalHandler();
+                        // Сбрасываем режим редактирования
+                        isArticleContentEditMode = false;
+                        editingArticleContentId = null;
+                        
+                        // Очищаем форму
+                        articleContentForm.reset();
+                        mainImagePreview.classList.add('hidden');
+                        mainImagePlaceholder.classList.remove('hidden');
+                        contentBlocksContainer.innerHTML = '<div class="text-gray text-center py-8">Добавьте блоки контента для вашей статьи</div>';
+                        
+                        // Обновляем список статей, если есть функция loadArticles
+                        if (typeof loadArticles === 'function') {
+                            loadArticles();
+                        }
+                        if (typeof loadArticlesContent === 'function') {
+                            loadArticlesContent();
+                        }
+                    } else {
+                        throw new Error(result.error || 'Ошибка создания статьи');
+                    }
+                    
+                } catch (error) {
+                    console.error('Ошибка создания статьи:', error);
+                    showNotification('Ошибка создания статьи: ' + error.message, 'error');
+                }
+            });
+        }
+
+        // Функция для загрузки авторов в модальное окно статей с контентом
+        async function loadAuthorsForArticleContent() {
+            try {
+                const response = await fetch('/api/db/architects');
+                const data = await response.json();
+                
+                const authorSelect = document.getElementById('article-content-author');
+                authorSelect.innerHTML = '<option value="">Выберите автора</option>';
+                
+                if (data.success && data.architects) {
+                    data.architects.forEach(architect => {
+                        const option = document.createElement('option');
+                        option.value = architect.id;
+                        option.textContent = architect.full_name;
+                        authorSelect.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки авторов:', error);
+            }
+        }
+
+        // Модифицируем обработчик открытия модального окна статей с контентом
+        const originalAddArticleContentHandler = addArticleContentBtn.onclick;
+        addArticleContentBtn.addEventListener('click', () => {
+            loadAuthorsForArticleContent();
+        });
+
+        // Загрузка статей для блока "Управление статьями" (контент)
+        async function loadArticlesContent() {
+            try {
+                const response = await fetch('/api/db/articles');
+                const data = await response.json();
+                if (data.success && data.articles) {
+                    renderArticlesContentTable(data.articles);
+                } else {
+                    renderArticlesContentTable([]);
+                }
+            } catch (err) {
+                console.error('Ошибка загрузки статей (контент):', err);
+                renderArticlesContentTable([]);
+            }
+        }
+
+        // Рендер таблицы во втором блоке
+        function renderArticlesContentTable(articles) {
+            const tbody = document.getElementById('articles-content-tbody');
+            if (!tbody) return;
+
+            if (!articles || articles.length === 0) {
+                tbody.innerHTML = `
+                    <tr><td colspan="7" class="py-8 px-4 text-center text-gray">Статьи не найдены</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = articles.map(article => {
+                const authorName = article.architects && article.architects.length > 0 ? article.architects[0].full_name : 'Не указан';
+                const date = article.publication_date ? new Date(article.publication_date).toLocaleDateString('ru-RU') : 'Не указана';
+                const escapedTitle = article.title.replace(/'/g, "\\'").replace(/"/g, '\\"');
+                return `
+                <tr class="border-b hover:bg-light-gray">
+                    <td class="py-3 px-4">${article.id}</td>
+                    <td class="py-3 px-4"><a href="article.html?id=${article.id}" target="_blank" class="text-blue-600 hover:text-blue-800">${article.title}</a></td>
+                    <td class="py-3 px-4">${article.category || 'Не указана'}</td>
+                    <td class="py-3 px-4">${date}</td>
+                    <td class="py-3 px-4">${authorName}</td>
+                    <td class="py-3 px-4"><span class="px-2 py-1 rounded text-xs ${article.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">${article.status === 'published' ? 'Опубликовано' : 'Черновик'}</span></td>
+                    <td class="py-3 px-4"><div class="flex space-x-2">
+                        <button class="text-blue-600 hover:text-blue-800" title="Редактировать"
+        onclick="editArticleContentLocal(${article.id})">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+         viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5
+                 m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828
+                 l8.586-8.586z"/>
+    </svg>
+</button>
+<button class="text-red-600 hover:text-red-800" title="Удалить"
+        onclick="deleteArticle(${article.id}, '${escapedTitle}')">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+         viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862
+                 a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4
+                 a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+    </svg>
+</button>
+                    </div></td>
+                </tr>`;
+            }).join('');
+        }
+
+        // Вызываем новую загрузку в DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            loadArticlesContent();
+        });
+
+        // ===== ФУНКЦИЯ РЕДАКТИРОВАНИЯ СТАТЬИ (контент, локальные изображения) =====
+        async function editArticleContentLocal(articleId) {
+            try {
+                showNotification('Загрузка статьи...', 'info');
+                const resp = await fetch(`/api/db/articles/${articleId}`);
+                const data = await resp.json();
+                if (!data.success) throw new Error(data.error || 'Ошибка загрузки');
+                const article = data.article;
+
+                // Переходим в режим редактирования
+                isArticleContentEditMode = true;
+                editingArticleContentId = articleId;
+
+                // Загружаем список авторов (обновит select)
+                await loadAuthorsForArticleContent();
+
+                // Открываем модалку
+                articleContentModal.classList.remove('hidden');
+
+                // Заполняем поля
+                document.getElementById('article-content-title').value = article.title || '';
+                document.getElementById('article-content-category').value = article.category || '';
+                document.getElementById('article-content-date').value = article.publication_date ? article.publication_date.split('T')[0] : '';
+                if (article.architects && article.architects.length > 0) {
+                    document.getElementById('article-content-author').value = article.architects[0].id;
+                }
+                document.getElementById('article-content-short').value = article.short_description || '';
+                document.getElementById('article-content-status').value = article.status || 'draft';
+
+                // Главное изображение
+                if (article.main_image_url) {
+                    mainImagePreviewImg.src = article.main_image_url;
+                    mainImagePlaceholder.classList.add('hidden');
+                    mainImagePreview.classList.remove('hidden');
+                } else {
+                    mainImagePlaceholder.classList.remove('hidden');
+                    mainImagePreview.classList.add('hidden');
+                }
+
+                // Контент-блоки
+                contentBlocksContainer.innerHTML = '';
+                article.contentBlocks.forEach((block, idx) => {
+                    if (block.block_type === 'text') {
+                        const template = document.getElementById('article-text-block-template');
+                        const clone = template.content.cloneNode(true);
+                        const blockEl = clone.querySelector('.content-block');
+                        blockEl.setAttribute('data-block-id', block.id);
+                        blockEl.querySelector('textarea').value = block.content || '';
+                        window.addArticleBlockHandlers ? window.addArticleBlockHandlers(blockEl) : null;
+                        window.setupMoveButtons ? window.setupMoveButtons(blockEl) : null;
+                        contentBlocksContainer.appendChild(clone);
+                    } else if (block.block_type === 'image') {
+                        const template = document.getElementById('article-image-block-template');
+                        const clone = template.content.cloneNode(true);
+                        const blockEl = clone.querySelector('.content-block');
+                        blockEl.setAttribute('data-block-id', block.id);
+
+                        const placeholder = blockEl.querySelector('.image-placeholder');
+                        const preview = blockEl.querySelector('.image-preview');
+                        const imgTag = preview.querySelector('img');
+                        imgTag.src = block.image_url;
+                        placeholder.classList.add('hidden');
+                        preview.classList.remove('hidden');
+
+                        // caption
+                        blockEl.querySelector('.image-caption').value = block.caption || '';
+
+                        // store existing path
+                        const uploadInput = blockEl.querySelector('.image-upload');
+                        uploadInput.setAttribute('data-existing-path', block.image_url);
+                        uploadInput.setAttribute('data-image-index', articleImageIndex);
+                        articleImageIndex++;
+
+                        window.addArticleBlockHandlers ? window.addArticleBlockHandlers(blockEl) : null;
+                        window.addArticleImageUploadHandler ? window.addArticleImageUploadHandler(blockEl) : null;
+                        window.setupMoveButtons ? window.setupMoveButtons(blockEl) : null;
+                        contentBlocksContainer.appendChild(clone);
+                    }
+                });
+
+                if (contentBlocksContainer.children.length === 0) {
+                    contentBlocksContainer.innerHTML = '<div class="text-gray text-center py-8">Добавьте блоки контента для вашей статьи</div>';
+                }
+            } catch (err) {
+                console.error('Ошибка загрузки статьи:', err);
+                showNotification('Ошибка загрузки статьи: ' + err.message, 'error');
+            }
+        }
+
+        // --- Экспортируем вспомогательные функции для глобального использования ---
+        window.addArticleBlockHandlers = addArticleBlockHandlers;
+        window.addArticleImageUploadHandler = addArticleImageUploadHandler;
+        window.setupMoveButtons = setupMoveButtons;
+
+        // ОБРАБОТЧИК ДЛЯ ГЛАВНОГО ИЗОБРАЖЕНИЯ СТАТЬИ
+// ... existing code ...
+// Экспорт функций в глобальную область
+// window.addArticleBlockHandlers = addArticleBlockHandlers;
+// window.setupMoveButtons = setupMoveButtons;
+
     </script>
 </body>
 </html> 

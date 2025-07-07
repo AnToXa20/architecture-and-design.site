@@ -155,7 +155,8 @@
 
     async function loadArticles() {
         try {
-            const response = await fetch('/api/db/articles');
+            // Загружаем только опубликованные статьи для публичной страницы
+            const response = await fetch('/api/db/articles?status=published');
             const data = await response.json();
 
             if (data.success && data.articles) {

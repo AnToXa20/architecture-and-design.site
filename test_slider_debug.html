@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест слайдера - Отладка</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .slide {
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">🖼️ Тест слайдера - Отладка</h1>
+        
+        <!-- Панель управления -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">🔧 Панель управления</h2>
+            <div class="flex flex-wrap gap-4">
+                <button onclick="testSliderAPI()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    📡 Тест API слайдера
+                </button>
+                <button onclick="testSliderDebug()" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">
+                    🔍 Отладка слайдера
+                </button>
+                <button onclick="loadSliderTest()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                    🖼️ Загрузить слайдер
+                </button>
+                <button onclick="clearResults()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                    🗑️ Очистить
+                </button>
+            </div>
+        </div>
+
+        <!-- Результаты -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">📊 Результаты</h2>
+            <div id="results" class="bg-gray-50 p-4 rounded text-sm font-mono overflow-auto max-h-96">
+                Нажмите на кнопки выше для тестирования...
+            </div>
+        </div>
+
+        <!-- Мини-слайдер для тестирования -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">🖼️ Тестовый слайдер</h2>
+            <div class="relative h-64 bg-gray-200 rounded-lg overflow-hidden">
+                <div id="test-slider" class="relative h-full">
+                    <div class="slide active absolute inset-0 transition-opacity duration-1000 opacity-100">
+                        <div class="w-full h-full bg-gray-300 flex items-center justify-center text-gray-600 text-xl">
+                            Слайдер не загружен
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Кнопки управления -->
+                <div class="absolute inset-x-0 top-1/2 flex justify-between items-center px-4 transform -translate-y-1/2">
+                    <button id="test-slider-prev" class="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70">
+                        ◀
+                    </button>
+                    <button id="test-slider-next" class="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70">
+                        ▶
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Информация о API -->
+        <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+            <h3 class="font-semibold text-blue-800 mb-2">ℹ️ Информация</h3>
+            <p class="text-blue-700">
+                Эта страница тестирует улучшенный API слайдера, который работает по аналогии с cases API.
+                Он автоматически создает записи в БД из файлов папки main-slider.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let currentTestSlide = 0;
+        let testSlides = [];
+
+        function log(message) {
+            const results = document.getElementById('results');
+            const timestamp = new Date().toLocaleTimeString();
+            results.innerHTML += `[${timestamp}] ${message}\n`;
+            results.scrollTop = results.scrollHeight;
+            console.log(message);
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = 'Результаты очищены...\n';
+        }
+
+        // Тест API слайдера
+        async function testSliderAPI() {
+            log('🚀 Тестирование API /api/slider-images...');
+            
+            try {
+                const response = await fetch('/api/slider-images');
+                const data = await response.json();
+                
+                log(`📡 Статус ответа: ${response.status}`);
+                log(`✅ Успех: ${data.success}`);
+                
+                if (data.success && data.images) {
+                    log(`📊 Найдено изображений: ${data.images.length}`);
+                    
+                    data.images.forEach((image, index) => {
+                        log(`  ${index + 1}. ${image.title || 'Без названия'}`);
+                        log(`     URL: ${image.url || 'не указан'}`);
+                        log(`     Direct URL: ${image.direct_url || 'не указан'}`);
+                        log(`     Sort Order: ${image.sort_order}`);
+                    });
+                } else {
+                    log(`❌ Ошибка: ${data.error || 'Неизвестная ошибка'}`);
+                }
+                
+                return data;
+                
+            } catch (error) {
+                log(`❌ Ошибка запроса: ${error.message}`);
+                return null;
+            }
+        }
+
+        // Тест отладки слайдера
+        async function testSliderDebug() {
+            log('🔍 Тестирование API /api/debug/slider...');
+            
+            try {
+                const response = await fetch('/api/debug/slider');
+                const data = await response.json();
+                
+                log(`📡 Статус ответа: ${response.status}`);
+                log(`✅ Успех: ${data.success}`);
+                
+                if (data.success && data.debug) {
+                    const debug = data.debug;
+                    log(`📊 В БД найдено: ${debug.totalInDB} записей`);
+                    log(`📁 В файловой системе: ${debug.totalInFileSystem} файлов`);
+                    log(`💡 Рекомендация: ${debug.recommendation}`);
+                    
+                    log('📋 Записи в БД:');
+                    debug.sliderFromDB.forEach((slide, index) => {
+                        log(`  ${index + 1}. ID: ${slide.id}, Order: ${slide.sort_order}`);
+                        log(`     Title: ${slide.title}`);
+                        log(`     URL Status: ${slide.url_status}`);
+                        log(`     Direct URL Status: ${slide.direct_url_status}`);
+                    });
+                    
+                    log('📁 Файлы в системе:');
+                    debug.fileSystemInfo.forEach((file, index) => {
+                        log(`  ${index + 1}. ${file.fileName}`);
+                        log(`     Expected URL: ${file.expectedUrl}`);
+                    });
+                } else {
+                    log(`❌ Ошибка: ${data.error || 'Неизвестная ошибка'}`);
+                }
+                
+            } catch (error) {
+                log(`❌ Ошибка запроса: ${error.message}`);
+            }
+        }
+
+        // Загрузка тестового слайдера
+        async function loadSliderTest() {
+            log('🖼️ Загрузка тестового слайдера...');
+            
+            try {
+                const data = await testSliderAPI();
+                
+                if (!data || !data.success || !data.images || data.images.length === 0) {
+                    log('❌ Нет данных для загрузки слайдера');
+                    return;
+                }
+                
+                const sliderContainer = document.getElementById('test-slider');
+                sliderContainer.innerHTML = '';
+                testSlides = data.images;
+                
+                log(`🔨 Создание ${testSlides.length} слайдов...`);
+                
+                // Создаем слайды
+                testSlides.forEach((image, index) => {
+                    const slideDiv = document.createElement('div');
+                    slideDiv.className = `slide absolute inset-0 transition-opacity duration-1000 ${index === 0 ? 'opacity-100 active' : 'opacity-0'}`;
+                    
+                    if (image.url) {
+                        const imgElement = document.createElement('img');
+                        imgElement.className = 'w-full h-full object-cover';
+                        imgElement.alt = image.alt_text || `Слайд ${index + 1}`;
+                        imgElement.src = image.direct_url || image.url;
+                        
+                        imgElement.onload = function() {
+                            log(`✅ Загружен слайд ${index + 1}: ${image.title}`);
+                        };
+                        
+                        imgElement.onerror = function() {
+                            log(`❌ Ошибка загрузки слайда ${index + 1}: ${image.title}`);
+                            slideDiv.innerHTML = `
+                                <div class="w-full h-full bg-red-100 flex items-center justify-center text-red-600">
+                                    <div class="text-center">
+                                        <div class="text-2xl mb-2">⚠️</div>
+                                        <div>Ошибка загрузки</div>
+                                        <div class="text-sm">${image.title}</div>
+                                    </div>
+                                </div>
+                            `;
+                        };
+                        
+                        slideDiv.appendChild(imgElement);
+                    } else {
+                        slideDiv.innerHTML = `
+                            <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-600">
+                                <div class="text-center">
+                                    <div class="text-2xl mb-2">🖼️</div>
+                                    <div>${image.title}</div>
+                                    <div class="text-sm">Нет изображения</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    sliderContainer.appendChild(slideDiv);
+                });
+                
+                // Настраиваем кнопки управления
+                setupTestSliderControls();
+                
+                log('✅ Тестовый слайдер загружен и готов к работе');
+                
+            } catch (error) {
+                log(`❌ Ошибка загрузки слайдера: ${error.message}`);
+            }
+        }
+
+        function setupTestSliderControls() {
+            const prevBtn = document.getElementById('test-slider-prev');
+            const nextBtn = document.getElementById('test-slider-next');
+            
+            prevBtn.onclick = function() {
+                changeTestSlide(-1);
+            };
+            
+            nextBtn.onclick = function() {
+                changeTestSlide(1);
+            };
+        }
+
+        function changeTestSlide(direction) {
+            if (testSlides.length === 0) return;
+            
+            const slides = document.querySelectorAll('#test-slider .slide');
+            
+            // Скрываем текущий слайд
+            slides[currentTestSlide].classList.remove('active');
+            slides[currentTestSlide].style.opacity = '0';
+            
+            // Вычисляем новый индекс
+            currentTestSlide = (currentTestSlide + direction + testSlides.length) % testSlides.length;
+            
+            // Показываем новый слайд
+            slides[currentTestSlide].classList.add('active');
+            slides[currentTestSlide].style.opacity = '1';
+            
+            log(`🔄 Переключение на слайд ${currentTestSlide + 1}: ${testSlides[currentTestSlide].title}`);
+        }
+
+        // Автозапуск при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            log('📄 Страница загружена. Готов к тестированию!');
+            log('💡 Нажмите "Тест API слайдера" для начала проверки.');
+        });
+    </script>
+</body>
+</html> 
