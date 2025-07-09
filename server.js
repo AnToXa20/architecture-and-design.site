@@ -85,10 +85,24 @@ app.use(session({
     }
 }));
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+/*app.use(express.json());
+app.use(express.urlencoded({ extended: true }));*/
+// Увеличиваем лимиты для body parser чтобы поддерживать загрузку больших изображений
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
 app.use(express.static('.'));  // Обслуживаем файлы из корневой директории
 app.use(express.static('public'));  // И из папки public
+
+// Middleware для корректной обработки URL с кириллицей
+app.use('/pic2', (req, res, next) => {
+    // Декодируем URL для правильной работы с кириллицей
+    const decodedUrl = decodeURIComponent(req.url);
+    console.log(`📁 Запрос изображения: ${req.url} → ${decodedUrl}`);
+    req.url = decodedUrl;
+    next();
+});
+
 app.use('/pic2', express.static(path.join(__dirname, 'pic2')));  // Обслуживаем изображения проектов
 
 // Добавляем CORS заголовки
@@ -122,10 +136,11 @@ app.get('/api/slider-images', async (req, res) => {
         console.log('Запрос изображений слайдера:', new Date().toISOString());
         
         // Сначала пытаемся получить существующие изображения слайдера
+        // Исключаем проблемные изображения с ID 2 и 4
         const existingSliderImages = await db.query(`
             SELECT id, url, alt_text, title, sort_order, direct_url
             FROM images 
-            WHERE entity_type = 'slider' AND entity_id = 1
+            WHERE entity_type = 'slider' AND entity_id = 1 AND id NOT IN (2, 4)
             ORDER BY sort_order, id
         `);
         
@@ -250,6 +265,7 @@ app.get('/api/debug/slider', async (req, res) => {
         console.log('🔍 Запрос отладки слайдера:', new Date().toISOString());
         
         // Получаем записи слайдера из БД
+        // Исключаем проблемные изображения с ID 2 и 4
         const sliderFromDB = await db.query(`
             SELECT id, url, alt_text, title, sort_order, direct_url,
                    CASE 
@@ -261,7 +277,7 @@ app.get('/api/debug/slider', async (req, res) => {
                        ELSE 'нет' 
                    END as direct_url_status
             FROM images 
-            WHERE entity_type = 'slider' AND entity_id = 1
+            WHERE entity_type = 'slider' AND entity_id = 1 AND id NOT IN (2, 4)
             ORDER BY sort_order, id
         `);
         
@@ -4392,17 +4408,35 @@ app.put('/api/db/articles-local/:id', upload.any(), async (req, res) => {
         let blocks = [];
         try { blocks = JSON.parse(contentBlocks || '[]'); } catch (e) { blocks = []; }
 
+        console.log('=== ОБРАБОТКА БЛОКОВ ===');
+        console.log('Количество блоков:', blocks.length);
+        console.log('Блоки:', JSON.stringify(blocks, null, 2));
+
         for (const block of blocks) {
+            console.log(`\n--- БЛОК ${block.order} (${block.type}) ---`);
+            console.log('Блок:', JSON.stringify(block, null, 2));
+            
             let imagePath = null;
-            if (block.type === 'image' && block.imageIndex !== undefined) {
+            if (block.type === 'image') {
+                // Проверяем, есть ли новое изображение для этого блока
                 const imageFile = req.files?.find(f => f.fieldname === `blockImage_${block.imageIndex}`);
-                if (imageFile) {
+                console.log('Новое изображение найдено:', !!imageFile);
+                console.log('imageIndex:', block.imageIndex);
+                console.log('existingImagePath:', block.existingImagePath);
+                
+                if (imageFile && block.imageIndex !== undefined) {
+                    // Сохраняем новое изображение
                     const imgFileName = createSafeFileName(imageFile.originalname, `block_${block.order}_`);
                     const imgFilePath = path.join(articleFolderPath, imgFileName);
                     fs.writeFileSync(imgFilePath, imageFile.buffer);
                     imagePath = `/pic2/articles/${slug}/${imgFileName}`;
+                    console.log('Сохранено новое изображение:', imagePath);
                 } else if (block.existingImagePath) {
-                    imagePath = block.existingImagePath; // оставляем прежний путь
+                    // Используем существующий путь изображения
+                    imagePath = block.existingImagePath;
+                    console.log('Используем существующее изображение:', imagePath);
+                } else {
+                    console.log('⚠️  ИЗОБРАЖЕНИЕ НЕ НАЙДЕНО! Ни нового, ни существующего.');
                 }
             }
 
@@ -4410,11 +4444,12 @@ app.put('/api/db/articles-local/:id', upload.any(), async (req, res) => {
                 entity_type: 'article',
                 entity_id: articleId,
                 block_type: block.type === 'image' ? 'image' : 'text',
-                content: block.content || '',
+                content: block.content || (block.type === 'image' ? '' : ''),
                 image_url: imagePath,
                 caption: block.caption || null,
                 sort_order: block.order || 0
             };
+            console.log('Вставляем блок в БД:', JSON.stringify(blockData, null, 2));
             await connection.query('INSERT INTO content_blocks SET ?', [blockData]);
         }
 
@@ -4590,3 +4625,52 @@ app.put('/api/db/articles/:id', upload.any(), async (req, res) => {
     }
 });
 // ====================  КОНЕЦ ОБНОВЛЕНИЯ СТАТЬИ ====================
+
+// Простой API для создания тестовых статей без файлов
+app.post('/api/db/articles/test', async (req, res) => {
+    try {
+        const { title, category, shortDescription, status = 'published' } = req.body;
+        
+        // Генерируем slug из заголовка
+        let slug = transliterate(title || 'test-article');
+        
+        // Проверяем уникальность slug
+        const existingSlug = await db.getOne('SELECT id FROM articles WHERE slug = ?', [slug]);
+        if (existingSlug) {
+            // Добавляем случайный суффикс для уникальности
+            const suffix = Math.random().toString(36).substring(2, 8);
+            slug = `${slug}-${suffix}`;
+        }
+        
+        // Создаем статью без изображений
+        const articleData = {
+            title: title || 'Тестовая статья',
+            slug: slug,
+            category: category || 'architecture', 
+            short_description: shortDescription || 'Это тестовая статья для проверки работы системы',
+            status: status,
+            publication_date: new Date().toISOString().split('T')[0],
+            main_image_url: null
+        };
+        
+        const articleId = await db.insert('articles', articleData);
+        
+        console.log(`Тестовая статья создана: ID=${articleId}, title=${articleData.title}`);
+        
+        res.json({
+            success: true,
+            article: {
+                id: articleId,
+                ...articleData
+            },
+            message: 'Тестовая статья успешно создана'
+        });
+        
+    } catch (error) {
+        console.error('Ошибка создания тестовой статьи:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Ошибка создания тестовой статьи: ' + error.message
+        });
+    }
+});

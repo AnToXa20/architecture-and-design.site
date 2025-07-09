@@ -771,7 +771,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800" onclick="removeArticleBlock(this)">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
@@ -797,7 +797,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    <button type="button" class="delete-block text-red-600 hover:text-red-800">
+                    <button type="button" class="delete-block text-red-600 hover:text-red-800" onclick="removeArticleBlock(this)">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
@@ -2173,24 +2173,7 @@
         
         // Функция для добавления обработчиков кнопок управления блоком статьи
         function addArticleBlockHandlers(blockElement) {
-            // Удаление блока
-            const deleteBtn = blockElement.querySelector('.delete-block');
-            if (deleteBtn) {
-                deleteBtn.addEventListener('click', function() {
-                    if (confirm('Удалить этот блок?')) {
-                        this.closest('.content-block').remove();
-                        
-                        // Если удалили все блоки, показываем сообщение
-                        const contentBlocks = document.getElementById('article-content-blocks');
-                        if (contentBlocks.children.length === 0) {
-                            const emptyMessage = document.createElement('div');
-                            emptyMessage.className = 'text-gray text-center py-8';
-                            emptyMessage.textContent = 'Добавьте блоки контента для вашей статьи';
-                            contentBlocks.appendChild(emptyMessage);
-                        }
-                    }
-                });
-            }
+            // Кнопка удаления теперь использует onclick, поэтому не нужно добавлять обработчики
             
             // Перемещение блока вверх
             const moveUpBtn = blockElement.querySelector('.move-block-up');
@@ -2822,6 +2805,10 @@
         const addTextBlockBtn = document.getElementById('add-article-content-text-block');
         const addImageBlockBtn = document.getElementById('add-article-content-image-block');
         let blockCounter = 0;
+        
+        // Переменные для режима редактирования статей
+        let isArticleContentEditMode = false;
+        let editingArticleContentId = null;
 
         // Добавление текстового блока
         addTextBlockBtn.addEventListener('click', () => {
@@ -2938,7 +2925,7 @@
             if (upBtn) {
                 upBtn.addEventListener('click', () => {
                     const prevBlock = block.previousElementSibling;
-                    if (prevBlock) {
+                    if (prevBlock && prevBlock.classList.contains('content-block')) {
                         contentBlocksContainer.insertBefore(block, prevBlock);
                     }
                 });
@@ -2947,7 +2934,7 @@
             if (downBtn) {
                 downBtn.addEventListener('click', () => {
                     const nextBlock = block.nextElementSibling;
-                    if (nextBlock) {
+                    if (nextBlock && nextBlock.classList.contains('content-block')) {
                         contentBlocksContainer.insertBefore(nextBlock, block);
                     }
                 });
@@ -2962,6 +2949,19 @@
             // Если блоков больше нет, показываем placeholder
             if (contentBlocksContainer.children.length === 0) {
                 contentBlocksContainer.innerHTML = '<div class="text-gray text-center py-8">Добавьте блоки контента для вашей статьи</div>';
+            }
+        };
+
+        // Функция удаления блока для загруженных блоков при редактировании
+        window.removeArticleBlock = (button) => {
+            if (confirm('Удалить этот блок?')) {
+                const block = button.closest('.content-block');
+                block.remove();
+                
+                // Если блоков больше нет, показываем placeholder
+                if (contentBlocksContainer.children.length === 0) {
+                    contentBlocksContainer.innerHTML = '<div class="text-gray text-center py-8">Добавьте блоки контента для вашей статьи</div>';
+                }
             }
         };
 
@@ -2988,7 +2988,12 @@
                     if (e.clientY < middle) {
                         contentBlocksContainer.insertBefore(draggingBlock, closestBlock);
                     } else {
-                        contentBlocksContainer.insertBefore(draggingBlock, closestBlock.nextSibling);
+                        // Если nextSibling равен null, используем appendChild
+                        if (closestBlock.nextSibling) {
+                            contentBlocksContainer.insertBefore(draggingBlock, closestBlock.nextSibling);
+                        } else {
+                            contentBlocksContainer.appendChild(draggingBlock);
+                        }
                     }
                 }
             });
@@ -3151,44 +3156,73 @@
                         
                         const textArea = block.querySelector('textarea');
                         const imageInput = block.querySelector('.image-upload');
+                        const existingBlockId = block.getAttribute('data-existing-block-id');
                         
                         if (textArea) {
                             // Текстовый блок
                             const textContent = textArea.value.trim();
                             if (textContent) {
-                                contentBlocks.push({
+                                const blockData = {
                                     type: 'text',
                                     content: textContent,
                                     order: i
-                                });
+                                };
+                                
+                                // Если это существующий блок, добавляем его ID
+                                if (existingBlockId) {
+                                    blockData.existingBlockId = existingBlockId;
+                                }
+                                
+                                contentBlocks.push(blockData);
                             }
                         } else if (imageInput) {
                             // Блок изображения
+                            const captionInput = block.querySelector('input[type="text"]');
+                            const caption = captionInput ? captionInput.value : '';
+                            const existingPath = imageInput.getAttribute('data-existing-path');
+                            
+                            console.log(`Блок изображения ${i}:`, {
+                                hasNewFile: !!imageInput.files[0],
+                                existingPath: existingPath,
+                                caption: caption,
+                                existingBlockId: existingBlockId
+                            });
+                            
                             if (imageInput.files[0]) {
+                                // Новое изображение
                                 formData.append(`blockImage_${imageIndex}`, imageInput.files[0]);
                                 
-                                const captionInput = block.querySelector('input[type="text"]');
-                                const caption = captionInput ? captionInput.value : '';
-                                
-                                contentBlocks.push({
+                                const blockData = {
                                     type: 'image',
                                     caption: caption,
                                     imageIndex: imageIndex,
                                     order: i
-                                });
+                                };
                                 
+                                // Если это существующий блок, добавляем его ID
+                                if (existingBlockId) {
+                                    blockData.existingBlockId = existingBlockId;
+                                }
+                                
+                                contentBlocks.push(blockData);
                                 imageIndex++;
-                            } else {
+                            } else if (existingPath) {
                                 // Используем существующее изображение
-                                const existingPath = imageInput.getAttribute('data-existing-path');
-                                const captionInput = block.querySelector('input[type="text"]');
-                                const caption = captionInput ? captionInput.value : '';
-                                contentBlocks.push({
+                                const blockData = {
                                     type: 'image',
                                     caption: caption,
                                     existingImagePath: existingPath,
                                     order: i
-                                });
+                                };
+                                
+                                // Если это существующий блок, добавляем его ID
+                                if (existingBlockId) {
+                                    blockData.existingBlockId = existingBlockId;
+                                }
+                                
+                                contentBlocks.push(blockData);
+                            } else {
+                                console.warn(`⚠️  Блок изображения ${i} пропущен - нет ни нового файла, ни существующего пути!`);
                             }
                         }
                     }
@@ -3196,7 +3230,10 @@
                     // Добавляем блоки контента в formData
                     formData.append('contentBlocks', JSON.stringify(contentBlocks));
                     
-                    console.log('Отправляю данные статьи:', {
+                    console.log('=== ОТПРАВКА ДАННЫХ СТАТЬИ ===');
+                    console.log('Количество блоков:', contentBlocks.length);
+                    console.log('Блоки детально:', JSON.stringify(contentBlocks, null, 2));
+                    console.log('Данные статьи:', {
                         title: document.getElementById('article-content-title').value,
                         category: document.getElementById('article-content-category').value,
                         contentBlocks: contentBlocks
@@ -3389,6 +3426,10 @@
                 }
 
                 // Контент-блоки
+                console.log('=== ЗАГРУЗКА БЛОКОВ СТАТЬИ ===');
+                console.log('Количество блоков:', article.contentBlocks.length);
+                console.log('Блоки из БД:', JSON.stringify(article.contentBlocks, null, 2));
+                
                 contentBlocksContainer.innerHTML = '';
                 article.contentBlocks.forEach((block, idx) => {
                     if (block.block_type === 'text') {
@@ -3396,6 +3437,7 @@
                         const clone = template.content.cloneNode(true);
                         const blockEl = clone.querySelector('.content-block');
                         blockEl.setAttribute('data-block-id', block.id);
+                        blockEl.setAttribute('data-existing-block-id', block.id);
                         blockEl.querySelector('textarea').value = block.content || '';
                         window.addArticleBlockHandlers ? window.addArticleBlockHandlers(blockEl) : null;
                         window.setupMoveButtons ? window.setupMoveButtons(blockEl) : null;
@@ -3405,6 +3447,7 @@
                         const clone = template.content.cloneNode(true);
                         const blockEl = clone.querySelector('.content-block');
                         blockEl.setAttribute('data-block-id', block.id);
+                        blockEl.setAttribute('data-existing-block-id', block.id);
 
                         const placeholder = blockEl.querySelector('.image-placeholder');
                         const preview = blockEl.querySelector('.image-preview');
@@ -3416,10 +3459,20 @@
                         // caption
                         blockEl.querySelector('.image-caption').value = block.caption || '';
 
-                        // store existing path
+                        // store existing path and block info
                         const uploadInput = blockEl.querySelector('.image-upload');
                         uploadInput.setAttribute('data-existing-path', block.image_url);
+                        uploadInput.setAttribute('data-existing-block-id', block.id);
                         uploadInput.setAttribute('data-image-index', articleImageIndex);
+                        
+                        console.log(`Блок изображения ${idx}:`, {
+                            blockId: block.id,
+                            imageUrl: block.image_url,
+                            caption: block.caption,
+                            dataExistingPath: uploadInput.getAttribute('data-existing-path'),
+                            dataExistingBlockId: uploadInput.getAttribute('data-existing-block-id')
+                        });
+                        
                         articleImageIndex++;
 
                         window.addArticleBlockHandlers ? window.addArticleBlockHandlers(blockEl) : null;

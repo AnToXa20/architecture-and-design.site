@@ -29,18 +29,122 @@
         }
     </script>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Стили для мобильного меню */
+        .mobile-menu-link {
+            display: block;
+            padding: 16px 24px;
+            text-decoration: none;
+            color: #2F2F2F;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #E6E6E6;
+            width: 100%;
+        }
+        
+        .mobile-menu-link:hover {
+            background-color: #FFC107;
+            color: #000;
+            padding-left: 32px;
+        }
+        
+        .mobile-menu-link:last-child {
+            border-bottom: none;
+        }
+        
+        /* Стили для мобильного меню контейнера */
+        #mobile-menu {
+            min-height: auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Стили для header-link на десктопе */
+        .header-link {
+            position: relative;
+            text-decoration: none;
+            color: #2F2F2F;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .header-link:hover {
+            color: #FFC107;
+        }
+        
+        .header-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #FFC107;
+            transition: width 0.3s ease;
+        }
+        
+        .header-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Стили для логотипа */
+        .logo-image {
+            height: 18px;
+            width: auto;
+            max-width: 60px;
+            max-height: 18px;
+        }
+        
+        /* Убираем стандартные стили для мобильного меню на больших экранах */
+        @media (min-width: 768px) {
+            #mobile-menu {
+                display: none !important;
+            }
+            #mobile-menu-button {
+                display: none !important;
+            }
+        }
+        
+        /* Дополнительные стили для мобильной версии */
+        @media (max-width: 767px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            /* Полностью отключаем только десктопную навигацию на мобильных */
+            #desktop-nav {
+                display: none !important;
+                pointer-events: none !important;
+                visibility: hidden !important;
+                position: static !important;
+                z-index: -999 !important;
+                left: auto !important;
+                transform: none !important;
+            }
+            
+            /* Убираем все взаимодействия с ссылками десктопной навигации на мобильных */
+            #desktop-nav a {
+                display: none !important;
+                pointer-events: none !important;
+                visibility: hidden !important;
+                position: static !important;
+                z-index: -999 !important;
+            }
+        }
+    </style>
 </head>
 <body class="font-roboto text-dark-gray bg-white">
     <!-- Шапка сайта -->
-    <header class="bg-white fixed w-full top-0 shadow-md z-50">
-        <div class="container mx-auto py-4 px-4 flex justify-between items-center">
+    <header class="bg-white fixed w-full top-0 shadow-md z-50" style="position: fixed; top: 0; left: 0; right: 0;">
+        <div class="container mx-auto py-2 px-4 flex justify-between items-center relative">
             <!-- Логотип -->
             <a href="index.html" class="flex items-center">
                 <img src="Logo_black.svg" alt="Логотип" class="logo-image">
             </a>
 
-            <!-- Навигация для десктопа -->
-            <nav class="hidden lg:flex">
+            <!-- Навигация для десктопа (центрированная) -->
+            <nav id="desktop-nav" class="hidden md:flex space-x-8 absolute left-1/2 transform -translate-x-1/2 pointer-events-none md:pointer-events-auto">
                 <a href="portfolio.html" class="header-link">Портфолио</a>
                 <a href="stages.html" class="header-link">Этапы работы</a>
                 <a href="articles.html" class="header-link">Статьи</a>
@@ -51,29 +155,29 @@
             </nav>
 
             <!-- Кнопка мобильного меню -->
-            <button id="mobile-menu-button" class="lg:hidden flex flex-col justify-center items-center">
-                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
-                <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
-                <span class="block w-6 h-0.5 bg-black"></span>
+            <button id="mobile-menu-button" class="md:hidden flex flex-col justify-center items-center w-10 h-10 focus:outline-none z-50">
+                <span id="hamburger-line-1" class="block w-6 h-0.5 bg-dark-gray mb-1.5 transition-all duration-300 ease-in-out"></span>
+                <span id="hamburger-line-2" class="block w-6 h-0.5 bg-dark-gray mb-1.5 transition-all duration-300 ease-in-out"></span>
+                <span id="hamburger-line-3" class="block w-6 h-0.5 bg-dark-gray transition-all duration-300 ease-in-out"></span>
             </button>
         </div>
 
         <!-- Мобильное меню -->
-        <div id="mobile-menu" class="lg:hidden hidden absolute top-full left-0 w-full bg-white shadow-md">
-            <nav class="flex flex-col p-4">
-                <a href="portfolio.html" class="py-2 header-link">Портфолио</a>
-                <a href="stages.html" class="py-2 header-link">Этапы работы</a>
-                <a href="articles.html" class="py-2 header-link">Статьи</a>
-                <a href="services.html" class="py-2 header-link">Услуги и цены</a>
-                <a href="ai-design.html" class="py-2 header-link">ИИ дизайн</a>
-                <a href="about.html" class="py-2 header-link">О нас</a>
-                <a href="contacts.html" class="py-2 header-link">Контакты</a>
+        <div id="mobile-menu" class="md:hidden absolute top-full left-0 w-full bg-white shadow-lg transform -translate-y-full opacity-0 transition-all duration-300 ease-in-out z-40">
+            <nav class="flex flex-col py-2">
+                <a href="portfolio.html" class="mobile-menu-link">Портфолио</a>
+                <a href="stages.html" class="mobile-menu-link">Этапы работы</a>
+                <a href="articles.html" class="mobile-menu-link">Статьи</a>
+                <a href="services.html" class="mobile-menu-link">Услуги и цены</a>
+                <a href="ai-design.html" class="mobile-menu-link">ИИ дизайн</a>
+                <a href="about.html" class="mobile-menu-link">О нас</a>
+                <a href="contacts.html" class="mobile-menu-link">Контакты</a>
             </nav>
         </div>
     </header>
 
     <!-- Основное содержимое -->
-    <main class="pt-32 pb-20">
+    <main class="pt-24 pb-20">
         <div class="container mx-auto px-4">
             <h1 class="text-4xl md:text-5xl font-montserrat font-bold mb-4 text-center">
                 Портфолио
@@ -85,39 +189,20 @@
                 <button class="filter-btn btn bg-gold-1 text-black" data-filter="all">
                     Все проекты
                 </button>
-                <button class="filter-btn btn border border-dark-gray text-dark-gray hover:bg-gold-1 hover:border-gold-1 hover:text-black" data-filter="apartments">
+                <button class="filter-btn btn border border-dark-gray text-dark-gray hover:bg-gold-1 hover:border-gold-1 hover:text-black" data-filter="residential">
                     Жилые интерьеры
                 </button>
-                <button class="filter-btn btn border border-dark-gray text-dark-gray hover:bg-gold-1 hover:border-gold-1 hover:text-black" data-filter="houses">
+                <button class="filter-btn btn border border-dark-gray text-dark-gray hover:bg-gold-1 hover:border-gold-1 hover:text-black" data-filter="country">
                     Загородные дома
                 </button>
-                <button class="filter-btn btn border border-dark-gray text-dark-gray hover:bg-gold-1 hover:border-gold-1 hover:text-black" data-filter="offices">
+                <button class="filter-btn btn border border-dark-gray text-dark-gray hover:bg-gold-1 hover:border-gold-1 hover:text-black" data-filter="office">
                     Офисные интерьеры
                 </button>
             </div>
 
-            <!-- Индикатор загрузки -->
-            <div id="loading" class="text-center py-12">
-                <div class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-gold-1">
-                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Загрузка портфолио...
-                </div>
-            </div>
-
-            <!-- Сообщение об ошибке -->
-            <div id="error" class="hidden text-center py-12">
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                    <p class="font-bold">Ошибка загрузки</p>
-                    <p id="error-message">Не удалось загрузить данные портфолио</p>
-                </div>
-            </div>
-            
             <!-- Сетка проектов -->
-            <div id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 hidden">
-                <!-- Проекты будут загружены динамически -->
+            <div id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Проекты будут загружены из базы данных -->
             </div>
 
             <!-- Сообщение о пустом фильтре -->
@@ -125,6 +210,19 @@
                 <div class="text-gray-500">
                     <p class="text-xl mb-2">Проекты не найдены</p>
                     <p>В выбранной категории пока нет проектов</p>
+                </div>
+            </div>
+
+            <!-- Временное сообщение -->
+            <div id="temp-message" class="text-center py-12">
+                <div class="bg-light-gray p-8 rounded-lg">
+                    <h2 class="text-2xl font-montserrat font-bold mb-4">Портфолио в разработке</h2>
+                    <p class="text-lg text-gray mb-4">
+                        Мы работаем над новой версией портфолио с улучшенным отображением проектов.
+                    </p>
+                    <p class="text-gray">
+                        Фильтры уже готовы, скоро здесь появятся проекты из базы данных.
+                    </p>
                 </div>
             </div>
         </div>
@@ -137,7 +235,7 @@
                 <div>
                     <h3 class="font-montserrat text-xl mb-4">Контакты</h3>
                     <ul class="space-y-2">
-                        <li>Телефон: +7 XXX XXX XX XX</li>
+                        <li>Телефон: +7 (906) 729-99-17</li>
                         <li>Email: info@architecture-bureau.com</li>
                         <li>Адрес: г. Москва, Новинский бульвар 25 к.10 оф.18</li>
                     </ul>
@@ -171,59 +269,54 @@
 
     <script>
     // Глобальные переменные
-    let portfolioData = null;
+    let portfolioData = [];
     let currentFilter = 'all';
-    const API_BASE_URL = 'http://localhost:3001/api';
 
-    // Функция загрузки данных портфолио
+    // Функция загрузки данных портфолио из базы данных
     async function loadPortfolioData() {
         try {
-            console.log('Загрузка данных портфолио...');
+            console.log('Загрузка проектов из базы данных...');
             
-            const response = await fetch(`${API_BASE_URL}/portfolio`);
+            const response = await fetch('/api/db/projects');
             const result = await response.json();
             
             if (!result.success) {
                 throw new Error(result.error || 'Ошибка загрузки данных');
             }
             
-            // Используем данные напрямую из API (фильтрация уже выполнена)
-            portfolioData = result.data;
-            
-            console.log('Данные загружены:', {
-                total: portfolioData.all.length,
-                apartments: portfolioData.apartments.length,
-                houses: portfolioData.houses.length,
-                offices: portfolioData.offices.length
-            });
+            portfolioData = result.projects || [];
+            console.log('Загружено проектов:', portfolioData.length);
             
             // Отображаем проекты
             displayProjects(currentFilter);
             
-            // Скрываем индикатор загрузки
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('portfolio-grid').classList.remove('hidden');
-            
         } catch (error) {
             console.error('Ошибка загрузки портфолио:', error);
-            showError('Не удалось загрузить данные портфолио: ' + error.message);
+            // Пока не показываем ошибки, просто логируем
         }
     }
 
-    // Функция отображения проектов с анимацией
+    // Функция отображения проектов с анимацией (как в portfolio.html)
     function displayProjects(filter) {
         const grid = document.getElementById('portfolio-grid');
         const emptyFilter = document.getElementById('empty-filter');
+        const tempMessage = document.getElementById('temp-message');
         
-        if (!portfolioData || !portfolioData[filter]) {
-            emptyFilter.classList.remove('hidden');
-            grid.classList.add('hidden');
-            return;
+        console.log(`Выбран фильтр: ${filter}`);
+        console.log(`Всего проектов в данных: ${portfolioData.length}`);
+        
+        // Фильтрация проектов по типу
+        let filteredProjects = portfolioData;
+        if (filter !== 'all') {
+            filteredProjects = portfolioData.filter(project => project.project_type === filter);
+            console.log(`Проектов после фильтрации: ${filteredProjects.length}`);
         }
         
-        const projects = portfolioData[filter];
+        // Скрываем временное сообщение
+        tempMessage.classList.add('hidden');
         
-        if (projects.length === 0) {
+        // Если нет проектов для отображения
+        if (!filteredProjects || filteredProjects.length === 0) {
             emptyFilter.classList.remove('hidden');
             grid.classList.add('hidden');
             return;
@@ -232,14 +325,14 @@
         emptyFilter.classList.add('hidden');
         grid.classList.remove('hidden');
         
-        // Добавляем анимацию исчезновения
+        // Добавляем анимацию исчезновения (как в portfolio.html)
         grid.style.opacity = '0';
         grid.style.transform = 'translateY(20px)';
         
         // Через небольшую задержку обновляем содержимое и показываем с анимацией
         setTimeout(() => {
             // Генерируем HTML для проектов
-            grid.innerHTML = projects.map((project, index) => createProjectCard(project, index)).join('');
+            grid.innerHTML = filteredProjects.map((project, index) => createProjectCard(project, index)).join('');
             
             // Анимация появления
             grid.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -260,34 +353,42 @@
             });
         }, 200);
     }
-
-    // Функция создания карточки проекта
+    
+    // Функция создания карточки проекта (в стиле portfolio.html)
     function createProjectCard(project, index) {
+        // Определяем путь к изображению
+        const imagePath = project.path_to_file || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
+        
+        // Получаем название типа проекта
+        const projectTypeName = getProjectTypeName(project.project_type);
+        
         // Определяем CSS классы для типов проектов
         const typeClasses = {
-            'apartments': 'project-card-apartments',
-            'houses': 'project-card-houses', 
-            'offices': 'project-card-offices'
+            'residential': 'project-card-apartments',
+            'country': 'project-card-houses', 
+            'office': 'project-card-offices'
         };
         
-        const typeClass = typeClasses[project.entity_type] || '';
+        const typeClass = typeClasses[project.project_type] || '';
         
         return `
-            <div class="project-card ${typeClass} group relative h-64 bg-dark-gray overflow-hidden rounded-lg shadow-lg transition-all duration-300" data-type="${project.entity_type}">
+            <div class="project-card ${typeClass} group relative h-64 bg-dark-gray overflow-hidden rounded-lg shadow-lg transition-all duration-300 cursor-pointer" 
+                 data-type="${project.project_type}" onclick="openProject(${project.id})">
                 <img 
-                    src="${project.url}" 
-                    alt="${project.alt_text}"
+                    src="${imagePath}" 
+                    alt="${project.title}"
                     class="w-full h-full object-cover transition-opacity duration-300"
                     onload="this.classList.add('loaded')"
                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='; this.classList.add('error')"
                 >
                 
-                <!-- Overlay с названием -->
+                <!-- Overlay с названием (как в portfolio.html) -->
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                     <div class="p-4 w-full">
                         <h3 class="text-white text-lg font-montserrat font-semibold line-clamp-2">
                             ${project.title}
                         </h3>
+                        <p class="text-white/80 text-sm mt-1">${projectTypeName}</p>
                     </div>
                 </div>
                 
@@ -302,12 +403,20 @@
             </div>
         `;
     }
-
-    // Функция отображения ошибки
-    function showError(message) {
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('error-message').textContent = message;
-        document.getElementById('error').classList.remove('hidden');
+    
+    // Функция получения названия типа проекта
+    function getProjectTypeName(type) {
+        const types = {
+            'residential': 'Жилые интерьеры',
+            'country': 'Загородные дома',
+            'office': 'Офисные интерьеры'
+        };
+        return types[type] || 'Не указан';
+    }
+    
+    // Функция открытия проекта
+    function openProject(projectId) {
+        window.location.href = `project.html?id=${projectId}`;
     }
 
     // Установка текущего года в футере
@@ -319,9 +428,53 @@
     document.addEventListener('DOMContentLoaded', function() {
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
+        const line1 = document.getElementById('hamburger-line-1');
+        const line2 = document.getElementById('hamburger-line-2');
+        const line3 = document.getElementById('hamburger-line-3');
+        
+        let isMenuOpen = false;
         
         mobileMenuButton.addEventListener('click', function() {
-            mobileMenu.classList.toggle('hidden');
+            if (isMenuOpen) {
+                // Закрываем меню
+                mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+                mobileMenu.classList.add('-translate-y-full', 'opacity-0');
+                
+                // Анимация гамбургера обратно
+                line1.classList.remove('rotate-45', 'translate-y-2');
+                line2.classList.remove('opacity-0');
+                line3.classList.remove('-rotate-45', '-translate-y-2');
+                
+                isMenuOpen = false;
+            } else {
+                // Открываем меню
+                mobileMenu.classList.remove('-translate-y-full', 'opacity-0');
+                mobileMenu.classList.add('translate-y-0', 'opacity-100');
+                
+                // Анимация гамбургера в крестик
+                line1.classList.add('rotate-45', 'translate-y-2');
+                line2.classList.add('opacity-0');
+                line3.classList.add('-rotate-45', '-translate-y-2');
+                
+                isMenuOpen = true;
+            }
+        });
+        
+        // Закрывать меню при клике на ссылку
+        const menuLinks = document.querySelectorAll('.mobile-menu-link');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                // Закрываем меню
+                mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+                mobileMenu.classList.add('-translate-y-full', 'opacity-0');
+                
+                // Анимация гамбургера обратно
+                line1.classList.remove('rotate-45', 'translate-y-2');
+                line2.classList.remove('opacity-0');
+                line3.classList.remove('-rotate-45', '-translate-y-2');
+                
+                isMenuOpen = false;
+            });
         });
     });
     
@@ -356,7 +509,7 @@
     </script>
 
     <style>
-    /* Стили для загрузки изображений */
+    /* Стили для загрузки изображений (как в portfolio.html) */
     .project-card img {
         opacity: 0;
         transition: opacity 0.3s ease;
@@ -374,8 +527,8 @@
         transition: opacity 0.3s ease;
     }
     
-    .project-card img.loaded + .image-loading,
-    .project-card img.error + .image-loading {
+    .project-card img.loaded ~ .image-loading,
+    .project-card img.error ~ .image-loading {
         opacity: 0;
         pointer-events: none;
     }
@@ -388,7 +541,7 @@
         overflow: hidden;
     }
     
-    /* Стили для разных типов проектов */
+    /* Стили для разных типов проектов (как в portfolio.html) */
     .project-card-apartments {
         border-bottom: 3px solid #4F46E5;
     }
@@ -404,6 +557,32 @@
     /* Плавная анимация для сетки */
     #portfolio-grid {
         transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    /* Стили для фильтров */
+    .filter-btn {
+        transition: all 0.3s ease;
+    }
+    
+    .filter-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Стили для временного сообщения */
+    #temp-message {
+        animation: fadeIn 0.6s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
     </style>
 </body>

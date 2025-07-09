@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестовая страница - Архитектурное Бюро</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'white': '#FFFFFF',
+                        'black': '#000000',
+                        'light-gray': '#E6E6E6',
+                        'gray': '#A6A6A6',
+                        'dark-gray': '#2F2F2F',
+                        'gold-1': '#FFC107',
+                        'gold-2': '#E8A317',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-roboto text-dark-gray bg-white">
+    <!-- Шапка сайта -->
+    <header class="bg-white fixed w-full top-0 shadow-md z-50" style="position: fixed; top: 0; left: 0; right: 0;">
+        <div class="container mx-auto py-2 px-4 flex justify-between items-center relative">
+            <!-- Логотип -->
+            <a href="index.html" class="flex items-center">
+                <img src="Logo_black.svg" alt="Логотип" class="logo-image">
+            </a>
+
+            <!-- Навигация для десктопа (центрированная) -->
+            <nav id="desktop-nav" class="hidden md:flex space-x-8 absolute left-1/2 transform -translate-x-1/2 pointer-events-none md:pointer-events-auto">
+                <a href="portfolio.html" class="header-link">Портфолио</a>
+                <a href="stages.html" class="header-link">Этапы работы</a>
+                <a href="articles.html" class="header-link">Статьи</a>
+                <a href="services.html" class="header-link">Услуги и цены</a>
+                <a href="ai-design.html" class="header-link">ИИ дизайн</a>
+                <a href="about.html" class="header-link">О нас</a>
+                <a href="contacts.html" class="header-link">Контакты</a>
+            </nav>
+
+            <!-- Кнопка мобильного меню -->
+            <button id="mobile-menu-button" class="md:hidden flex flex-col justify-center items-center w-10 h-10 focus:outline-none z-50">
+                <span id="hamburger-line-1" class="block w-6 h-0.5 bg-dark-gray mb-1.5 transition-all duration-300 ease-in-out"></span>
+                <span id="hamburger-line-2" class="block w-6 h-0.5 bg-dark-gray mb-1.5 transition-all duration-300 ease-in-out"></span>
+                <span id="hamburger-line-3" class="block w-6 h-0.5 bg-dark-gray transition-all duration-300 ease-in-out"></span>
+            </button>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="md:hidden absolute top-full left-0 w-full bg-white shadow-lg transform -translate-y-full opacity-0 transition-all duration-300 ease-in-out z-40">
+            <nav class="flex flex-col py-2">
+                <a href="portfolio.html" class="mobile-menu-link">Портфолио</a>
+                <a href="stages.html" class="mobile-menu-link">Этапы работы</a>
+                <a href="articles.html" class="mobile-menu-link">Статьи</a>
+                <a href="services.html" class="mobile-menu-link">Услуги и цены</a>
+                <a href="ai-design.html" class="mobile-menu-link">ИИ дизайн</a>
+                <a href="about.html" class="mobile-menu-link">О нас</a>
+                <a href="contacts.html" class="mobile-menu-link">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main class="pt-24 pb-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-montserrat font-bold mb-4">
+                    Тестовая страница
+                </h1>
+                <div class="w-20 h-1 bg-gold-1 mx-auto mb-8"></div>
+                <p class="text-lg text-gray">
+                    Это тестовая страница с только шапкой сайта
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Мобильное меню
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const line1 = document.getElementById('hamburger-line-1');
+            const line2 = document.getElementById('hamburger-line-2');
+            const line3 = document.getElementById('hamburger-line-3');
+            
+            let isMenuOpen = false;
+            
+            mobileMenuButton.addEventListener('click', function() {
+                if (isMenuOpen) {
+                    // Закрываем меню
+                    mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+                    mobileMenu.classList.add('-translate-y-full', 'opacity-0');
+                    
+                    // Анимация гамбургера обратно
+                    line1.classList.remove('rotate-45', 'translate-y-2');
+                    line2.classList.remove('opacity-0');
+                    line3.classList.remove('-rotate-45', '-translate-y-2');
+                    
+                    isMenuOpen = false;
+                } else {
+                    // Открываем меню
+                    mobileMenu.classList.remove('-translate-y-full', 'opacity-0');
+                    mobileMenu.classList.add('translate-y-0', 'opacity-100');
+                    
+                    // Анимация гамбургера в крестик
+                    line1.classList.add('rotate-45', 'translate-y-2');
+                    line2.classList.add('opacity-0');
+                    line3.classList.add('-rotate-45', '-translate-y-2');
+                    
+                    isMenuOpen = true;
+                }
+            });
+            
+            // Закрывать меню при клике на ссылку
+            const menuLinks = document.querySelectorAll('.mobile-menu-link');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    // Закрываем меню
+                    mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+                    mobileMenu.classList.add('-translate-y-full', 'opacity-0');
+                    
+                    // Анимация гамбургера обратно
+                    line1.classList.remove('rotate-45', 'translate-y-2');
+                    line2.classList.remove('opacity-0');
+                    line3.classList.remove('-rotate-45', '-translate-y-2');
+                    
+                    isMenuOpen = false;
+                });
+            });
+        });
+    </script>
+
+    <style>
+        /* Стили для мобильного меню */
+        .mobile-menu-link {
+            display: block;
+            padding: 16px 24px;
+            text-decoration: none;
+            color: #2F2F2F;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #E6E6E6;
+            width: 100%;
+        }
+        
+        .mobile-menu-link:hover {
+            background-color: #FFC107;
+            color: #000;
+            padding-left: 32px;
+        }
+        
+        .mobile-menu-link:last-child {
+            border-bottom: none;
+        }
+        
+        /* Стили для мобильного меню контейнера */
+        #mobile-menu {
+            min-height: auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Стили для header-link на десктопе */
+        .header-link {
+            position: relative;
+            text-decoration: none;
+            color: #2F2F2F;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .header-link:hover {
+            color: #FFC107;
+        }
+        
+        .header-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #FFC107;
+            transition: width 0.3s ease;
+        }
+        
+        .header-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Стили для логотипа */
+        .logo-image {
+            height: 18px;
+            width: auto;
+            max-width: 60px;
+            max-height: 18px;
+        }
+        
+        /* Убираем стандартные стили для мобильного меню на больших экранах */
+        @media (min-width: 768px) {
+            #mobile-menu {
+                display: none !important;
+            }
+            #mobile-menu-button {
+                display: none !important;
+            }
+        }
+        
+        /* Дополнительные стили для мобильной версии */
+        @media (max-width: 767px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            /* Полностью отключаем только десктопную навигацию на мобильных */
+            #desktop-nav {
+                display: none !important;
+                pointer-events: none !important;
+                visibility: hidden !important;
+                position: static !important;
+                z-index: -999 !important;
+                left: auto !important;
+                transform: none !important;
+            }
+            
+            /* Убираем все взаимодействия с ссылками десктопной навигации на мобильных */
+            #desktop-nav a {
+                display: none !important;
+                pointer-events: none !important;
+                visibility: hidden !important;
+                position: static !important;
+                z-index: -999 !important;
+            }
+        }
+    </style>
+
+    <script src="script.js"></script>
+</body>
+</html> 
